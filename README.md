@@ -1,22 +1,11 @@
-# RDR2-Online-AHK Macros on GitHub ([DOWNLOAD](https://github.com/Acromatic/rdr2-online-ahk/))
-*provides hotkeys for several useful features in RDR2:Online, see list further down.
+# RDR2-Online-AHK Macros on GitHub ([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
 
-*I tested this with my account. If something doesn't work, ask by opening an issue
+*provides hotkeys for several useful features in RDR2:Online, see list further down.
+*Tested with my own account. If something doesn't work, ask by opening an issue
 *I evidently do big missions most of the time so if you have ideas for useful macros, let me know or just send them in!
 
-IF you delete your README and let the script generate one it'll display your autokey version in the new README below:
-
-Your AutoHotkey Version: v 1.1.33.02
-Midnight’s AutoHotkey Version: v 1.1.33.02
-Original AutoHotkey Version: v 1.1.26.00
-
 Language: English Platform: Windows 10 Home (64 bit)
-
-Started by KeyMash , Sep 17 2015 06:33 PM
-Original Author: twentyafterfour First Modified by: StArL0rd84
-Posted by u/REDR0VER68 years ago (2017) Modified by: OriginalEmpire
-
-Updated to 2020-21 by: Midnight ( January 2021 ) Rewritten for RDR2 by: Midnight ( August 2021 )
+AutoHotkey Version: v 1.1.33.02
 
 Introduction: Everthing in this script can be modified to your needs. BUT BE CAREFUL!
 The Player Menu, Escape Menu, and Tab Menu have different delay times due to various reasons, 
@@ -27,16 +16,17 @@ maybe even faster than you will be able to do manually.
 
 ## Updates
 
-Since v1.0 the script includes a simple auto updater. By default it will check for a new version on GitHub every time you launch the script.
+By default it will check for a new version on GitHub every time you launch the script.
 If a new (or actually different) version is found it will prompt you to proceed or cancel.
-See the readme section about using config.ahk if you plan on changing settings as the update will replace the main script file!
+See the README section about using RDR2Config.ahk if you plan on changing settings as the update will replace the script files!
 
-You can disable the automatic check in the configuration (`CheckForUpdates`).
+You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
 
-* Updated to v6.7 (Example only)
-* Added
-* Fixed
-* Removed
+* Updated to v1.0 - August 2021
+* Added - Initialization File Configuration Editor
+* Added - Automatic Updates
+* Added - Mission Failsafe Mode
+
 
 ## Installation
 
@@ -92,11 +82,12 @@ it also does next to nothing for controller users so there's that. Kind of a big
 
 ## Available macros
 
+* **BeatPoker** - This is a half working poker beating bot! (only tested with singleplayer)
+
 * **ToggleAutoRun** – Auto run/drive mode, combine this with walk to run/drive at proper full speed
 * **ToggleAutoWalk** – Auto walk/trot mode, ctrl+w to walk, then ctrl+shift to run, tap each to disable seperately (shift and w)
 * **ToggleAutoReverse** – Auto backwards mode, ctrl+s to reverse, tap s to disable (was more useful when I wrote it)
 
-   -------------------------------------------------------------------------
 * **ToggleCooking** – Auto Cooking mode
 * **ToggleEnhancedAFK** – Enhanced AFK mode (this is mostly passive, speeds up j key)
 * **TogglePatrolAFK** – Toggle Patrol mode (this is like gtav macros AFK, just moves left and right, circles on horseback)
@@ -105,7 +96,6 @@ it also does next to nothing for controller users so there's that. Kind of a big
 * **ToggleClicker** – Toggle Auto Clicker mode
 * **ToggleFinale** – Cycle Auto Finish Missions mode
 
-   -------------------------------------------------------------------------
 * **Health** – Self Explainitory
 * **Stamina** – Self Explainitory
 * **Deadeye** – Self Explainitory
@@ -113,20 +103,17 @@ it also does next to nothing for controller users so there's that. Kind of a big
 * **WildernessCamp** – Self Explainitory
 * **ItemSlot** – use item from the ITEMS SLOT, such as metal detector, binoculars, or whatever else you select in that slot
 
-   -------------------------------------------------------------------
 * **HuntingWagon** – Calls the Hunting Cart (nice when it doesn't want to spawn)
 * **BountyWagon** – Calls the Bounty Cart (nice when it doesn't want to spawn)
 * **DismissWagons** – Dismisses both Hunting, and Bounty carts
 * **FeedHorse** – Feeds Horse if you're riding one, if not pulls out your left rifle slot
 
-   ------------------------------------------------------------
 * **ShowPossesWindow** – Self Explainitory
 * **FormPosse** – Form up the top-most posse, mine is named AAA Team but starting with numbers may also work
 * **QuickRace** – Self Explainitory
 * **MenuSlotTwo** – Opens the Online Menu, Chooses Row 1, Slot 2 (Load to Crimes currently, rockstar changes online menu)
 * **MenuSlotFour** – Opens the Online Menu, Chooses Row 1, Slot 4 (Load to Camp currently, rockstar changes online menu)
 
-   -------------------------------------------------------
 * **VolumeUp** – Opens the settings, Turns the Volume Up
 * **VolumeDown** – Opens the settings, Turns the Volume Down
 * **ReloadScript** – Reloads the Script
@@ -134,14 +121,10 @@ it also does next to nothing for controller users so there's that. Kind of a big
 * **SoloSession** – Force disconnect the game by freezing the process for 10 seconds (requires pssuspend.exe)
 * **KillGame** – Kill the game process immediately (requires pskill.exe)
 
------------ Singleplayer ONLY binds -----------
-
-* **BeatPoker** - This is a half working poker beating bot!
-* **SPCooking** - cooking also works in SP, using same function in script as of v1.0
 
 ## Planned Features
 
-* **CycleOutfit** – Cycle through your saved outfits
+* **CycleOutfits** – Cycle through your saved outfits
 
 * **More single player binds** - possibly a seperate script
 
@@ -166,11 +149,12 @@ the cooking, autorun, autowalk, and enhanced AFK. Generally speaking double bind
 * The numpad has keys with special properties that AHK has problems dealing with, CTRL, ALT, Windows Key, are all like this
 * Social Club uses home key, binding shift+any number will cause you not to be able to run with a horse and pull a weapon properly
 * F1, F4, F12 are all used by the game
-* F, C, V, B, N, M, L, H, G, R, E, are all used in game, you'll get issues binding these and more
+* F, C, V, B, N, M, L, H, G, R, E, X, are all used in game, you'll get issues binding these and more
 * Generally speaking don't bind any of these, or with shift because of run, will also toggle the autorun off
 
 ## Contributing
-
+	
+  This script is the culmination of macro scripts over the past 6 years, and 7 or more contributors.
   Contributions are very welcome! Either report errors, bugs and propose features or directly submit code:
 
   1. Fork it
@@ -179,6 +163,18 @@ the cooking, autorun, autowalk, and enhanced AFK. Generally speaking double bind
   4. Push to the branch (`git push origin my-new-feature`)
   5. Create new Pull Request
 
+  Starting in 2015 list of contributors over the years:
+
+  * KeyMash
+  * twentyafterfour
+  * StArL0rd84
+  * REDR0VER68
+  * OriginalEmpire
+  * 2called-chaos
+  * Updated to 2020-21 by: Midnight ( January 2021 )
+  * Rewritten for RDR2 by: Midnight ( August 2021 )
+
 ## Legal
 
 This repository is licensed under the MIT license.
+It is Free to use for ANY purpose.
