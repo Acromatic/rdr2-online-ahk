@@ -63,8 +63,8 @@ IfNotExist,%CFG%
 
 ;/////////////////   Settings     ///////////////
 
-IniWrite, true, %CFG%, Settings, LoadConfigOnStart
-IniWrite, true, %CFG%, Settings, AutoUpdateOnStart
+IniWrite, 1, %CFG%, Settings, LoadConfigOnStart
+IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
@@ -157,7 +157,15 @@ IniRead, Read_AbortScriptKey, %CFG%, Hotkeys,AbortScript
 
 }
 
-if(%Read_LoadConfigOnStart%=true)
+if(Read_AutoUpdateOnStart=1)
+{
+	; Check for script updates on startup
+	if (CheckForUpdates=true) {
+	  performUpdateCheck(true)
+	}
+}
+
+if(Read_LoadConfigOnStart=1)
 {
 RunWait, RDR2Config.ahk
 }
@@ -200,15 +208,9 @@ Hotkey, %Read_AbortScriptKey%, AbortScript
 
 Hotkey, %Read_BeatPokerKey%, BeatPoker
 
-if(%Read_AutoUpdateOnStart%=true)
-{
 ; ==============
 ; === UPDATE ===
 ; ==============
-; Check for script updates on startup
-if (CheckForUpdates=true) {
-  performUpdateCheck(true)
-}
 
 performUpdateCheck(silentSuccess = false) {
   URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,update.txt
@@ -243,16 +245,14 @@ performUpdateCheck(silentSuccess = false) {
     msgbox, 0, Error - RDR2 Online AHK-Macros, Received invalid response from GitHub and update check was canceled.`nPlease retry later or check manually.`n`nHint: Set CheckForUpdates to false to disable automatic checking!
     FileDelete, update.txt
   }
-  return
 }
-}
-
+return
 
 CheckForUpdates:
   performUpdateCheck()
   return
   
-  return
+;return
 
 ;///////////////////////////   Auto Keys   /////////////////////////////////////
 
