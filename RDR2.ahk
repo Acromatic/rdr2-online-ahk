@@ -46,7 +46,6 @@ WinSet, TransColor, %CustomColor% 150
 SetTimer, UpdateOSD, 40  ; Update minutes less than every second, there are also delays in the function
 Gosub, UpdateOSD
 Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently active window.
-;return
 
 ;////// another gui script snippet
 ;Gui Color, 0xFF0000
@@ -56,7 +55,7 @@ Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently a
 ;return
 
 
-;///////////// Write RDR2Quick.ini (Script Configuration w/Hotkeys) /////////////
+;///////////// Write config.ini (Script Configuration w/Hotkeys) /////////////
 
 IfNotExist,%CFG%
 {
@@ -167,6 +166,40 @@ if(Read_AutoUpdateOnStart=1)
 
 if(Read_LoadConfigOnStart=1)
 {
+URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,downloadconfig.txt
+  if (errorlevel) {
+    msgbox, 0, Error - RDR2-Online-AHK Macros, Received error response from GitHub and failed to download RDR2Config.ahk.`nPlease retry later or check manually.`n`nHint: Set CheckForUpdates to false to disable automatic checking!
+    FileDelete, downloadconfig.txt
+    return
+  }
+
+  FileReadLine, downloadconfig, downloadconfig.txt, 1
+  FileReadLine, currentVersion, %A_ScriptName%, 1
+  if (downloadconfig = currentVersion) {
+    FileDelete, downloadconfig.txt
+    if (!silentSuccess)
+      msgbox, You are running the latest version!`n%update%`nIf something doesn't work please let me know!`nhttps://github.com/Acromatic/rdr2-online-ahk/
+  } else if (InStr(downloadconfig, "; v") = 1) {
+    MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of RDR2Config.ahk has been released!`n%currentVersion% <-- your version`n%update% <-- available update`nWould you like to update?`nWarning: If you don't use config.ini this might reset all your settings!
+    IfMsgBox Yes
+    {
+      FileCopy, downloadconfig.txt, %A_ScriptName%, 1
+      FileDelete, downloadconfig.txt
+      FileDelete, README.md
+      msgbox, 0, Update successful! - RDR2Config.ahk, Update successful, the script will now reload!`nHint: Check for new stuff `;)
+      reload
+    }
+    IfMsgBox No
+    {
+      msgbox, This script will NOT be updated!`nHint: Set CheckForUpdates to false to disable automatic checking!
+      FileDelete, downloadconfig.txt
+    }
+  } else {
+    msgbox, 0, Error - RDR2-Online-AHK Macros, Received invalid response from GitHub and failed to download RDR2Config.ahk.`nPlease retry later or check manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
+    FileDelete, downloadconfig.txt
+  }
+
+sleep, 4000
 RunWait, RDR2Config.ahk
 }
 
