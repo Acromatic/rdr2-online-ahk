@@ -1,4 +1,5 @@
-# RDR2-Online-AHK Macros on GitHub ([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
+# RDR2-Online-AHK Macros on GitHub
+([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
 
 *provides hotkeys for several useful features in RDR2:Online, see list further down.
 *Tested with my own account. If something doesn't work, ask by opening an issue
@@ -71,49 +72,41 @@ it also does next to nothing for controller users so there's that. Kind of a big
 ----------------------------------------------------------------------------------------------------------
 ## Usage
 
-* On Windows 10 you have to start the AHK script as administrator (right click -> Run as administator)
-* You should run the game in windowed or some functions will not work properly
+* On Windows 10 Start the AHK script as administrator (right click -> Run as administator)
+* You should run the game in windowed mode or some functions will not work properly
 * You will have to toggle some modes manually since the game will change and some functions need to be aware of that.
-* The interaction menu is often delayed the first time it's opened after loading screens or cutscenes.
-  Alternatively you can increase the IntMenuDelay setting for more accuracy but making the process slower in general.
-* Some inputs will work and some will not depending on what is taking place, mostly failsafe, just reload script if problems occur
+* Some inputs will work and some will not depending on what is taking place, reload script if problems occur
 * Sometimes you might find that the script doesn't appear to do anything. This might happen if you start
   the game after the AHK script. Reloading it (right click on systray icon -> reload script) fixes that usually.
 
 ## Available macros
 
 * **BeatPoker** - This is a half working poker beating bot! (only tested with singleplayer)
-
 * **ToggleAutoRun** – Auto run/drive mode, combine this with walk to run/drive at proper full speed
 * **ToggleAutoWalk** – Auto walk/trot mode, ctrl+w to walk, then ctrl+shift to run, tap each to disable seperately (shift and w)
 * **ToggleAutoReverse** – Auto backwards mode, ctrl+s to reverse, tap s to disable (was more useful when I wrote it)
-
 * **ToggleCooking** – Auto Cooking mode
 * **ToggleEnhancedAFK** – Enhanced AFK mode (this is mostly passive, speeds up j key)
 * **TogglePatrolAFK** – Toggle Patrol mode (this is like gtav macros AFK, just moves left and right, circles on horseback)
 * **ToggleDefensive** – Toggle Defensive mode
 * **ToggleAFK** – Toggle AFK mode (my own version of AFK, uses look-behind to be AFK on carts and stealthly, no more catalog griefers!)
 * **ToggleClicker** – Toggle Auto Clicker mode
-* **ToggleFinale** – Cycle Auto Finish Missions mode
-
-* **Health** – Self Explainitory
-* **Stamina** – Self Explainitory
-* **Deadeye** – Self Explainitory
-* **HealCores** – Self Explainitory
-* **WildernessCamp** – Self Explainitory
-* **ItemSlot** – use item from the ITEMS SLOT, such as metal detector, binoculars, or whatever else you select in that slot
-
-* **HuntingWagon** – Calls the Hunting Cart (nice when it doesn't want to spawn)
-* **BountyWagon** – Calls the Bounty Cart (nice when it doesn't want to spawn)
+* **CycleMissionFailSafeMode** – Cycle Mission Fail-Safe Mode
+* **Health** – Use the preselected item from this slot (Health tonics slot)
+* **Stamina** – Use the preselected item from this slot (Stamina tonics slot)
+* **Deadeye** – Use the preselected item from this slot (Deadeye tonics slot)
+* **HealCores** – Use the preselected item from this slot (food slot)
+* **WildernessCamp** – Use the preselected item from this slot (camp slot)
+* **ItemSlot** – Use the preselected item from this slot (binocular slot)
+* **HuntingWagon** – Calls the Hunting Cart (nice for when it doesn't like to spawn)
+* **BountyWagon** – Calls the Bounty Cart (nice for when it doesn't like to spawn)
 * **DismissWagons** – Dismisses both Hunting, and Bounty carts
 * **FeedHorse** – Feeds Horse if you're riding one, if not pulls out your left rifle slot
-
 * **ShowPossesWindow** – Self Explainitory
 * **FormPosse** – Form up the top-most posse, mine is named AAA Team but starting with numbers may also work
 * **QuickRace** – Self Explainitory
 * **MenuSlotTwo** – Opens the Online Menu, Chooses Row 1, Slot 2 (Load to Crimes currently, rockstar changes online menu)
 * **MenuSlotFour** – Opens the Online Menu, Chooses Row 1, Slot 4 (Load to Camp currently, rockstar changes online menu)
-
 * **VolumeUp** – Opens the settings, Turns the Volume Up
 * **VolumeDown** – Opens the settings, Turns the Volume Down
 * **ReloadScript** – Reloads the Script
