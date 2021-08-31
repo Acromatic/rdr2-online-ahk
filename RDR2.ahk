@@ -20,7 +20,7 @@ Global KeySendDelay := 100      	;----> Delay between send key commands.
 Global KeyPressDuration := 80		;----> Duration each key press is held down.
 setkeydelay, %KeySendDelay%, %KeyPressDuration%, true
 
-CFG = RDR2Quick.ini
+CFG = config.ini
 ; Check for updates?
 CheckForUpdates    	:= true  ; Initial status IS OPTIONAL
 IsEnhancedAFKActivated  := false ; Initial status should always be false ( Also mostly passive, don't rebind)
@@ -31,8 +31,8 @@ IsCookingActivated    	:= false ; Initial status should always be false
 IsFinaleActivated    	:= false ; Initial status should always be false
 FinaleType              := 0 	 ; Initial status should always be zero
 IsTimerSet              := 0 	 ; Initial status should always be zero
-TimeMins 		:= 00
-TimeSecs 		:= 00
+TimeMins 		:= 0
+TimeSecs 		:= 0
 
 ;////// Initialize the GUI for On Screen Display
 CustomColor := "AAAAAA"  ; Can be any RGB color (it will be made transparent below).
@@ -62,8 +62,10 @@ IfNotExist,%CFG%
 
 ;/////////////////   Settings     ///////////////
 
-IniWrite, 1, %CFG%, Settings, LoadConfigOnStart
+IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
+IniWrite, 1, %CFG%, Settings, UpdateEditorOnStart
 IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
+IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
@@ -103,8 +105,8 @@ IniWrite, NumpadMult , %CFG%, Hotkeys, MenuSlotFour
 
 IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
 IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
-IniWrite, ^Escape , %CFG%, Hotkeys, ReloadScript
-IniWrite, +Escape , %CFG%, Hotkeys, AbortScript
+IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
+IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
 
 }
 
@@ -113,8 +115,10 @@ sleep, 2000
 IfExist, %CFG%
 { 
 ;/////////////////   Settings     ///////////////
-IniRead, Read_LoadConfigOnStart, %CFG%, Settings, LoadConfigOnStart
+IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
+IniRead, Read_UpdateEditorOnStart, %CFG%, Settings, UpdateEditorOnStart
 IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
+IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
 IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
@@ -164,43 +168,9 @@ if(Read_AutoUpdateOnStart=1)
 	}
 }
 
-if(Read_LoadConfigOnStart=1)
+if(Read_LoadEditorOnStart=1)
 {
-URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,downloadconfig.txt
-  if (errorlevel) {
-    msgbox, 0, Error - RDR2-Online-AHK Macros, Received error response from GitHub and failed to download RDR2Config.ahk.`nPlease retry later or check manually.`n`nHint: Set CheckForUpdates to false to disable automatic checking!
-    FileDelete, downloadconfig.txt
-    return
-  }
-
-  FileReadLine, downloadconfig, downloadconfig.txt, 1
-  FileReadLine, currentVersion, %A_ScriptName%, 1
-  if (downloadconfig = currentVersion) {
-    FileDelete, downloadconfig.txt
-    if (!silentSuccess)
-      msgbox, You are running the latest version!`n%update%`nIf something doesn't work please let me know!`nhttps://github.com/Acromatic/rdr2-online-ahk/
-  } else if (InStr(downloadconfig, "; v") = 1) {
-    MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of RDR2Config.ahk has been released!`n%currentVersion% <-- your version`n%update% <-- available update`nWould you like to update?`nWarning: If you don't use config.ini this might reset all your settings!
-    IfMsgBox Yes
-    {
-      FileCopy, downloadconfig.txt, %A_ScriptName%, 1
-      FileDelete, downloadconfig.txt
-      FileDelete, README.md
-      msgbox, 0, Update successful! - RDR2Config.ahk, Update successful, the script will now reload!`nHint: Check for new stuff `;)
-      reload
-    }
-    IfMsgBox No
-    {
-      msgbox, This script will NOT be updated!`nHint: Set CheckForUpdates to false to disable automatic checking!
-      FileDelete, downloadconfig.txt
-    }
-  } else {
-    msgbox, 0, Error - RDR2-Online-AHK Macros, Received invalid response from GitHub and failed to download RDR2Config.ahk.`nPlease retry later or check manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
-    FileDelete, downloadconfig.txt
-  }
-
-sleep, 4000
-RunWait, RDR2Config.ahk
+	RunWait, RDR2Config.ahk
 }
 
 Hotkey, %Read_PassiveToggleCookingOnKey%, PassiveToggleCookingOn
@@ -244,7 +214,6 @@ Hotkey, %Read_BeatPokerKey%, BeatPoker
 ; ==============
 ; === UPDATE ===
 ; ==============
-
 performUpdateCheck(silentSuccess = false) {
   URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,update.txt
   if (errorlevel) {
@@ -266,6 +235,10 @@ performUpdateCheck(silentSuccess = false) {
       FileCopy, update.txt, %A_ScriptName%, 1
       FileDelete, update.txt
       FileDelete, README.md
+
+	;/// Update the readme file
+      UpdateReadMe()
+
       msgbox, 0, Update successful! - RDR2 Online AHK-Macros, Update successful, the script will now reload!`n`nHint: Check for new stuff `;)
       reload
     }
@@ -285,10 +258,48 @@ CheckForUpdates:
   performUpdateCheck()
   return
   
-;return
+UpdateReadMe()
+{
+;///////////////// Update Readme file  //////////////////////
+URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/README.md,readme.txt
+	  if (errorlevel) {
+	    msgbox, 0, Error - RDR2-Online-AHK Macros, Received error response from GitHub and failed to download README.md.`nPlease retry later or check 				manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
+	    FileDelete, readme.txt
+	    return
+	  }
+	
+	  FileReadLine, readme, readme.txt, 1
+	  FileReadLine, currentVersion, %A_ScriptName%, 1
+	  if (readme = currentVersion) {
+	    FileDelete, readme.txt
+	    if (!silentSuccess)
+	      msgbox, You have the latest version of README.md!`n%update%`nIf something doesn't work please let me know!`nhttps://github.com/Acromatic/rdr2-online-	ahk/
+		  } 
+		  else if (InStr(readme, "; v") = 1) {
+		    MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of README.md has been released!`n%currentVersion% <-- your version`n%update% <-- available update`nWould you like to update?`nWarning: If you don't use config.ini this might delete your README.md!
+		    IfMsgBox Yes
+		    {
+		      FileCopy, readme.txt, %A_ScriptName%, 1
+		      FileDelete, readme.txt
+		      FileDelete, README.md
+		      msgbox, 0, Update successful! - README.md, Update successful!
+		      reload
+		    }
+		    IfMsgBox No
+		    {
+		      msgbox, This script will NOT be updated!`nHint: Set CheckForUpdates to false to disable automatic checking!
+		      FileDelete, readme.txt
+		    }
+		  } 
+		  else {
+		  msgbox, 0, Error - RDR2-Online-AHK Macros, Received invalid response from GitHub and failed to download README.md.`nPlease retry later or	check manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
+	    FileDelete, readme.txt
+	  }
+	}
+return
+;/////////////// End Update README.md //////////////////////////
 
 ;///////////////////////////   Auto Keys   /////////////////////////////////////
-
 #IfWinActive, Red Dead Redemption 2      
 {
 turnCapslockOff()
@@ -329,55 +340,8 @@ turnCapslockOff()
 	}
 return
 }
-
-
-;//////////////////////////   Toggle Cooking     /////////////////////////////
-
-; Toggle Cooking On - Ctrl+Enter to auto cook ( Last thing is brew coffee, x toggles off - reloads script)
-
-PassiveToggleCookingOff:
-  if (IsCookingActivated) {
-  IsCookingActivated := !IsCookingActivated
-reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
-}
-return
-
-PassiveToggleCookingOn:
-  IsCookingActivated := !IsCookingActivated
-
-  if (IsCookingActivated) {
-    Loop{
-	LongDelay()
-	Send {Enter up}
-	Send {Enter}
-	LongDelay()
-	Send {Space down}  ;/// For single player
-	LongDelay()
-	Send {Space up}    ;/// For single player
-	Send {r}           ;/// For single player
-	Send {Space}
-	Send {Enter down}
-	LongDelay()
-	Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
-	Send {Down}
-	LongDelay()
-	Send {Enter up}
-	Send {Enter}
-	Send {Enter up}
-
-;	if (!IsCookingActivated) {
-;		;ToolTip, Cooking Mode Disabled,0,0
-;		ShortDelay()
-;		Send {Space up} 
-;		ShortDelay()
-;		Send {Enter up}
-;		break
-;   		}
-	}
-    }
-   return
-
-;//////////////////////////   Enhanced Catalog and AFK     /////////////////////////////
+;/////////////////////////////////////////////////////////////////////////////
+;//////////////////////////   Enhanced Catalog and AFK     ///////////////////
 
 ; Toggle AFK - tap a key to avoid getting kicked, you can also use the catalog
 ; This one is passive, it makes holding j unnessary incase you need to go AFK quickly and easily the normal way
@@ -755,10 +719,54 @@ ShortDelay()
 Send {ESC down}
 return	
 
-;/////////////////////////////////       Experimental    ////////////////////////////////////////////////
+;///////////////////////////       Experimental   /////////////////////////////
+;//////////////////////////   Toggle Cooking     /////////////////////////////
 
+; Toggle Cooking On - Ctrl+Enter to auto cook ( Last thing is brew coffee, x toggles off - reloads script)
 
-;/////////////////////////////////        Beat Poker ( Singleplayer )     ////////////////////////////
+PassiveToggleCookingOff:
+  if (IsCookingActivated) {
+  IsCookingActivated := !IsCookingActivated
+reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
+}
+return
+
+PassiveToggleCookingOn:
+  IsCookingActivated := !IsCookingActivated
+
+  if (IsCookingActivated) {
+    Loop{
+	LongDelay()
+	Send {Enter up}
+	Send {Enter}
+	LongDelay()
+	Send {Space down}  ;/// For single player
+	LongDelay()
+	Send {Space up}    ;/// For single player
+	Send {r}           ;/// For single player
+	Send {Space}
+	Send {Enter down}
+	LongDelay()
+	Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
+	Send {Down}
+	LongDelay()
+	Send {Enter up}
+	Send {Enter}
+	Send {Enter up}
+
+;	if (!IsCookingActivated) {
+;		;ToolTip, Cooking Mode Disabled,0,0
+;		ShortDelay()
+;		Send {Space up} 
+;		ShortDelay()
+;		Send {Enter up}
+;		break
+;   		}
+	}
+    }
+return
+
+;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
 
 BeatPoker:  ;// singleplayer
   IsBeatPokerActivated := !IsBeatPokerActivated
@@ -796,14 +804,28 @@ return
 ;//////////////////////////////////      Script Functions      ////////////////////////////////////////
 
 ReloadScript:
-reload
-return
+
+	IsFinaleActivated=false
+	IsTimerSet=0
+	TimeMins = 00
+	TimeSecs = 00
+	TimeMinz = 00
+	TimeSecz = 00
+	FinaleType=0
+	GuiControl,, MyText, Finale Mode: %FinaleType%
+	sleep, 1000
+	reload
+return   
 
 AbortScript:
-ExitApp
-return
+	ExitApp
+return 
 
 ;////// Delay-Functions
+SuperShortDelay(){
+sleep, 20 
+}
+return
 
 ShortDelay(){
 sleep, 200 
@@ -892,8 +914,8 @@ turnCapslockOff() {
 }
 return
 
-;//////////////////      Finale Mode Functions and Subroutines      ///////////////////////////
-;/////// Cycle the Finale Modes ///////
+;//////////////////      Mission Failsafe Mode    ///////////////////////////
+;/////// Cycle the Mission Failsafe Modes ///////
 ToggleFinale:
 {
 	if(FinaleType>=6){       ;////// off, drop-only, give-to-contact, and walk-in Finale Types 4-6 respectively
@@ -911,23 +933,6 @@ ToggleFinale:
 	GuiControl,, MyText, Finale Mode: %FinaleType%
 }
 return 
-
-F10::
-{	
-if (IsFinaleActivated){
-	IsFinaleActivated=false
-	IsTimerSet=0
-	TimeMins = 00
-	TimeSecs = 00
-	TimeMinz = 00
-	TimeSecz = 00
-	FinaleType=0
-	GuiControl,, MyText, Finale Mode: %FinaleType%
-	sleep, 1000
-	Gui, Hide
-	return
-	}
-}
 
 ;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 UpdateOSD:
@@ -958,7 +963,7 @@ UpdateOSD:
 				Send {r down}
 				LongDelay()
 				Send {r up}
-				IsFinaleActivated=false
+				reload
 				}
 					;/// contact drop variant 
 				if(FinaleType=2){
@@ -968,7 +973,7 @@ UpdateOSD:
 				LongDelay()
 				Send {r up}
 				Send {RButton up}
-				IsFinaleActivated=false
+				reload
 				}
 					;/// drive in (bounty) variant 
 				if(FinaleType=3){
@@ -977,7 +982,7 @@ UpdateOSD:
 				SuperLongDelay()
 				Send {w up}
 				Send {LShift up}
-				IsFinaleActivated=false
+				reload
 				}
 
 				}		
@@ -1051,7 +1056,7 @@ UpdateOSD:
 				Send {r down}
 				LongDelay()
 				Send {r up}
-				IsFinaleActivated=false
+				reload
 				}
 					;/// Drop-to-Contact
 				if(FinaleType=5){
@@ -1061,7 +1066,7 @@ UpdateOSD:
 				LongDelay()
 				Send {r up}
 				Send {RButton up}
-				IsFinaleActivated=false
+				reload
 				}
 					;/// Drive-in/Walk-in
 				if(FinaleType=6){
@@ -1070,7 +1075,7 @@ UpdateOSD:
 				SuperLongDelay()
 				Send {w up}
 				Send {LShift up}
-				IsFinaleActivated=false
+				reload
 				}
 			}
 			}
@@ -1083,19 +1088,19 @@ UpdateOSD:
 				}
 
 				;/// Digit Formatting
-				if(TimeSecz<10){
-					IfNotInString, TimeSecz, "0"
-					{
-						TimeSecz=0%TimeSecz%
-					}				
-				}
-				
-				if(TimeMinz<10){
-					IfNotInString, TimeMinz, "0"
-					{
-						TimeMinz=0%TimeMinz%
-					}			
-				}
+;				if(TimeSecz<10){
+;					IfNotInString, TimeSecz, "0"
+;					{
+;						TimeSecz=0%TimeSecz%
+;					}				
+;				}
+;				
+;				if(TimeMinz<10){
+;					IfNotInString, TimeMinz, "0"
+;					{
+;						TimeMinz=0%TimeMinz%
+;					}			
+;				}
 			
 			GuiControl,, MyText, %TimeMinz%:%TimeSecz%
 			return
@@ -1103,10 +1108,10 @@ UpdateOSD:
 	else{  			
 		FinaleType=0
 		IsTimerSet=0
-		TimeMins = 00
-		TimeSecs = 00
-		TimeMinz = 00
-		TimeSecz = 00
+		TimeMins = 0
+		TimeSecs = 0
+		TimeMinz = 0
+		TimeSecz = 0
 		Gui, Hide
 	}
 }
