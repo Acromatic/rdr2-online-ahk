@@ -212,7 +212,7 @@ Gui, Add, Hotkey, x480 y350 w150 h20 vReloadScriptKey,F10
 Gui, Add, Hotkey,x480 y380 w150 h20 vAbortScriptKey,^Escape
 
 if Read_LoadEditorOnStart = 1
-Gui, Add, CheckBox, x60 y450 w150 h20 Read_LoadEditorOnStart vLoadEditorOnStart, Run Config Editor on start?
+Gui, Add, CheckBox, x60 y450 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
 else Gui, Add, CheckBox, x60 y450 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
 
 if Read_UpdateEditorOnStart = 1 
