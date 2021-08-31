@@ -15,7 +15,7 @@ SetWorkingDir %A_ScriptDir%
 
 ;/////////////////////////     Create Ini file    //////////////////////////////////
 
-CFG = RDR2Quick.ini
+CFG = config.ini
 
 IfExist, %CFG%
 { 
