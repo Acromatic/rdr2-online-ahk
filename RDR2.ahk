@@ -2,19 +2,19 @@
 ; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 
-; Windows seems to force this anyway - it's here if you need it.
-; Run as Admin to ensure the script will work
-;IF NOT A_IsAdmin
-;{
-;   Run *RunAs "%A_ScriptFullPath%"
-;  ExitApp
-;}
-
 #NoEnv
 SetTitleMatchMode, 3
 #MaxThreadsPerHotkey 2
 #SingleInstance, Force               
 SetWorkingDir %A_ScriptDir% 
+
+; Run as Admin to ensure the script will work
+IF NOT A_IsAdmin
+{
+	Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%"
+	ExitApp
+}
+
 SetScrollLockState, AlwaysOff
 Global KeySendDelay := 100      	;----> Delay between send key commands.
 Global KeyPressDuration := 80		;----> Duration each key press is held down.
