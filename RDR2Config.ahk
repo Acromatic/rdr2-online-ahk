@@ -212,33 +212,23 @@ Gui, Add, Hotkey, x480 y350 w150 h20 vReloadScriptKey,F10
 Gui, Add, Hotkey,x480 y380 w150 h20 vAbortScriptKey,^Escape
 
 if Read_LoadEditorOnStart = 1
-Gui, Add, CheckBox, x60 y450 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
-else
 Gui, Add, CheckBox, x60 y450 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
-
+else Gui, Add, CheckBox, x60 y450 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
 
 if Read_UpdateEditorOnStart = 1 
 Gui, Add, CheckBox, x70 y470 w150 h20 Checked vUpdateEditorOnStart, Auto Update Editor on start?
-else
-Gui, Add, CheckBox, x70 y470 w150 h20 vUpdateEditorOnStart, Auto Update Editor on start?
-
+else Gui, Add, CheckBox, x70 y470 w150 h20 vUpdateEditorOnStart, Auto Update Editor on start?
 
 if Read_AutoUpdateOnStart = 1
 Gui, Add, CheckBox, x360 y450 w150 h20 Checked vAutoUpdateOnStart, Auto Update on start?
-else
-Gui, Add, CheckBox, x360 y450 w150 h20 vAutoUpdateOnStart, Auto Update on start?
-
+else Gui, Add, CheckBox, x360 y450 w150 h20 vAutoUpdateOnStart, Auto Update on start?
 
 if Read_SilentUpdateOnStart = 1 
 Gui, Add, CheckBox, x370 y470 w150 h20 Checked vSilentUpdateOnStart, Silent Updates?
-else
-Gui, Add, CheckBox, x370 y470 w150 h20 vSilentUpdateOnStart, Silent Updates?
-
-
-;Gui, Submit, NoHide ;this command submits the guis' datas' state
+else Gui, Add, CheckBox, x370 y470 w150 h20 vSilentUpdateOnStart, Silent Updates?
 
 Gui, Add, Button, x50 y520 w200 h50 gButtonExit, Exit
-Gui, Add, Button, x350 y520 w200 h50 gSave, Save
+Gui, Add, Button, x350 y520 w200 h50 gSave, Save and Exit
 
 Gui, Show, w640 h620, RDR Online Quick Macros
 return 
