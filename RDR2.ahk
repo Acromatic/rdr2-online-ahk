@@ -22,7 +22,7 @@ setkeydelay, %KeySendDelay%, %KeyPressDuration%, true
 
 CFG = config.ini
 ; Check for updates?
-CheckForUpdates    	:= true  ; Initial status IS OPTIONAL
+CheckForUpdates    	:= true  ; Initial status IS OPTIONAL - if you change the code set this false until you change your update URL
 IsEnhancedAFKActivated  := false ; Initial status should always be false ( Also mostly passive, don't rebind)
 IsAFKActivated       	:= false ; Initial status should always be false
 IsPatrolAFKActivated 	:= false ; Initial status should always be false
