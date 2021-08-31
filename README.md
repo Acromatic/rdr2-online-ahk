@@ -146,12 +146,6 @@ it also does next to nothing for controller users so there's that. Kind of a big
 
 * **More single player binds** - possibly a seperate script
 
-* **Single file updates** - the script already writes the ini, and readme, eventually it will write the config script, 
-which will write the main script. This way updates delete everything, download only the main script, which creates the rest of the program
-if the main script gets damaged, the configuration script will be able to write it again, which can already write the rest.
-It's a self repair system that makes damaging the script while offline impossible if you only edit one script at a time.
-It's small enough, why not? as I said it's already writing half the contents of the program.
-
 * **Merge with two other projects** - firstly this started as GTAV-Online-AHK Macros, so I want to merge that and update it, because it can share functions
 and because this is AutoHotKey it makes sense to only have to run a single script (which will rebuild itself if needed). It'll also make development easier IMO
 the other project is another macro that uses gosubs and seems to be faster, even though mine would beat his in an auto-clicker war his items are superior
