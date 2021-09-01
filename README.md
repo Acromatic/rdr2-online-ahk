@@ -1,9 +1,9 @@
-
-; v1.0
+﻿; v1.0.1
+; ^ don't remove or alter this line (autoupdate)
 # RDR2-Online-AHK Macros on GitHub
 ([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
 
-*provides hotkeys for several useful features in RDR2:Online, see list further down.
+*A suite of hotkeys for several useful features in RDR2:Online, see list further down.
 *Tested with my own account. If something doesn't work, ask by opening an issue
 *I evidently do big missions most of the time so if you have ideas for useful macros, let me know or just send them in!
 
@@ -13,7 +13,7 @@ AutoHotkey Version: v 1.1.33.02
 Introduction: Everthing in this script can be modified to your needs. BUT BE CAREFUL!
 The Player Menu, Escape Menu, and Tab Menu have different delay times due to various reasons, 
 so be sure to remember this if you are going to change the delay settings. 
-Everything is dialed in so the macro’s are executed as fast and reliable as posible, 
+Everything is dialed in so the macroâ€™s are executed as fast and reliable as posible, 
 maybe even faster than you will be able to do manually.
 (Delays are measured in milliseconds) (1000 milliseconds in 1 second)
 
@@ -24,6 +24,11 @@ If a new (or actually different) version is found it will prompt you to proceed 
 See the README section about using RDR2Config.ahk if you plan on changing settings as the update will replace the script files!
 
 You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
+
+* Updated to v1.0.1 - August 31st 2021
+* Added - MultiSampling to the Mission Failsafe timer 
+* Added - Item Slot now cycles through all items
+* Fixed - Massive speed improvements throughout, initial tuning pass more to come
 
 * Updated to v1.0 - August 2021
 * Added - Initialization File Configuration Editor
@@ -84,42 +89,42 @@ it also does next to nothing for controller users so there's that. Kind of a big
 ## Available macros
 
 * **BeatPoker** - This is a half working poker beating bot! (only tested with singleplayer)
-* **ToggleAutoRun** – Auto run/drive mode, combine this with walk to run/drive at proper full speed
-* **ToggleAutoWalk** – Auto walk/trot mode, ctrl+w to walk, then ctrl+shift to run, tap each to disable seperately (shift and w)
-* **ToggleAutoReverse** – Auto backwards mode, ctrl+s to reverse, tap s to disable (was more useful when I wrote it)
-* **ToggleCooking** – Auto Cooking mode
-* **ToggleEnhancedAFK** – Enhanced AFK mode (this is mostly passive, speeds up j key)
-* **TogglePatrolAFK** – Toggle Patrol mode (this is like gtav macros AFK, just moves left and right, circles on horseback)
-* **ToggleDefensive** – Toggle Defensive mode
-* **ToggleAFK** – Toggle AFK mode (my own version of AFK, uses look-behind to be AFK on carts and stealthly, no more catalog griefers!)
-* **ToggleClicker** – Toggle Auto Clicker mode
-* **CycleMissionFailSafeMode** – Cycle Mission Fail-Safe Mode
-* **Health** – Use the preselected item from this slot (Health tonics slot)
-* **Stamina** – Use the preselected item from this slot (Stamina tonics slot)
-* **Deadeye** – Use the preselected item from this slot (Deadeye tonics slot)
-* **HealCores** – Use the preselected item from this slot (food slot)
-* **WildernessCamp** – Use the preselected item from this slot (camp slot)
-* **ItemSlot** – Use the preselected item from this slot (binocular slot)
-* **HuntingWagon** – Calls the Hunting Cart (nice for when it doesn't like to spawn)
-* **BountyWagon** – Calls the Bounty Cart (nice for when it doesn't like to spawn)
-* **DismissWagons** – Dismisses both Hunting, and Bounty carts
-* **FeedHorse** – Feeds Horse if you're riding one, if not pulls out your left rifle slot
-* **ShowPossesWindow** – Self Explainitory
-* **FormPosse** – Form up the top-most posse, mine is named AAA Team but starting with numbers may also work
-* **QuickRace** – Self Explainitory
-* **MenuSlotTwo** – Opens the Online Menu, Chooses Row 1, Slot 2 (Load to Crimes currently, rockstar changes online menu)
-* **MenuSlotFour** – Opens the Online Menu, Chooses Row 1, Slot 4 (Load to Camp currently, rockstar changes online menu)
-* **VolumeUp** – Opens the settings, Turns the Volume Up
-* **VolumeDown** – Opens the settings, Turns the Volume Down
-* **ReloadScript** – Reloads the Script
-* **AbortScript** – Exit / Shutdown the Script
-* **SoloSession** – Force disconnect the game by freezing the process for 10 seconds (requires pssuspend.exe)
-* **KillGame** – Kill the game process immediately (requires pskill.exe)
+* **ToggleAutoRun** â€“ Auto run/drive mode, combine this with walk to run/drive at proper full speed
+* **ToggleAutoWalk** â€“ Auto walk/trot mode, ctrl+w to walk, then ctrl+shift to run, tap each to disable seperately (shift and w)
+* **ToggleAutoReverse** â€“ Auto backwards mode, ctrl+s to reverse, tap s to disable (was more useful when I wrote it)
+* **ToggleCooking** â€“ Auto Cooking mode
+* **ToggleEnhancedAFK** â€“ Enhanced AFK mode (this is mostly passive, speeds up j key)
+* **TogglePatrolAFK** â€“ Toggle Patrol mode (this is like gtav macros AFK, just moves left and right, circles on horseback)
+* **ToggleDefensive** â€“ Toggle Defensive mode
+* **ToggleAFK** â€“ Toggle AFK mode (my own version of AFK, uses look-behind to be AFK on carts and stealthly, no more catalog griefers!)
+* **ToggleClicker** â€“ Toggle Auto Clicker mode
+* **CycleMissionFailSafeMode** â€“ Cycle Mission Fail-Safe Mode
+* **Health** â€“ Use the preselected item from this slot (Health tonics slot)
+* **Stamina** â€“ Use the preselected item from this slot (Stamina tonics slot)
+* **Deadeye** â€“ Use the preselected item from this slot (Deadeye tonics slot)
+* **HealCores** â€“ Use the preselected item from this slot (food slot)
+* **WildernessCamp** â€“ Use the preselected item from this slot (camp slot)
+* **ItemSlot** â€“ Use the preselected item from this slot (binocular slot)
+* **HuntingWagon** â€“ Calls the Hunting Cart (nice for when it doesn't like to spawn)
+* **BountyWagon** â€“ Calls the Bounty Cart (nice for when it doesn't like to spawn)
+* **DismissWagons** â€“ Dismisses both Hunting, and Bounty carts
+* **FeedHorse** â€“ Feeds Horse if you're riding one, if not pulls out your left rifle slot
+* **ShowPossesWindow** â€“ Self Explainitory
+* **FormPosse** â€“ Form up the top-most posse, mine is named AAA Team but starting with numbers may also work
+* **QuickRace** â€“ Self Explainitory
+* **MenuSlotTwo** â€“ Opens the Online Menu, Chooses Row 1, Slot 2 (Load to Crimes currently, rockstar changes online menu)
+* **MenuSlotFour** â€“ Opens the Online Menu, Chooses Row 1, Slot 4 (Load to Camp currently, rockstar changes online menu)
+* **VolumeUp** â€“ Opens the settings, Turns the Volume Up
+* **VolumeDown** â€“ Opens the settings, Turns the Volume Down
+* **ReloadScript** â€“ Reloads the Script
+* **AbortScript** â€“ Exit / Shutdown the Script
+* **SoloSession** â€“ Force disconnect the game by freezing the process for 10 seconds (requires pssuspend.exe)
+* **KillGame** â€“ Kill the game process immediately (requires pskill.exe)
 
 
 ## Planned Features
 
-* **CycleOutfits** – Cycle through your saved outfits
+* **CycleOutfits** â€“ Cycle through your saved outfits
 
 * **More single player binds** - possibly a seperate script
 
@@ -146,6 +151,9 @@ the cooking, autorun, autowalk, and enhanced AFK. Generally speaking double bind
 * F1, F4, F12 are all used by the game
 * F, C, V, B, N, M, L, H, G, R, E, X, are all used in game, you'll get issues binding these and more
 * Generally speaking don't bind any of these, or with shift because of run, will also toggle the autorun off
+
+Mission Failsafe Mode isn't intended for afk usage even though it has built-in antiAFK, 
+you can now go AFK because the timer is improved, but I wouldn't recommend it.
 
 ## Contributing
 	

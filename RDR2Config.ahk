@@ -1,4 +1,4 @@
-; v1.0
+; v1.0.1
 ; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 
@@ -42,7 +42,7 @@ IfExist, %CFG%
 	    		if (!silentSuccess)
 	      			msgbox, You are running the latest version!`n%update%`nIf something doesn't work please let me know!`nhttps://github.com/Acromatic/rdr2-online-ahk/
 	  } else if (InStr(downloadconfig, "; v") = 1) {
-	  	MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of RDR2Config.ahk has been released!`n%currentVersion% <-- your version`n%update% 	<-- available update`nWould 						you like to update?`nWarning: If you don't use config.ini this might reset all your settings!
+	  	MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of RDR2Config.ahk has been released.`n%currentVersion% <-- your version   %update% <-- available update`nWould 						you like to update?`nWarning: This will replace script files, custom scripts should search "fork" in the script to update from their own fork/repo!
 	    IfMsgBox Yes
 	    {
 	      	FileCopy, downloadconfig.txt, %A_ScriptName%, 1
@@ -53,7 +53,7 @@ IfExist, %CFG%
 	    }
 	    IfMsgBox No
 	    {
-	      	msgbox, This script will NOT be updated!`nHint: Set CheckForUpdates to false to disable automatic checking!
+	      	msgbox, This script will NOT be updated!`nHint: Set AutoUpdateOnStart to false to disable automatic checking!
 	      	FileDelete, downloadconfig.txt
 	    }
 	  } else {
@@ -228,7 +228,7 @@ Gui, Add, CheckBox, x370 y470 w150 h20 Checked vSilentUpdateOnStart, Silent Upda
 else Gui, Add, CheckBox, x370 y470 w150 h20 vSilentUpdateOnStart, Silent Updates?
 
 Gui, Add, Button, x50 y520 w200 h50 gButtonExit, Exit
-Gui, Add, Button, x350 y520 w200 h50 gSave, Save and Exit
+Gui, Add, Button, x350 y520 w200 h50 gSave, Save and Run
 
 Gui, Show, w640 h620, RDR Online Quick Macros
 return 

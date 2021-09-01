@@ -1,4 +1,4 @@
-; v1.0
+; v1.0.1
 ; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 
@@ -16,23 +16,24 @@ IF NOT A_IsAdmin
 }
 
 SetScrollLockState, AlwaysOff
-Global KeySendDelay := 100      	;----> Delay between send key commands.
-Global KeyPressDuration := 80		;----> Duration each key press is held down.
+Global KeySendDelay := 1      	;----> Delay between send key commands.
+Global KeyPressDuration := 90		;----> Duration each key press is held down.
 setkeydelay, %KeySendDelay%, %KeyPressDuration%, true
 
 CFG = config.ini
 ; Check for updates?
-CheckForUpdates    	:= true  ; Initial status IS OPTIONAL - if you change the code set this false until you change your update URL
-IsEnhancedAFKActivated  := false ; Initial status should always be false ( Also mostly passive, don't rebind)
+CheckForUpdates    	     := true  ; Initial status IS OPTIONAL - if you change the code set this false until you change your update URL
+IsEnhancedAFKActivated   := false ; Initial status should always be false ( Also mostly passive, don't rebind)
 IsAFKActivated       	:= false ; Initial status should always be false
 IsPatrolAFKActivated 	:= false ; Initial status should always be false
 IsClickerActivated   	:= false ; Initial status should always be false
 IsCookingActivated    	:= false ; Initial status should always be false
 IsFinaleActivated    	:= false ; Initial status should always be false
-FinaleType              := 0 	 ; Initial status should always be zero
-IsTimerSet              := 0 	 ; Initial status should always be zero
+FinaleType     := 0 	 ; Initial status should always be zero
+IsTimerSet     := 0 	 ; Initial status should always be zero
 TimeMins 		:= 0
 TimeSecs 		:= 0
+LoopCount      := 3     ; Number of times to multisample TimeSecz, values < 3 will break multisampling
 
 ;////// Initialize the GUI for On Screen Display
 CustomColor := "AAAAAA"  ; Can be any RGB color (it will be made transparent below).
@@ -43,7 +44,7 @@ Gui, Add, Text, vMyText cLime, XXXXX YYYYY  ; XX & YY serve to auto-size the win
 
 ; Make all pixels of this color transparent and make the text itself translucent (150):
 WinSet, TransColor, %CustomColor% 150
-SetTimer, UpdateOSD, 40  ; Update minutes less than every second, there are also delays in the function
+SetTimer, UpdateOSD, 10  ; There are also delays in the function
 Gosub, UpdateOSD
 Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
@@ -445,7 +446,7 @@ ToggleClicker:
         break
       }
     }
-  }
+}
 return
 
 ;//////////////////////////    Defensive Toggle     /////////////////////////////
@@ -453,8 +454,8 @@ return
 ToggleDefensive:
 OpenPlayerMenu()
 Send {Up}
-Send {Enter}
-Send {Up 3}
+SendEnter()
+Send {Up 4}
 Send {Left}
 
 ClosePlayerMenu()
@@ -465,9 +466,7 @@ return
 Health:
 OpenTabMenu()
 MouseMove, 766, 354
-ShortDelay()
-Send {Enter}
-
+;SendEnter()
 CloseTabMenu()
 return	
 
@@ -476,9 +475,7 @@ return
 Stamina:
 OpenTabMenu()
 MouseMove, 954, 271
-ShortDelay()
-Send {Enter}
-
+;SendEnter()
 CloseTabMenu()
 return				
 
@@ -487,9 +484,7 @@ return
 Deadeye:
 OpenTabMenu()
 MouseMove, 1147, 350
-ShortDelay()
-Send {Enter}
-
+;SendEnter()
 CloseTabMenu()
 return	
 
@@ -498,9 +493,7 @@ return
 HealCores:
 OpenTabMenu()
 MouseMove, 691, 550
-ShortDelay()
-Send {Enter}
-
+;SendEnter()
 CloseTabMenu()
 return	
 
@@ -509,7 +502,6 @@ return
 WildernessCamp:
 OpenTabMenu()
 MouseMove, 963, 815
-
 CloseTabMenu()
 return	
 
@@ -517,9 +509,8 @@ return
 
 ItemSlot:
 OpenTabMenu()
-Send {4}
 MouseMove, 1231, 548
-
+Send {q 2}
 CloseTabMenu()
 return
 
@@ -529,13 +520,10 @@ HuntingWagon:
 OpenPlayerMenu()
 LongDelay()
 Send {Down 7}
-Send {Enter}
-LongDelay()
+SendEnter()
 Send {Down}
 SendEnterEnter()
 SendEnter()
-
-ShortDelay()
 ClosePlayerMenu()
 return		
 
@@ -545,13 +533,11 @@ BountyWagon:
 OpenPlayerMenu()
 LongDelay()
 Send {Down 7}
-Send {Enter}
-LongDelay()
+SendEnter()
 Send {Down}
 SendEnterEnter()
-Send {Down}{Enter}
-
-ShortDelay()
+Send {Down}
+SendEnter()
 ClosePlayerMenu()
 return	
 
@@ -559,10 +545,11 @@ return
 
 DismissWagons:
 OpenPlayerMenu()
-ShortDelay()
+SuperShortDelay() 
 Send {e}
-ShortDelay()
-Send {Up 3}
+SuperShortDelay()
+Send {Down 7}
+SuperShortDelay()
 Send {Enter}
 LongDelay()
 Send {Down}
@@ -573,8 +560,6 @@ ShortDelay()
 Send {Down}
 ShortDelay()
 Send {Space}
-
-ShortDelay()
 ClosePlayerMenu()
 return	
 
@@ -584,9 +569,6 @@ FeedHorse:
 OpenTabMenu()
 Send {r}
 MouseMove, 691, 550
-ShortDelay()
-Send {Enter}
-
 CloseTabMenu()
 return	
 
@@ -596,8 +578,7 @@ ShowPosses:
 OpenPlayerMenu()
 ShortDelay()
 Send {Down 5}
-LongDelay()
-Send {Enter}
+SendEnter()
 return	
 
 ;/////////////////////////          Form Posse       ////////////////////////////
@@ -606,14 +587,8 @@ FormPosse:     ;/ Name it with AAA's or something and keep it at the top of the 
 OpenPlayerMenu()
 LongDelay()
 Send {Down 5}
-LongDelay()
-Send {Enter}
-LongDelay()
-Send {Enter}
-LongDelay()
-Send {Enter}
-ShortDelay()
-
+SendEnterEnter()
+SendEnter()
 ClosePlayerMenu()
 return	
 
@@ -725,7 +700,7 @@ return
 ; Toggle Cooking On - Ctrl+Enter to auto cook ( Last thing is brew coffee, x toggles off - reloads script)
 
 PassiveToggleCookingOff:
-  if (IsCookingActivated) {
+if (IsCookingActivated) {
   IsCookingActivated := !IsCookingActivated
 reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
 }
@@ -734,36 +709,25 @@ return
 PassiveToggleCookingOn:
   IsCookingActivated := !IsCookingActivated
 
-  if (IsCookingActivated) {
-    Loop{
-	LongDelay()
-	Send {Enter up}
-	Send {Enter}
-	LongDelay()
-	Send {Space down}  ;/// For single player
-	LongDelay()
-	Send {Space up}    ;/// For single player
-	Send {r}           ;/// For single player
-	Send {Space}
-	Send {Enter down}
-	LongDelay()
-	Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
-	Send {Down}
-	LongDelay()
-	Send {Enter up}
-	Send {Enter}
-	Send {Enter up}
-
-;	if (!IsCookingActivated) {
-;		;ToolTip, Cooking Mode Disabled,0,0
-;		ShortDelay()
-;		Send {Space up} 
-;		ShortDelay()
-;		Send {Enter up}
-;		break
-;   		}
+if (IsCookingActivated) {
+	Loop{
+		LongDelay()
+		Send {Enter up}
+		Send {Enter}
+		LongDelay()
+		Send {Space down}  ;/// For single player
+		LongDelay()
+		Send {Space up}    ;/// For single player
+		Send {r}           ;/// For single player
+		Send {Space}
+		Send {Enter down}
+		LongDelay()
+		Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
+		Send {Down}
+		LongDelay()
+		Send {Enter up}
 	}
-    }
+}
 return
 
 ;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
@@ -771,32 +735,33 @@ return
 BeatPoker:  ;// singleplayer
   IsBeatPokerActivated := !IsBeatPokerActivated
 
-  if (IsBeatPokerActivated) {
+if (IsBeatPokerActivated) {
      Loop{
-	ShortDelay()
-	Send {Enter}
-	LongDelay()
-	Send {a down}
-	ShortDelay()
-	Send {Enter}
-	Send {g}
-	SuperLongDelay()
-	Send {Enter}
-	ShortDelay()
-	Send {a up}
-	Send {Up 30}
-	ShortDelay()
-	Send {RButton down}
-	LongDelay()
-	Send {Enter}
-	ShortDelay()
-	Send {RButton up}
-	ShortDelay()
-
-      if (!IsBeatPokerActivated) {
+		ShortDelay()
+		Send {Enter}
+		LongDelay()
+		Send {a down}
+		ShortDelay()
+		Send {Enter}
+		Send {g}
+		SuperLongDelay()
+		Send {Enter}
+		ShortDelay()
+		Send {a up}
+		Send {Up 30}
+		ShortDelay()
+		Send {RButton down}
+		LongDelay()
+		LongDelay()
+		Send {Enter}
+		ShortDelay()
+		Send {RButton up}
+		ShortDelay()
+		
+		if (!IsBeatPokerActivated) {
    	;ToolTip, BeatPoker Disabled,0,0
-        break
-     	 }
+			break
+		}
 	}
 }
 return	
@@ -865,29 +830,25 @@ ShortDelay()
 return
 
 CloseTabMenu(){
-Send {F4 up}
+	Send {F4 up}
 }
 return
 
 ;////// player menu - L menu on PC
 OpenPlayerMenu(){
-ShortDelay()
-turnCapslockOff()
-Send {l}
-ShortDelay()
+	turnCapslockOff()
+	Send {l}
+	LongDelay()
 } 
 return
 
 ClosePlayerMenu(){
-LongDelay()
-Send {ESC}
-ShortDelay()
-Send {ESC}
-ShortDelay()
-Send {ESC}
-ShortDelay()
-Send {ESC 2} 
-ShortDelay()
+	Loop, 4
+	{
+		LongDelay()
+		Send {ESC}
+		Send {ESC up}
+	}
 }
 return
 
@@ -896,7 +857,7 @@ EscapeMenu(){
 ;turnCapslockOff()
 ;ShortDelay()
 Send {ESC}
-ShortDelay()
+SuperShortDelay()
 }
 return
 
@@ -937,185 +898,196 @@ return
 ;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 UpdateOSD:
 {
-#IfWinActive, Red Dead Redemption 2  
-{
-	if (IsFinaleActivated)
+	#IfWinActive, Red Dead Redemption 2 
 	{
-		if(FinaleType<=3){
-			
-			if(IsTimerSet=0){
-			TimeMins = 12
- 			TimeSecs = 54
-			IsTimerSet=1
-			}
-			LongDelay()
-			ShortDelay()
-			TimeSecs--
-			
-				if(TimeSecs<1){
+		if (IsFinaleActivated)
+		{
+			if(FinaleType<=3)
+			{
+				if(IsTimerSet=0)
+				{
+					TimeMins = 12
+					TimeSecs = 54
+					IsTimerSet=1
+				}
+				LongDelay()
+				ShortDelay()
+				TimeSecs--
+				
+				if(TimeSecs<1)
+				{
 					TimeMins--
 					TimeSecs=59			
-				
-				if(TimeMins<0){			
-
-					;/// dead drop variant 
-				if(FinaleType=1){
-				Send {r down}
-				LongDelay()
-				Send {r up}
-				reload
-				}
-					;/// contact drop variant 
-				if(FinaleType=2){
-				Send {RButton down}
-				ShortDelay()
-				Send {r down}
-				LongDelay()
-				Send {r up}
-				Send {RButton up}
-				reload
-				}
-					;/// drive in (bounty) variant 
-				if(FinaleType=3){
-				Send {w down}
-				Send {LShift down}
-				SuperLongDelay()
-				Send {w up}
-				Send {LShift up}
-				reload
-				}
-
-				}		
+					
+					if(TimeMins<0)
+					{			
+							;/// dead drop variant 
+						if(FinaleType=1){
+							Send {r down}
+							LongDelay()
+							Send {r up}
+							reload
+						}
+							;/// contact drop variant 
+						if(FinaleType=2){
+							Send {RButton down}
+							ShortDelay()
+							Send {r down}
+							LongDelay()
+							Send {r up}
+							Send {RButton up}
+							reload
+						}
+							;/// drive in (bounty) variant 
+						if(FinaleType=3){
+							Send {w down}
+							Send {LShift down}
+							SuperLongDelay()
+							Send {w up}
+							Send {LShift up}
+							reload
+						}
+					}		
 				}
 					;////// Anti-AFK
-				if(TimeSecs=20){
+				if TimeSecs = 30 
+				{
 					Send {c down}
 					LongDelay()
 					Send {c up}
-					}
-
+				}
 					;/// Digit Formatting
-				if(TimeMins<10 && TimeSecs<10){
-					GuiControl,, MyText, 0%TimeMins%:0%TimeSecs%
-				return
-				}
-				
-				if(TimeSecs<10){
-					GuiControl,, MyText, %TimeMins%:0%TimeSecs%
-				return
-				}
-				
-				if(TimeMins<10){
-					GuiControl,, MyText, 0%TimeMins%:%TimeSecs%
-				return
-				}
-				
+				IfNotInString, TimeSecs, "0"
+				{
+					if TimeSecs < 10 
+						TimeSecs = 0%TimeSecs%
+				}			
+				IfNotInString, TimeMins, "0"
+				{
+					if TimeMins < 10 
+						TimeMins = 0%TimeMins%
+				}			
 				GuiControl,, MyText, %TimeMins%:%TimeSecs%
-			return
+				return
 			}
-			else{
-			
-				;////// Update Minutes
-			Clip0 = %ClipBoardAll%
-			Clipboard = ; Erase clipboard
-			Run, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "925 52 957 76" --clipboard --whitelist "0123456789" ,,hide
-			sleep, 500
-			ClipBoard = %ClipBoard%       ; Convert to text
-			ShortDelay()	
-			TimeMinz := RegExReplace(ClipBoard, "\D")
-			Clipboard = %Clip0%              ; Restore clipboard
-			Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
-			LongDelay()
-
-				;////// Now Update Seconds
-			Clip0 = %ClipBoardAll%
-			Clipboard = ; Erase clipboard
-			Run, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "962 52 993 76" --clipboard --whitelist "0123456789" ,,hide
-			sleep, 500
-			ClipBoard = %ClipBoard%       ; Just the text
-			ShortDelay()	
-			TimeSecz := RegExReplace(ClipBoard, "\D")   ; Filter only digits
-			Clipboard = %Clip0%              ; Restore clipboard
-			Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
-	
-			;//////  Subtract seconds we use to capture data, and also
-			;/// predict and manually replace timer when it reaches one or zero
-			;/// increase reliability, reduce false timer results
-			if(TimeSecz>=1){
-				TimeSecz-=1
-			}
-			else{
-				TimeSecz=59
-			}	
-
-			if(TimeMinz<1){
-
-			if(TimeSecz<=10){
-					;/// Drop-only
-				if(FinaleType=4){
-				Send {r down}
-				LongDelay()
-				Send {r up}
-				reload
+			else
+			{
+				;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
+				Loop, 3
+				{
+						;////// Update Minutes
+					Clip0 = %ClipBoardAll%
+					Clipboard = ; Erase clipboard
+					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "927 52 958 76" --clipboard --whitelist "0123456789",, hide
+					ClipBoard = %ClipBoard%       ; Convert to text
+					TimeMinz := RegExReplace(ClipBoard, "\D")
+					Clipboard = %Clip0%              ; Restore clipboard
+					Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
+					
+					if TimeMinz - LastTimeMinz is between 1 and 5
+						break
+					else
+						LastTimeMinz = TimeMinz
 				}
-					;/// Drop-to-Contact
-				if(FinaleType=5){
-				Send {RButton down}
-				ShortDelay()
-				Send {r down}
-				LongDelay()
-				Send {r up}
-				Send {RButton up}
-				reload
+				;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
+				Loop, 3
+				{
+					;////// Now Update Seconds
+					Clip0 = %ClipBoardAll%
+					Clipboard = ; Erase clipboard
+					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "962 52 993 76" --clipboard --whitelist "0123456789",, hide
+					ClipBoard = %ClipBoard%       ; Just the text
+					TimeSecz := RegExReplace(ClipBoard, "\D")   ; Filter only digits
+					Clipboard = %Clip0%              ; Restore clipboard
+					Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
+					
+					if LastTimeSecz - TimeSecz is between 1 and 5
+						break
+					else
+						LastTimeSecz = TimeSecz
 				}
-					;/// Drive-in/Walk-in
-				if(FinaleType=6){
-				Send {w down}
-				Send {LShift down}
-				SuperLongDelay()
-				Send {w up}
-				Send {LShift up}
-				reload
+					;//////  Subtract seconds we use to capture data, and also
+				;/// predict and manually replace timer when it reaches one or zero
+				;/// increase reliability, reduce false timer results
+				if TimeSecz >= 2 
+					TimeSecz -= 2
+				else
+					TimeSecz = 59
+				
+				if TimeMinz < 1 
+				{
+					if TimeSecz <= 10 
+					{
+							;/// Drop-only
+						if FinaleType = 4 
+						{
+							Send {r down}
+							LongDelay()
+							Send {r up}
+							reload
+						}
+							;/// Drop-to-Contact
+						if FinaleType = 5 
+						{
+							Send {RButton down}
+							ShortDelay()
+							Send {r down}
+							LongDelay()
+							Send {r up}
+							Send {RButton up}
+							reload
+						}
+							;/// Drive-in/Walk-in
+						if FinaleType = 6 
+						{
+							Send {w down}
+							Send {LShift down}
+							SuperLongDelay()
+							Send {w up}
+							Send {LShift up}
+							reload
+						}
+					}
 				}
-			}
 			}
 				;////// Anti-AFK, again but different 
 			;/// the catch-up timer skips some seconds we'll do a range instead
-			if TimeSecz between 20 and 25{
+			if TimeSecz between 30 and 33
+			{
 				Send {c down}
 				LongDelay()
 				Send {c up}
-				}
-
+			}
 				;/// Digit Formatting
-;				if(TimeSecz<10){
-;					IfNotInString, TimeSecz, "0"
-;					{
-;						TimeSecz=0%TimeSecz%
-;					}				
-;				}
-;				
-;				if(TimeMinz<10){
-;					IfNotInString, TimeMinz, "0"
-;					{
-;						TimeMinz=0%TimeMinz%
-;					}			
-;				}
-			
+			IfNotInString, TimeSecz, "0" 
+			{
+				if(TimeSecz<10)
+				{					
+					TimeSecz=0%TimeSecz%
+				}
+			}				
+			IfNotInString, TimeMinz, "0" 
+			{
+				if(TimeMinz<10)
+				{
+					TimeMinz=0%TimeMinz%
+				}
+			}			
 			GuiControl,, MyText, %TimeMinz%:%TimeSecz%
 			return
 		}
-	else{  			
-		FinaleType=0
-		IsTimerSet=0
-		TimeMins = 0
-		TimeSecs = 0
-		TimeMinz = 0
-		TimeSecz = 0
-		Gui, Hide
-	}
-}
-return
-}
+		else 
+		{  			
+			FinaleType=0
+			IsTimerSet=0
+			TimeMins = 0
+			TimeSecs = 0
+			TimeMinz = 0
+			TimeSecz = 0
+			Gui, Hide
+		} 
+	} ;//// end ifwin
+	return
+} ;//// end UpdateOSD
 
 
