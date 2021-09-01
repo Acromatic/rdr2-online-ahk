@@ -1,6 +1,5 @@
 
 ; v1.0
-; ^ don't remove or alter this line (autoupdate)
 # RDR2-Online-AHK Macros on GitHub
 ([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
 
