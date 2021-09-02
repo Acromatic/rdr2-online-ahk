@@ -28,8 +28,8 @@ IsAFKActivated       	:= false ; Initial status should always be false
 IsPatrolAFKActivated 	:= false ; Initial status should always be false
 IsClickerActivated   	:= false ; Initial status should always be false
 IsCookingActivated    	:= false ; Initial status should always be false
-IsFinaleActivated    	:= false ; Initial status should always be false
-FinaleType     := 0 	 ; Initial status should always be zero
+IsMissionFailSafeActivated    	:= false ; Initial status should always be false
+MissionFailSafeType     := 0 	 ; Initial status should always be zero
 IsTimerSet     := 0 	 ; Initial status should always be zero
 TimeMins 		:= 0
 TimeSecs 		:= 0
@@ -83,7 +83,7 @@ IniWrite, k, %CFG%, Hotkeys, ToggleAFK
 
 IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
 IniWrite, z, %CFG%, Hotkeys, ToggleClicker
-IniWrite, F9, %CFG%, Hotkeys, ToggleFinale
+IniWrite, F9, %CFG%, Hotkeys, ToggleMissionFailSafe
 
 IniWrite, NumpadHome , %CFG%, Hotkeys, Health
 IniWrite, NumpadUp , %CFG%, Hotkeys, Stamina
@@ -116,49 +116,49 @@ sleep, 2000
 IfExist, %CFG%
 { 
 ;/////////////////   Settings     ///////////////
-IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
-IniRead, Read_UpdateEditorOnStart, %CFG%, Settings, UpdateEditorOnStart
-IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
-IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
-
+	IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
+	IniRead, Read_UpdateEditorOnStart, %CFG%, Settings, UpdateEditorOnStart
+	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
+	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
+	
 ;/////////////////// Singleplayer ONLY binds ///////////////
-IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
-
+	IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
+	
 ;//////////////////  Online Macros  ////////////////////
-IniRead, Read_PassiveToggleCookingOnKey, %CFG%,Hotkeys,PassiveToggleCookingOn
-IniRead, Read_PassiveToggleCookingOffKey, %CFG%,Hotkeys,PassiveToggleCookingOff
-
-IniRead, Read_ToggleEnhancedAFKKey, %CFG%,Hotkeys,ToggleEnhancedAFK
-IniRead, Read_TogglePatrolAFKKey, %CFG%,Hotkeys,TogglePatrolAFK
-IniRead, Read_ToggleAFKKey, %CFG%,Hotkeys,ToggleAFK
-IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
-IniRead, Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
-IniRead, Read_ToggleFinaleKey, %CFG%,Hotkeys,ToggleFinale
-
-IniRead, Read_HealthKey, %CFG%, Hotkeys,Health
-IniRead, Read_StaminaKey, %CFG%, Hotkeys,Stamina
-IniRead, Read_DeadeyeKey, %CFG%, Hotkeys,Deadeye
-IniRead, Read_HealCoresKey, %CFG%, Hotkeys,HealCores
-
-IniRead, Read_WildernessCampKey, %CFG%, Hotkeys,WildernessCamp
-IniRead, Read_ItemSlotKey, %CFG%, Hotkeys,ItemSlot
-
-IniRead, Read_HuntingWagonKey, %CFG%, Hotkeys,HuntingWagon
-IniRead, Read_BountyWagonKey, %CFG%, Hotkeys,BountyWagon
-IniRead, Read_DismissWagonsKey, %CFG%, Hotkeys,DismissWagons
-IniRead, Read_FeedHorseKey, %CFG%, Hotkeys,FeedHorse
-
-IniRead, Read_ShowPossesKey, %CFG%, Hotkeys,ShowPosses
-IniRead, Read_FormPosseKey, %CFG%, Hotkeys,FormPosse
-IniRead, Read_QuickRaceKey, %CFG%, Hotkeys,QuickRace
-IniRead, Read_MenuSlotTwoKey, %CFG%, Hotkeys,MenuSlotTwo
-IniRead, Read_MenuSlotFourKey, %CFG%, Hotkeys,MenuSlotFour
-
-IniRead, Read_VolumeDownKey, %CFG%, Hotkeys,VolumeDown
-IniRead, Read_VolumeUpKey, %CFG%, Hotkeys,VolumeUp
-IniRead, Read_ReloadScriptKey, %CFG%, Hotkeys,ReloadScript
-IniRead, Read_AbortScriptKey, %CFG%, Hotkeys,AbortScript
-
+	IniRead, Read_PassiveToggleCookingOnKey, %CFG%,Hotkeys,PassiveToggleCookingOn
+	IniRead, Read_PassiveToggleCookingOffKey, %CFG%,Hotkeys,PassiveToggleCookingOff
+	
+	IniRead, Read_ToggleEnhancedAFKKey, %CFG%,Hotkeys,ToggleEnhancedAFK
+	IniRead, Read_TogglePatrolAFKKey, %CFG%,Hotkeys,TogglePatrolAFK
+	IniRead, Read_ToggleAFKKey, %CFG%,Hotkeys,ToggleAFK
+	IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
+	IniRead, Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
+	IniRead, Read_ToggleMissionFailSafeKey, %CFG%,Hotkeys,ToggleMissionFailSafe
+	
+	IniRead, Read_HealthKey, %CFG%, Hotkeys,Health
+	IniRead, Read_StaminaKey, %CFG%, Hotkeys,Stamina
+	IniRead, Read_DeadeyeKey, %CFG%, Hotkeys,Deadeye
+	IniRead, Read_HealCoresKey, %CFG%, Hotkeys,HealCores
+	
+	IniRead, Read_WildernessCampKey, %CFG%, Hotkeys,WildernessCamp
+	IniRead, Read_ItemSlotKey, %CFG%, Hotkeys,ItemSlot
+	
+	IniRead, Read_HuntingWagonKey, %CFG%, Hotkeys,HuntingWagon
+	IniRead, Read_BountyWagonKey, %CFG%, Hotkeys,BountyWagon
+	IniRead, Read_DismissWagonsKey, %CFG%, Hotkeys,DismissWagons
+	IniRead, Read_FeedHorseKey, %CFG%, Hotkeys,FeedHorse
+	
+	IniRead, Read_ShowPossesKey, %CFG%, Hotkeys,ShowPosses
+	IniRead, Read_FormPosseKey, %CFG%, Hotkeys,FormPosse
+	IniRead, Read_QuickRaceKey, %CFG%, Hotkeys,QuickRace
+	IniRead, Read_MenuSlotTwoKey, %CFG%, Hotkeys,MenuSlotTwo
+	IniRead, Read_MenuSlotFourKey, %CFG%, Hotkeys,MenuSlotFour
+	
+	IniRead, Read_VolumeDownKey, %CFG%, Hotkeys,VolumeDown
+	IniRead, Read_VolumeUpKey, %CFG%, Hotkeys,VolumeUp
+	IniRead, Read_ReloadScriptKey, %CFG%, Hotkeys,ReloadScript
+	IniRead, Read_AbortScriptKey, %CFG%, Hotkeys,AbortScript
+	
 }
 
 if(Read_AutoUpdateOnStart=1)
@@ -182,7 +182,7 @@ Hotkey, %Read_TogglePatrolAFKKey%, TogglePatrolAFK
 Hotkey, %Read_ToggleAFKKey%, ToggleAFK
 Hotkey, %Read_ToggleDefensiveKey%, ToggleDefensive
 Hotkey, %Read_ToggleClickerKey%, ToggleClicker
-Hotkey, %Read_ToggleFinaleKey%, ToggleFinale
+Hotkey, %Read_ToggleMissionFailSafeKey%, ToggleMissionFailSafe
 
 Hotkey, %Read_HealthKey%, Health
 Hotkey, %Read_StaminaKey%, Stamina
@@ -759,7 +759,7 @@ if (IsBeatPokerActivated) {
 		ShortDelay()
 		
 		if (!IsBeatPokerActivated) {
-   	;ToolTip, BeatPoker Disabled,0,0
+			;ToolTip, BeatPoker Disabled,0,0
 			break
 		}
 	}
@@ -769,21 +769,25 @@ return
 ;//////////////////////////////////      Script Functions      ////////////////////////////////////////
 
 ReloadScript:
-
-	IsFinaleActivated=false
+{
+	IsMissionFailSafeActivated=false
 	IsTimerSet=0
-	TimeMins = 00
-	TimeSecs = 00
-	TimeMinz = 00
-	TimeSecz = 00
-	FinaleType=0
-	GuiControl,, MyText, Finale Mode: %FinaleType%
+	TimeMins = 0
+	TimeSecs = 0
+	TimeMinz = 0
+	TimeSecz = 0
+	MissionFailSafeType=0
+	GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType%
 	sleep, 1000
 	reload
+	ExitApp
+}
 return   
 
 AbortScript:
+{
 	ExitApp
+}
 return 
 
 ;////// Delay-Functions
@@ -877,21 +881,22 @@ return
 
 ;//////////////////      Mission Failsafe Mode    ///////////////////////////
 ;/////// Cycle the Mission Failsafe Modes ///////
-ToggleFinale:
+ToggleMissionFailSafe:
 {
-	if(FinaleType>=6){       ;////// off, drop-only, give-to-contact, and walk-in Finale Types 4-6 respectively
-  	IsFinaleActivated := !IsFinaleActivated
-    	FinaleType=0
+	if(MissionFailSafeType>=6){       ;////// off, drop-only, give-to-contact, and walk-in MissionFailSafe Types 4-6 respectively
+		IsMissionFailSafeActivated := !IsMissionFailSafeActivated
+		MissionFailSafeType=0
 	}
 	else
 	{
-		if(!IsFinaleActivated){
-		IsFinaleActivated=true
-		Gui, Show, x910 y70 NoActivate
+		if(!IsMissionFailSafeActivated){
+			IsMissionFailSafeActivated=true
+			Gui, Show, x910 y70 NoActivate
+			
+			
 		}
-	FinaleType++
+		MissionFailSafeType++
 	}
-	GuiControl,, MyText, Finale Mode: %FinaleType%
 }
 return 
 
@@ -900,9 +905,9 @@ UpdateOSD:
 {
 	#IfWinActive, Red Dead Redemption 2 
 	{
-		if (IsFinaleActivated)
+		if (IsMissionFailSafeActivated)
 		{
-			if(FinaleType<=3)
+			if(MissionFailSafeType<=3)
 			{
 				if(IsTimerSet=0)
 				{
@@ -914,22 +919,27 @@ UpdateOSD:
 				ShortDelay()
 				TimeSecs--
 				
+				
+				
 				if(TimeSecs<1)
 				{
 					TimeMins--
 					TimeSecs=59			
 					
-					if(TimeMins<0)
-					{			
-							;/// dead drop variant 
-						if(FinaleType=1){
+						;/// dead drop variant 
+					if(MissionFailSafeType=1){
+						GuiControl,, MyText, MissionFailSafe Mode: %FinaleType% Dead Drop
+						if(TimeMins<0){
 							Send {r down}
 							LongDelay()
 							Send {r up}
 							reload
 						}
-							;/// contact drop variant 
-						if(FinaleType=2){
+					}
+						;/// contact drop variant 
+					if(MissionFailSafeType=2){
+						GuiControl,, MyText, MissionFailSafe Mode: %FinaleType% Contact Drop
+						if(TimeMins<0){
 							Send {RButton down}
 							ShortDelay()
 							Send {r down}
@@ -938,8 +948,11 @@ UpdateOSD:
 							Send {RButton up}
 							reload
 						}
-							;/// drive in (bounty) variant 
-						if(FinaleType=3){
+					}
+						;/// drive in (bounty) variant 
+					if(MissionFailSafeType=3){
+						GuiControl,, MyText, MissionFailSafe Mode: %FinaleType% Drive In/Walk In
+						if(TimeMins<0){
 							Send {w down}
 							Send {LShift down}
 							SuperLongDelay()
@@ -947,7 +960,7 @@ UpdateOSD:
 							Send {LShift up}
 							reload
 						}
-					}		
+					}
 				}
 					;////// Anti-AFK
 				if TimeSecs = 30 
@@ -1019,7 +1032,7 @@ UpdateOSD:
 					if TimeSecz <= 10 
 					{
 							;/// Drop-only
-						if FinaleType = 4 
+						if MissionFailSafeType = 4 
 						{
 							Send {r down}
 							LongDelay()
@@ -1027,7 +1040,7 @@ UpdateOSD:
 							reload
 						}
 							;/// Drop-to-Contact
-						if FinaleType = 5 
+						if MissionFailSafeType = 5 
 						{
 							Send {RButton down}
 							ShortDelay()
@@ -1038,7 +1051,7 @@ UpdateOSD:
 							reload
 						}
 							;/// Drive-in/Walk-in
-						if FinaleType = 6 
+						if MissionFailSafeType = 6 
 						{
 							Send {w down}
 							Send {LShift down}
@@ -1078,7 +1091,7 @@ UpdateOSD:
 		}
 		else 
 		{  			
-			FinaleType=0
+			MissionFailSafeType=0
 			IsTimerSet=0
 			TimeMins = 0
 			TimeSecs = 0
