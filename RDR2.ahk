@@ -60,16 +60,6 @@ Gosub, UpdateOSD
 
 IfNotExist,%CFG%
 {
-	IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
-	IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
-	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
-	IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
-	
-	IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
-	IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
-	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
-	IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
-	
 	
 ;/////////////////   Settings     ///////////////
 	
@@ -82,7 +72,7 @@ IfNotExist,%CFG%
 	
 	IniWrite, F11 , %CFG%, SinglePlayerHotkeys, BeatPoker
 	
-;//////////////////  Online Macros  ////////////////////
+;//////////////////  Other Macros  ////////////////////
 	
 	IniWrite, ^Enter, %CFG%, Hotkeys, PassiveToggleCookingOn
 	IniWrite, x, %CFG%, Hotkeys, PassiveToggleCookingOff
@@ -231,10 +221,10 @@ Hotkey, %Read_VolumeUpKey%, VolumeUp
 Hotkey, %Read_ReloadScriptKey%, ReloadScript
 Hotkey, %Read_AbortScriptKey%, AbortScript
 
-Hotkey, %Read_TimerAddMinutesKey%, %CFG%, Hotkeys, TimerAddMinutes
-Hotkey, %Read_TimerSubMinutesKey%, %CFG%, Hotkeys, TimerSubMinutes
-Hotkey, %Read_TimerResetMinutesKey%, %CFG%, Hotkeys, TimerResetMinutes
-Hotkey, %Read_TimerResetSecondsKey%, %CFG%, Hotkeys, TimerResetSeconds
+Hotkey, %Read_TimerAddMinutesKey%, TimerAddMinutes
+Hotkey, %Read_TimerSubMinutesKey%, TimerSubMinutes
+Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
+Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
 
 ; ==============
 ; === UPDATE ===
