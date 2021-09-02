@@ -46,7 +46,7 @@ Gui, Add, Text, vMyText cLime, XXXXX YYYYY  ; XX & YY serve to auto-size the win
 WinSet, TransColor, %CustomColor% 150
 SetTimer, UpdateOSD, 10  ; There are also delays in the function
 Gosub, UpdateOSD
-Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently active window.
+;Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
 ;////// another gui script snippet
 ;Gui Color, 0xFF0000
@@ -60,55 +60,69 @@ Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently a
 
 IfNotExist,%CFG%
 {
-
+	IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
+	IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
+	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
+	IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
+	
+	IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
+	IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
+	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
+	IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
+	
+	
 ;/////////////////   Settings     ///////////////
-
-IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
-IniWrite, 1, %CFG%, Settings, UpdateEditorOnStart
-IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
-IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
-
+	
+	IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
+	IniWrite, 1, %CFG%, Settings, UpdateEditorOnStart
+	IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
+	IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
+	
 ;/////////////////// Singleplayer ONLY binds ///////////////
-
-IniWrite, F11 , %CFG%, SinglePlayerHotkeys, BeatPoker
-
+	
+	IniWrite, F11 , %CFG%, SinglePlayerHotkeys, BeatPoker
+	
 ;//////////////////  Online Macros  ////////////////////
-
-IniWrite, ^Enter, %CFG%, Hotkeys, PassiveToggleCookingOn
-IniWrite, x, %CFG%, Hotkeys, PassiveToggleCookingOff
-
-IniWrite, j, %CFG%, Hotkeys, ToggleEnhancedAFK
-IniWrite, o, %CFG%, Hotkeys, TogglePatrolAFK
-IniWrite, k, %CFG%, Hotkeys, ToggleAFK
-
-IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
-IniWrite, z, %CFG%, Hotkeys, ToggleClicker
-IniWrite, F9, %CFG%, Hotkeys, ToggleMissionFailSafe
-
-IniWrite, NumpadHome , %CFG%, Hotkeys, Health
-IniWrite, NumpadUp , %CFG%, Hotkeys, Stamina
-IniWrite, NumpadPgUp , %CFG%, Hotkeys, Deadeye
-IniWrite, NumpadLeft , %CFG%, Hotkeys, HealCores
-
-IniWrite, NumpadClear , %CFG%, Hotkeys, WildernessCamp
-IniWrite, NumpadRight , %CFG%, Hotkeys, ItemSlot
-
-IniWrite, NumpadEnd , %CFG%, Hotkeys, HuntingWagon
-IniWrite, NumpadDown , %CFG%, Hotkeys, BountyWagon
-IniWrite, NumpadPgDn , %CFG%, Hotkeys, DismissWagons
-IniWrite, NumpadIns , %CFG%, Hotkeys, FeedHorse
-
-IniWrite, t, %CFG%, Hotkeys, ShowPosses
-IniWrite, y, %CFG%, Hotkeys, FormPosse
-IniWrite, F6, %CFG%, Hotkeys, QuickRace
-IniWrite, NumpadDiv , %CFG%, Hotkeys, MenuSlotTwo
-IniWrite, NumpadMult , %CFG%, Hotkeys, MenuSlotFour
-
-IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
-IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
-IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
-IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
-
+	
+	IniWrite, ^Enter, %CFG%, Hotkeys, PassiveToggleCookingOn
+	IniWrite, x, %CFG%, Hotkeys, PassiveToggleCookingOff
+	
+	IniWrite, j, %CFG%, Hotkeys, ToggleEnhancedAFK
+	IniWrite, o, %CFG%, Hotkeys, TogglePatrolAFK
+	IniWrite, k, %CFG%, Hotkeys, ToggleAFK
+	
+	IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
+	IniWrite, z, %CFG%, Hotkeys, ToggleClicker
+	IniWrite, F9, %CFG%, Hotkeys, ToggleMissionFailSafe
+	
+	IniWrite, NumpadHome , %CFG%, Hotkeys, Health
+	IniWrite, NumpadUp , %CFG%, Hotkeys, Stamina
+	IniWrite, NumpadPgUp , %CFG%, Hotkeys, Deadeye
+	IniWrite, NumpadLeft , %CFG%, Hotkeys, HealCores
+	
+	IniWrite, NumpadClear , %CFG%, Hotkeys, WildernessCamp
+	IniWrite, NumpadRight , %CFG%, Hotkeys, ItemSlot
+	
+	IniWrite, NumpadEnd , %CFG%, Hotkeys, HuntingWagon
+	IniWrite, NumpadDown , %CFG%, Hotkeys, BountyWagon
+	IniWrite, NumpadPgDn , %CFG%, Hotkeys, DismissWagons
+	IniWrite, NumpadIns , %CFG%, Hotkeys, FeedHorse
+	
+	IniWrite, t, %CFG%, Hotkeys, ShowPosses
+	IniWrite, y, %CFG%, Hotkeys, FormPosse
+	IniWrite, F6, %CFG%, Hotkeys, QuickRace
+	IniWrite, NumpadDiv , %CFG%, Hotkeys, MenuSlotTwo
+	IniWrite, NumpadMult , %CFG%, Hotkeys, MenuSlotFour
+	
+	IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
+	IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
+	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
+	IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
+	
+	IniWrite, Up    , %CFG%, Hotkeys, TimerAddMinutes
+	IniWrite, Down  , %CFG%, Hotkeys, TimerSubMinutes
+	IniWrite, Left  , %CFG%, Hotkeys, TimerResetMinutes
+	IniWrite, Right , %CFG%, Hotkeys, TimerResetSeconds
 }
 
 sleep, 2000
@@ -159,6 +173,10 @@ IfExist, %CFG%
 	IniRead, Read_ReloadScriptKey, %CFG%, Hotkeys,ReloadScript
 	IniRead, Read_AbortScriptKey, %CFG%, Hotkeys,AbortScript
 	
+	IniRead, Read_TimerAddMinutesKey, %CFG%, Hotkeys, TimerAddMinutes
+	IniRead, Read_TimerSubMinutesKey, %CFG%, Hotkeys, TimerSubMinutes
+	IniRead, Read_TimerResetMinutesKey, %CFG%, Hotkeys, TimerResetMinutes
+	IniRead, Read_TimerResetSecondsKey, %CFG%, Hotkeys, TimerResetSeconds
 }
 
 if(Read_AutoUpdateOnStart=1)
@@ -173,6 +191,11 @@ if(Read_LoadEditorOnStart=1)
 {
 	RunWait, RDR2Config.ahk
 }
+;/////////////////// Singleplayer ONLY binds ///////////////
+
+Hotkey, %Read_BeatPokerKey%, BeatPoker
+
+;/////////////////// Other binds ///////////////
 
 Hotkey, %Read_PassiveToggleCookingOnKey%, PassiveToggleCookingOn
 Hotkey, %Read_PassiveToggleCookingOffKey%, PassiveToggleCookingOff
@@ -208,9 +231,10 @@ Hotkey, %Read_VolumeUpKey%, VolumeUp
 Hotkey, %Read_ReloadScriptKey%, ReloadScript
 Hotkey, %Read_AbortScriptKey%, AbortScript
 
-;/////////////////// Singleplayer ONLY binds ///////////////
-
-Hotkey, %Read_BeatPokerKey%, BeatPoker
+Hotkey, %Read_TimerAddMinutesKey%, %CFG%, Hotkeys, TimerAddMinutes
+Hotkey, %Read_TimerSubMinutesKey%, %CFG%, Hotkeys, TimerSubMinutes
+Hotkey, %Read_TimerResetMinutesKey%, %CFG%, Hotkeys, TimerResetMinutes
+Hotkey, %Read_TimerResetSecondsKey%, %CFG%, Hotkeys, TimerResetSeconds
 
 ; ==============
 ; === UPDATE ===
@@ -694,6 +718,24 @@ ShortDelay()
 Send {ESC down}
 return	
 
+;///////////////////////         Timer Keys       ///////////////////////////
+
+TimerAddMinutes:
+TimeMins++
+return
+
+TimerSubMinutes:
+TimeMins--
+return
+
+TimerResetMinutes:
+TimeMins=00
+return	
+
+TimerResetSeconds:
+TimeSecs=00
+return	
+
 ;///////////////////////////       Experimental   /////////////////////////////
 ;//////////////////////////   Toggle Cooking     /////////////////////////////
 
@@ -892,14 +934,46 @@ ToggleMissionFailSafe:
 		if(!IsMissionFailSafeActivated){
 			IsMissionFailSafeActivated=true
 			Gui, Show, x910 y70 NoActivate
-			
-			
+			MissionFailSafeType=0
+			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType%
 		}
 		MissionFailSafeType++
 	}
+	Gui, Hide
+	Gui, Show, x800 y100 NoActivate
+	if(MissionFailSafeType=1){
+		GuiControl,, MyText, MissionFailSafe Mode: Dead Drop
+		SuperLongDelay()
+		return
+	}
+	if(MissionFailSafeType=2){
+		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
+		SuperLongDelay()
+		return
+	}
+	if(MissionFailSafeType=3){
+		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
+		SuperLongDelay()
+		return
+	}
+	if(MissionFailSafeType=4){
+		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Dead Drop
+		SuperLongDelay()
+		return
+	}
+	if(MissionFailSafeType=5){
+		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
+		SuperLongDelay()
+		return
+	}
+	if(MissionFailSafeType=6){
+		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
+		SuperLongDelay()
+		return
+	}
 }
 return 
-
+					
 ;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 UpdateOSD:
 {
@@ -919,27 +993,22 @@ UpdateOSD:
 				ShortDelay()
 				TimeSecs--
 				
-				
-				
 				if(TimeSecs<1)
 				{
 					TimeMins--
 					TimeSecs=59			
 					
-						;/// dead drop variant 
-					if(MissionFailSafeType=1){
-						GuiControl,, MyText, MissionFailSafe Mode: %FinaleType% Dead Drop
-						if(TimeMins<0){
+					if(TimeMins<0)
+					{			
+;/// dead drop variant 
+						if(MissionFailSafeType=1){
 							Send {r down}
 							LongDelay()
 							Send {r up}
 							reload
 						}
-					}
-						;/// contact drop variant 
-					if(MissionFailSafeType=2){
-						GuiControl,, MyText, MissionFailSafe Mode: %FinaleType% Contact Drop
-						if(TimeMins<0){
+;/// contact drop variant 
+						if(MissionFailSafeType=2){
 							Send {RButton down}
 							ShortDelay()
 							Send {r down}
@@ -948,11 +1017,8 @@ UpdateOSD:
 							Send {RButton up}
 							reload
 						}
-					}
-						;/// drive in (bounty) variant 
-					if(MissionFailSafeType=3){
-						GuiControl,, MyText, MissionFailSafe Mode: %FinaleType% Drive In/Walk In
-						if(TimeMins<0){
+;/// drive in (bounty) variant 
+						if(MissionFailSafeType=3){
 							Send {w down}
 							Send {LShift down}
 							SuperLongDelay()
@@ -960,16 +1026,16 @@ UpdateOSD:
 							Send {LShift up}
 							reload
 						}
-					}
+					}		
 				}
-					;////// Anti-AFK
+;////// Anti-AFK
 				if TimeSecs = 30 
 				{
 					Send {c down}
 					LongDelay()
 					Send {c up}
 				}
-					;/// Digit Formatting
+;/// Digit Formatting
 				IfNotInString, TimeSecs, "0"
 				{
 					if TimeSecs < 10 
@@ -985,10 +1051,10 @@ UpdateOSD:
 			}
 			else
 			{
-				;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
+;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
 				Loop, 3
 				{
-						;////// Update Minutes
+;////// Update Minutes
 					Clip0 = %ClipBoardAll%
 					Clipboard = ; Erase clipboard
 					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "927 52 958 76" --clipboard --whitelist "0123456789",, hide
@@ -1002,10 +1068,10 @@ UpdateOSD:
 					else
 						LastTimeMinz = TimeMinz
 				}
-				;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
+;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
 				Loop, 3
 				{
-					;////// Now Update Seconds
+;////// Now Update Seconds
 					Clip0 = %ClipBoardAll%
 					Clipboard = ; Erase clipboard
 					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "962 52 993 76" --clipboard --whitelist "0123456789",, hide
@@ -1019,9 +1085,9 @@ UpdateOSD:
 					else
 						LastTimeSecz = TimeSecz
 				}
-					;//////  Subtract seconds we use to capture data, and also
-				;/// predict and manually replace timer when it reaches one or zero
-				;/// increase reliability, reduce false timer results
+;//////  Subtract seconds we use to capture data, and also
+;/// predict and manually replace timer when it reaches one or zero
+;/// increase reliability, reduce false timer results
 				if TimeSecz >= 2 
 					TimeSecz -= 2
 				else
@@ -1031,7 +1097,7 @@ UpdateOSD:
 				{
 					if TimeSecz <= 10 
 					{
-							;/// Drop-only
+		;/// Drop-only
 						if MissionFailSafeType = 4 
 						{
 							Send {r down}
@@ -1039,7 +1105,7 @@ UpdateOSD:
 							Send {r up}
 							reload
 						}
-							;/// Drop-to-Contact
+		;/// Drop-to-Contact
 						if MissionFailSafeType = 5 
 						{
 							Send {RButton down}
@@ -1050,7 +1116,7 @@ UpdateOSD:
 							Send {RButton up}
 							reload
 						}
-							;/// Drive-in/Walk-in
+		;/// Drive-in/Walk-in
 						if MissionFailSafeType = 6 
 						{
 							Send {w down}
@@ -1063,15 +1129,15 @@ UpdateOSD:
 					}
 				}
 			}
-				;////// Anti-AFK, again but different 
-			;/// the catch-up timer skips some seconds we'll do a range instead
+;////// Anti-AFK, again but different 
+;/// the catch-up timer skips some seconds we'll do a range instead
 			if TimeSecz between 30 and 33
 			{
 				Send {c down}
 				LongDelay()
 				Send {c up}
 			}
-				;/// Digit Formatting
+;/// Digit Formatting
 			IfNotInString, TimeSecz, "0" 
 			{
 				if(TimeSecz<10)
@@ -1102,5 +1168,5 @@ UpdateOSD:
 	} ;//// end ifwin
 	return
 } ;//// end UpdateOSD
-
-
+					
+					
