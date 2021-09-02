@@ -33,7 +33,8 @@ MissionFailSafeType     := 0 	 ; Initial status should always be zero
 IsTimerSet     := 0 	 ; Initial status should always be zero
 TimeMins 		:= 0
 TimeSecs 		:= 0
-LoopCount      := 3     ; Number of times to multisample TimeSecz, values < 3 will break multisampling
+LoopCount      := 3      ;Number of times to multisample TimeSecz, values < 3 will break multisampling
+Pack 		:= 0		;Status should always be 0
 
 ;////// Initialize the GUI for On Screen Display
 CustomColor := "AAAAAA"  ; Can be any RGB color (it will be made transparent below).
@@ -719,11 +720,11 @@ TimeMins--
 return
 
 TimerResetMinutes:
-TimeMins=00
+TimeMins=1
 return	
 
 TimerResetSeconds:
-TimeSecs=00
+TimeSecs=30
 return	
 
 ;///////////////////////////       Experimental   /////////////////////////////
@@ -927,39 +928,36 @@ ToggleMissionFailSafe:
 			MissionFailSafeType=0
 			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType%
 		}
-		MissionFailSafeType++
-	}
-	Gui, Hide
-	Gui, Show, x800 y100 NoActivate
-	if(MissionFailSafeType=1){
-		GuiControl,, MyText, MissionFailSafe Mode: Dead Drop
-		SuperLongDelay()
-		return
-	}
-	if(MissionFailSafeType=2){
-		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
-		SuperLongDelay()
-		return
-	}
-	if(MissionFailSafeType=3){
-		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
-		SuperLongDelay()
-		return
-	}
-	if(MissionFailSafeType=4){
-		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Dead Drop
-		SuperLongDelay()
-		return
-	}
-	if(MissionFailSafeType=5){
-		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
-		SuperLongDelay()
-		return
-	}
-	if(MissionFailSafeType=6){
-		GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
-		SuperLongDelay()
-		return
+		else
+		{
+		Gui, Hide
+		Gui, Show, x800 y100 NoActivate
+		if(MissionFailSafeType=1){
+			GuiControl,, MyText, MissionFailSafe Mode: Dead Drop
+			SuperLongDelay()
+		}
+		if(MissionFailSafeType=2){
+			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
+			SuperLongDelay()
+		}
+		if(MissionFailSafeType=3){
+			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
+			SuperLongDelay()
+		}
+		if(MissionFailSafeType=4){
+			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Dead Drop
+			SuperLongDelay()
+		}
+		if(MissionFailSafeType=5){
+			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
+			SuperLongDelay()
+		}
+		if(MissionFailSafeType=6){
+			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
+			SuperLongDelay()
+		}
+		}
+	MissionFailSafeType++
 	}
 }
 return 
@@ -1019,23 +1017,24 @@ UpdateOSD:
 					}		
 				}
 ;////// Anti-AFK
-				if TimeSecs = 30 
-				{
-					Send {c down}
-					LongDelay()
-					Send {c up}
-				}
+				;if TimeSecs = 30 
+				;{
+				;	Send {c down}
+				;	LongDelay()
+				;	Send {c up}
+				;}
 ;/// Digit Formatting
-				IfNotInString, TimeSecs, "0"
-				{
-					if TimeSecs < 10 
-						TimeSecs = 0%TimeSecs%
-				}			
-				IfNotInString, TimeMins, "0"
-				{
-					if TimeMins < 10 
-						TimeMins = 0%TimeMins%
-				}			
+				;IfNotInString, TimeSecs, 0
+				;{
+					;if TimeSecs < 10 
+						TimeSecs := Format("{:02}", TimeSecs)
+				;}			
+				;IfNotInString, TimeMins, 0
+				;{
+					;if TimeMins < 10 
+				TimeMins := Format("{:02}", TimeMins)
+						;(SubStr(Pack, 1, StrLen(Pack) - StrLen(%TimeMins%)) . TimeMins)
+				;}			
 				GuiControl,, MyText, %TimeMins%:%TimeSecs%
 				return
 			}
@@ -1158,5 +1157,3 @@ UpdateOSD:
 	} ;//// end ifwin
 	return
 } ;//// end UpdateOSD
-					
-					
