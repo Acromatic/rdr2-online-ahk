@@ -199,7 +199,8 @@ if(Read_AutoUpdateOnStart=1)
 	FormatTime, FileTime, %FileTime%, YWeek
 	FormatTime, YearWeek, YWeek
 	if(%FileTime%>=%YearWeek%)
-	return
+	GuiControl, guitwo:, MyText2, %FileTime%:%YearWeek%
+    	return
 	}
 	else{
 
