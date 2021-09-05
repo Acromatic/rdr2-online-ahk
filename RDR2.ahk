@@ -202,22 +202,28 @@ if(Read_AutoUpdateOnStart=1)
     	return
   	}
   	FileReadLine, updatecheck, updatecheck.txt, 1
-	if (Update.ahk)
-  	FileReadLine, currentVersion, Update.ahk, 1
-  	if (updatecheck = currentVersion){
-   		FileDelete, updatecheck.txt
-    		GuiControl, guione:, MyText, Update failed, scripts will not be updated. version %updatecheck% was detected.
-		return
+	if (!Update.ahk){
+		FileCopy, updatecheck.txt, Update.ahk, 1
+      		FileDelete, updatecheck.txt
 	}
-	else if (InStr(updatecheck, "; v") = 1) {
-    		if (!SilentSuccess)
-    		GuiControl, guione:, MyText, Update available, scripts will now be updated to version %updatecheck% 			- Warning: do NOT interupt the update process!
+	else {
+  		FileReadLine, currentVersion, Update.ahk, 1
+	
+	  	if (updatecheck = currentVersion){
+   			FileDelete, updatecheck.txt
+    			GuiControl, guione:, MyText, Update failed, scripts will not be updated. version %updatecheck% was detected.
+			return
+		}
+		else if (InStr(updatecheck, "; v") = 1) {
+	    		if (!SilentSuccess)
+    			GuiControl, guione:, MyText, Update available, scripts will now be updated to version %updatecheck% 			- Warning: do NOT interupt the update process!
       		
-		FileCopy, update.txt, Update.ahk, 1
-      		FileDelete, update.txt
+			FileCopy, update.txt, Update.ahk, 1
+	      		FileDelete, update.txt
+		}
 	}
 	Sleep, 1000
-	Run *RunAs "C:\Program Files\AutoHotkey" "Update.ahk" Read_SilentUpdateOnStart
+	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
 }
