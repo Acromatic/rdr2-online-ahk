@@ -37,16 +37,16 @@ SilentSuccess := %1%
 else
 SilentSuccess := false
 
-UpdateScriptMain(SilentSuccess)
-UpdateScriptConfig(SilentSuccess)
-UpdateReadMe(SilentSuccess)
+UpdateScriptMain()
+UpdateScriptConfig()
+UpdateReadMe()
 
 Run, RDR2.ahk
 ExitApp
 return
 
 ;//////////////////////  Update Script Main File  ////////////////
-UpdateScriptMain(SilentSuccess=false){
+UpdateScriptMain(){
 URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,RDR2.txt
 	if (errorlevel) {
     	GuiControl, guione:, MyText, Error response from GitHub, update was aborted.`nPlease try again 		later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
@@ -62,7 +62,7 @@ URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/ma
 }
 
 ;//////////////////////  Update Script Config File  ////////////////
-UpdateScriptConfig(SilentSuccess=false){
+UpdateScriptConfig(){
 URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,RDR2Config.txt
 	if (errorlevel) {
     	GuiControl, guione:, MyText, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
@@ -78,7 +78,7 @@ URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/ma
 }
 
 ;//////////////////////  Update Read Me File  ////////////////
-UpdateReadMe(SilentSuccess=false){
+UpdateReadMe(){
 URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/README.md,README.txt
 	if (errorlevel) {
     	GuiControl, guione:, MyText, Error response from GitHub on README.md, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
