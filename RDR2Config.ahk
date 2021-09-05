@@ -102,58 +102,58 @@ IfExist, %CFG%
 	GuiControl,,TimerResetSeconds,%Read_TimerResetSecondsKey%
 }
 	
-Gui, Add, Text, x10 y20 w150 h20,BeatPoker Key:
+Gui, Add, Text,x10 y20 w150 h20,BeatPoker Key:
 
-Gui, Add, Text, x10 y50 w150 h20,PassiveToggleCookingOn Key:
-Gui, Add, Text, x10 y80 w150 h20,PassiveToggleCookingOnKey:
+Gui, Add, Text,x10 y50 w150 h20,PassiveToggleCookingOn Key:
+Gui, Add, Text,x10 y80 w150 h20,PassiveToggleCookingOnKey:
 
-Gui, Add, Text, x10 y110 w150 h20,ToggleDefensive Key:
-Gui, Add, Text, x10 y140 w150 h20,ToggleClicker Key:
-Gui, Add, Text, x10 y170 w150 h20,ToggleFinale Key:
+Gui, Add, Text,x10 y110 w150 h20,ToggleDefensive Key:
+Gui, Add, Text,x10 y140 w150 h20,ToggleClicker Key:
+Gui, Add, Text,x10 y170 w150 h20,ToggleFinale Key:
 
-Gui, Add, Text, x10 y200 w150 h20,Health Key:
-Gui, Add, Text, x10 y230 w150 h20,Stamina Key:
-Gui, Add, Text, x10 y260 w150 h20,Deadeye Key:
-Gui, Add, Text, x10 y290 w150 h20,HealCores Key:
+Gui, Add, Text,x10 y200 w150 h20,Health Key:
+Gui, Add, Text,x10 y230 w150 h20,Stamina Key:
+Gui, Add, Text,x10 y260 w150 h20,Deadeye Key:
+Gui, Add, Text,x10 y290 w150 h20,HealCores Key:
 
-Gui, Add, Text, x10 y320 w150 h20,WildernessCamp Key:
-Gui, Add, Text, x10 y350 w150 h20,ItemSlot Key:
+Gui, Add, Text,x10 y320 w150 h20,WildernessCamp Key:
+Gui, Add, Text,x10 y350 w150 h20,ItemSlot Key:
 	
-Gui, Add, Text, x10 y380 w150 h20,HuntingWagon Key:
-Gui, Add, Text, x10 y410 w150 h20,BountyWagon Key:
-Gui, Add, Text, x320 y20 w150 h20,DismissWagons Key:
-Gui, Add, Text, x320 y50 w150 h20,FeedHorse Key:
+Gui, Add, Text,x10 y380 w150 h20,HuntingWagon Key:
+Gui, Add, Text,x10 y410 w150 h20,BountyWagon Key:
+Gui, Add, Text,x320 y20 w150 h20,DismissWagons Key:
+Gui, Add, Text,x320 y50 w150 h20,FeedHorse Key:
 
-Gui, Add, Text, x320 y80 w150 h20,ShowPosses Key:
-Gui, Add, Text, x320 y110 w150 h20,FormPosse Key:
-Gui, Add, Text, x320 y140 w150 h20,QuickRace Key:
-Gui, Add, Text, x320 y170 w150 h20,MenuSlotTwo Key:
-Gui, Add, Text, x320 y200 w150 h20,MenuSlotFour Key:
+Gui, Add, Text,x320 y80 w150 h20,ShowPosses Key:
+Gui, Add, Text,x320 y110 w150 h20,FormPosse Key:
+Gui, Add, Text,x320 y140 w150 h20,QuickRace Key:
+Gui, Add, Text,x320 y170 w150 h20,MenuSlotTwo Key:
+Gui, Add, Text,x320 y200 w150 h20,MenuSlotFour Key:
 
-Gui, Add, Text, x320 y230 w150 h20,VolumeDown Key:
-Gui, Add, Text, x320 y260 w150 h20,VolumeUp Key:
-Gui, Add, Text, x320 y290 w150 h20,ReloadScript Key:
-Gui, Add, Text, x320 y320 w150 h20,AbortScript Key:
+Gui, Add, Text,x320 y230 w150 h20,VolumeDown Key:
+Gui, Add, Text,x320 y260 w150 h20,VolumeUp Key:
+Gui, Add, Text,x320 y290 w150 h20,ReloadScript Key:
+Gui, Add, Text,x320 y320 w150 h20,AbortScript Key:
 
-Gui, Add, Text, x320 y350 w150 h20,TimerAddMinutes Key:
-Gui, Add, Text, x320 y380 w150 h20,TimerSubMinutes Key:
-Gui, Add, Text, x320 y410 w150 h20,TimerResetMinutes Key:
-Gui, Add, Text, x320 y440 w150 h20,TimerResetSeconds Key:
+Gui, Add, Text,x320 y350 w150 h20,TimerAddMinutes Key:
+Gui, Add, Text,x320 y380 w150 h20,TimerSubMinutes Key:
+Gui, Add, Text,x320 y410 w150 h20,TimerResetMinutes Key:
+Gui, Add, Text,x320 y440 w150 h20,TimerResetSeconds Key:
 
 ;///////// HotKey Edit Boxes
 
-Gui, Add, Hotkey, x160 y20 w150 h20 vBeatPokerKey,F11
+Gui, Add, Hotkey,x160 y20 w150 h20 vBeatPokerKey,F11
 
-Gui, Add, Hotkey, x160 y50 w150 h20 vPassiveToggleCookingOnKey,^Enter
-Gui, Add, Hotkey, x160 y80 w150 h20 vPassiveToggleCookingOffKey,F10
+Gui, Add, Hotkey,x160 y50 w150 h20 vPassiveToggleCookingOnKey,^Enter
+Gui, Add, Hotkey,x160 y80 w150 h20 vPassiveToggleCookingOffKey,F10
 
-Gui, Add, Hotkey, x160 y110 w150 h20 vToggleDefensiveKey,F5
-Gui, Add, Hotkey, x160 y140 w150 h20 vToggleClickerKey,z
-Gui, Add, Hotkey, x160 y170 w150 h20 vToggleFinaleKey,F9
+Gui, Add, Hotkey,x160 y110 w150 h20 vToggleDefensiveKey,F5
+Gui, Add, Hotkey,x160 y140 w150 h20 vToggleClickerKey,z
+Gui, Add, Hotkey,x160 y170 w150 h20 vToggleFinaleKey,F9
 
-Gui, Add, Hotkey, x160 y200 w150 h20 vHealthKey,NumpadHome
-Gui, Add, Hotkey, x160 y230 w150 h20 vStaminaKey,NumpadUp
-Gui, Add, Hotkey, x160 y260 w150 h20 vDeadeyeKey,NumpadPgUp
+Gui, Add, Hotkey,x160 y200 w150 h20 vHealthKey,NumpadHome
+Gui, Add, Hotkey,x160 y230 w150 h20 vStaminaKey,NumpadUp
+Gui, Add, Hotkey,x160 y260 w150 h20 vDeadeyeKey,NumpadPgUp
 Gui, Add, Hotkey,x160 y290 w150 h20 vHealCoresKey,NumpadLeft
 
 Gui, Add, Hotkey,x160 y320 w150 h20 vWildernessCampKey,NumpadClear 
@@ -170,15 +170,15 @@ Gui, Add, Hotkey,x480 y140 w150 h20 vQuickRaceKey,F6
 Gui, Add, Hotkey,x480 y170 w150 h20 vMenuSlotTwoKey,NumpadDiv 
 Gui, Add, Hotkey,x480 y200 w150 h20 vMenuSlotFourKey,NumpadMult 
 
-Gui, Add, Hotkey, x480 y230 w150 h20 vVolumeDownKey,NumpadSub
+Gui, Add, Hotkey,x480 y230 w150 h20 vVolumeDownKey,NumpadSub
 Gui, Add, Hotkey,x480 y260 w150 h20 vVolumeUpKey,NumpadAdd
 Gui, Add, Hotkey,x480 y290 w150 h20 vReloadScriptKey,F10
 Gui, Add, Hotkey,x480 y320 w150 h20 vAbortScriptKey,^Escape
 
-Gui, Add, Hotkey, x480 y350 w150 h20 TimerAddMinutesKey
-Gui, Add, Hotkey,x480 y380 w150 h20 TimerSubMinutesKey
-Gui, Add, Hotkey,x480 y410 w150 h20 TimerResetMinutesKey
-Gui, Add, Hotkey,x480 y440 w150 h20 TimerResetSecondsKey
+Gui, Add, Hotkey,x480 y350 w150 h20 vTimerAddMinutesKey,i
+Gui, Add, Hotkey,x480 y380 w150 h20 vTimerSubMinutesKey,k
+Gui, Add, Hotkey,x480 y410 w150 h20 vTimerResetMinutesKey,u
+Gui, Add, Hotkey,x480 y440 w150 h20 vTimerResetSecondsKey,o
 
 
 if Read_LoadEditorOnStart = 1

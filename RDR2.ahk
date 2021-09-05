@@ -134,10 +134,10 @@ IfNotExist, %CFG%
 	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
 	IniWrite, +Escape , %CFG%, Hotkeys, AbortScript
 	
-	IniWrite, Up    , %CFG%, Hotkeys, TimerAddMinutes
-	IniWrite, Down  , %CFG%, Hotkeys, TimerSubMinutes
-	IniWrite, Left  , %CFG%, Hotkeys, TimerResetMinutes
-	IniWrite, Right , %CFG%, Hotkeys, TimerResetSeconds
+	IniWrite, i , %CFG%, Hotkeys, TimerAddMinutes
+	IniWrite, k , %CFG%, Hotkeys, TimerSubMinutes
+	IniWrite, u , %CFG%, Hotkeys, TimerResetMinutes
+	IniWrite, o , %CFG%, Hotkeys, TimerResetSeconds
 }
 
 sleep, 2000
@@ -193,7 +193,16 @@ IfExist, %CFG%
 
 if(Read_AutoUpdateOnStart=1)
 {
-	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate 
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+	if (Update.ahk){
+	FileGetTime, FileTime, Update.ahk
+	FormatTime, FileTime, %FileTime%, YWeek
+	FormatTime, YearWeek, YWeek
+	if(%FileTime%>=%YearWeek%)
+	return
+	}
+	else{
+
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
   	if (errorlevel) {
     		GuiControl, guitwo:, MyText, Error response from GitHub, update check was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
@@ -222,19 +231,19 @@ if(Read_AutoUpdateOnStart=1)
 	      		FileDelete, update.txt
 		}
 	}
-	Sleep, 1000
+	Sleep, 2000
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
+	}
 }
 
 if(Read_LoadEditorOnStart=1)
 {
-	Gui, guitwo: Show, x905 y70 w100 h60 NoActivate 
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
     	GuiControl, guitwo:, MyText, Starting Configuration Editor...
 	RunWait, RDR2Config.ahk
 }
-
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
