@@ -25,6 +25,8 @@ IsCookingActivated    		:= false ; Initial status should always be false
 IsMissionFailSafeActivated    	:= false ; Initial status should always be false
 MissionFailSafeType     	:= 0 	 ; Initial status should always be zero
 IsTimerSet     			:= 0 	 ; Initial status should always be zero
+TimeMins     			:= 0 	 ; Initial status should always be zero
+TimeSecs     			:= 0 	 ; Initial status should always be zero
 loopcount			:= 0	 ; Initial status should always be zero
 
 ;////// Initialize the GUI for On Screen Display
@@ -39,9 +41,6 @@ Gui, guione: Add, Text, Left vMyText cLime, 00:00  ; 00:00 serves to auto-size t
 ;////// Make all pixels of this color transparent and make the text itself translucent (150):
 WinSet, TransColor, %CustomColor% 200
 ;WinSet, AlwaysOnTop, %CustomColor% 150
-
-SetTimer, UpdateOSD, 300  
-Gosub, UpdateOSD
 
 ;////// Initialize the GUI for On Screen Display
 Gui, guione: Show, x905 y70 w100 h60 NoActivate  ; NoActivate avoids deactivating the currently active window.
@@ -78,7 +77,7 @@ sleep, 1000
 Gui, guitwo: Hide   ; gui 2
 
 ;////// Automatic Anti-Away-From-Keyboard - Fires a timed Send {AppsKey} to disable in-game AFK Disconnects 
-;////// Least destructive key, requires RedDead Active Window
+;////// Least destructive key, requires RedDead Active Window - 180000 equals every 3 minutes
 SetTimer, UpdateAntiAFK, 180000
 
 ;////// another gui script snippet
@@ -88,9 +87,10 @@ SetTimer, UpdateAntiAFK, 180000
 ;Gui Show, w200 h200
 ;return
 
-;///////////// Write config.ini (Script Configuration w/Hotkeys) /////////////
-IfNotExist,%CFG%
+;///////////// Write config.ini (Script Configuration wHotkeys) /////////////
+IfNotExist, %CFG%
 {
+
 ;/////////////////   Settings     ///////////////
 	
 	IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
@@ -105,10 +105,6 @@ IfNotExist,%CFG%
 	
 	IniWrite, ^Enter, %CFG%, Hotkeys, PassiveToggleCookingOn
 	IniWrite, x, %CFG%, Hotkeys, PassiveToggleCookingOff
-	
-	;IniWrite, j, %CFG%, Hotkeys, ToggleEnhancedAFK
-	;IniWrite, o, %CFG%, Hotkeys, TogglePatrolAFK
-	;IniWrite, k, %CFG%, Hotkeys, ToggleAFK
 	
 	IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
 	IniWrite, z, %CFG%, Hotkeys, ToggleClicker
@@ -136,7 +132,7 @@ IfNotExist,%CFG%
 	IniWrite, NumpadSub , %CFG%, Hotkeys, VolumeDown
 	IniWrite, NumpadAdd , %CFG%, Hotkeys, VolumeUp
 	IniWrite, F10 , %CFG%, Hotkeys, ReloadScript
-	IniWrite, +>Escape , %CFG%, Hotkeys, AbortScript
+	IniWrite, +Escape , %CFG%, Hotkeys, AbortScript
 	
 	IniWrite, Up    , %CFG%, Hotkeys, TimerAddMinutes
 	IniWrite, Down  , %CFG%, Hotkeys, TimerSubMinutes
@@ -148,10 +144,11 @@ sleep, 2000
 
 IfExist, %CFG%
 { 
+
 ;/////////////////   Settings     ///////////////
-	IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
-	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
-	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
+	IniRead, Read_LoadEditorOnStart, %CFG%, Settings,LoadEditorOnStart
+	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings,AutoUpdateOnStart
+	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings,SilentUpdateOnStart
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
 	IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
@@ -160,9 +157,6 @@ IfExist, %CFG%
 	IniRead, Read_PassiveToggleCookingOnKey, %CFG%,Hotkeys,PassiveToggleCookingOn
 	IniRead, Read_PassiveToggleCookingOffKey, %CFG%,Hotkeys,PassiveToggleCookingOff
 	
-	;IniRead, Read_ToggleEnhancedAFKKey, %CFG%,Hotkeys,ToggleEnhancedAFK
-	;IniRead, Read_TogglePatrolAFKKey, %CFG%,Hotkeys,TogglePatrolAFK
-	;IniRead, Read_ToggleAFKKey, %CFG%,Hotkeys,ToggleAFK
 	IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
 	IniRead, Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
 	IniRead, Read_ToggleMissionFailSafeKey, %CFG%,Hotkeys,ToggleMissionFailSafe
@@ -223,8 +217,6 @@ if(Read_AutoUpdateOnStart=1)
       		FileDelete, update.txt
 	}
 	Sleep, 1000
-	;C:\Program Files\AutoHotkey
-	;Run %A_AhkPath%  Read_SilentUpdateOnStart
 	Run *RunAs "C:\Program Files\AutoHotkey" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
@@ -232,9 +224,12 @@ if(Read_AutoUpdateOnStart=1)
 
 if(Read_LoadEditorOnStart=1)
 {
+	Gui, guione: Show, x905 y70 w100 h60 NoActivate 
     	GuiControl, guione:, MyText, Starting Configuration Editor...
 	RunWait, RDR2Config.ahk
 }
+
+
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
 Hotkey, %Read_BeatPokerKey%, BeatPoker
@@ -276,6 +271,9 @@ Hotkey, %Read_TimerAddMinutesKey%, TimerAddMinutes
 Hotkey, %Read_TimerSubMinutesKey%, TimerSubMinutes
 Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
 Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
+
+SetTimer, UpdateOSD, 200  
+Gosub, UpdateOSD
 
 ;///////////////////////////   Auto Keys   /////////////////////////////////////
 if WinActive("Red Dead Redemption 2")
@@ -336,12 +334,13 @@ ToggleClicker:
         break
       }
     }
-}
 return
+}
 
 ;//////////////////////////    Defensive Toggle     /////////////////////////////
 
 ToggleDefensive:
+{
 OpenPlayerMenu()
 Send {Up}
 SendEnter()
@@ -350,63 +349,70 @@ Send {Left}
 
 ClosePlayerMenu()
 return      
-
+}
 ;///////////////////////////        Health Slot        ///////////////////////////////////
 
 Health:
+{
 OpenTabMenu()
 MouseMove, 766, 354
 ;SendEnter()
 CloseTabMenu()
 return	
-
+}
 ;///////////////////////////        Stamina Slot       ///////////////////////////////////
 
 Stamina:
+{
 OpenTabMenu()
 MouseMove, 954, 271
 ;SendEnter()
 CloseTabMenu()
 return				
-
+}
 ;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
 
 Deadeye:
+{
 OpenTabMenu()
 MouseMove, 1147, 350
 ;SendEnter()
 CloseTabMenu()
 return	
-
+}
 ;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
 
 HealCores:
+{
 OpenTabMenu()
 MouseMove, 691, 550
 ;SendEnter()
 CloseTabMenu()
 return	
-
+}
 ;///////////////////////////        Wilderness Camp    //////////////////////////////////////
 
 WildernessCamp:
+{
 OpenTabMenu()
 MouseMove, 963, 815
 CloseTabMenu()
 return	
-
+}
 ;///////////////////////////        Item Slot    //////////////////////////////////////
 
 ItemSlot:
+{
 OpenTabMenu()
 MouseMove, 1231, 548
 Send {q 2}
 CloseTabMenu()
 return
-
+}
 ;///////////////////////////     Hunting Wagon    //////////////////////////////////////
 
 HuntingWagon:
+{
 OpenPlayerMenu()
 LongDelay()
 Send {Down 7}
@@ -416,10 +422,11 @@ SendEnterEnter()
 SendEnter()
 ClosePlayerMenu()
 return		
-
+}
 ;///////////////////////////     Bounty Wagon    /////////////////////////////////
 
 BountyWagon:
+{
 OpenPlayerMenu()
 LongDelay()
 Send {Down 7}
@@ -430,10 +437,11 @@ Send {Down}
 SendEnter()
 ClosePlayerMenu()
 return	
-
+}
 ;///////////////////////////     Dismiss Wagons    /////////////////////////////////
 
 DismissWagons:
+{
 OpenPlayerMenu()
 SuperShortDelay() 
 Send {e}
@@ -452,28 +460,31 @@ ShortDelay()
 Send {Space}
 ClosePlayerMenu()
 return	
-
+}
 ;///////////////////////////     Feed Horse Slot    /////////////////////////////////
 
 FeedHorse:
+{
 OpenTabMenu()
 Send {r}
 MouseMove, 691, 550
 CloseTabMenu()
 return	
-
+}
 ;///////////////////////////     Open Posses List    ///////////////////////////
 
 ShowPosses:
+{
 OpenPlayerMenu()
 ShortDelay()
 Send {Down 5}
 SendEnter()
 return	
-
+}
 ;/////////////////////////          Form Posse       ////////////////////////////
-
-FormPosse:     ;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
+;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
+FormPosse:
+{     
 OpenPlayerMenu()
 LongDelay()
 Send {Down 5}
@@ -481,10 +492,11 @@ SendEnterEnter()
 SendEnter()
 ClosePlayerMenu()
 return	
-
+}
 ;//////////////////////           Quick Race         //////////////////////////////
 
 QuickRace:
+{
 OpenPlayerMenu()
 ShortDelay()
 Send {Up 2}{Enter}
@@ -497,10 +509,11 @@ Send {Up}
 ShortDelay()
 Send {Up}{Enter}
 return	
-
+}
 ;///////////////////////          Menu Slot Two      ///////////////////////////
 
 MenuSlotTwo:
+{
 EscapeMenu()
 ShortDelay()
 MouseMove, 170, 852
@@ -513,11 +526,12 @@ Send {Enter}
 LongDelay()
 Send {Enter}
 return	
-
+}
 ;///////////////////////          Menu Slot Four      ///////////////////////////
 
 
 MenuSlotFour:
+{
 EscapeMenu()
 ShortDelay()
 MouseMove, 170, 852
@@ -532,10 +546,11 @@ Send {Enter}
 LongDelay()
 Send {Enter}
 return	
-
+}
 ;///////////////////////          Volume Down      ///////////////////////////
 
 VolumeDown:
+{
 EscapeMenu()
 ShortDelay()
 MouseMove, 130, 960
@@ -558,10 +573,11 @@ Send {Left}
 ShortDelay()
 Send {ESC down}
 return	
-
+}
 ;///////////////////////          Volume Up       ///////////////////////////
 
 VolumeUp:
+{
 EscapeMenu()
 ShortDelay()
 MouseMove, 131, 970
@@ -583,24 +599,30 @@ Send {Right}
 ShortDelay()
 Send {ESC down}
 return	
+}
 
 ;///////////////////////         Timer Keys       ///////////////////////////
 
 TimerAddMinutes:
+{
 TimeMins++
 return
-
+}
 TimerSubMinutes:
+{
 TimeMins--
 return
-
+}
 TimerResetMinutes:
+{
 TimeMins=1
 return	
-
+}
 TimerResetSeconds:
+{
 TimeSecs=30
-return	
+return
+}
 
 ;///////////////////////////       Experimental   /////////////////////////////
 ;//////////////////////////   Toggle Cooking     /////////////////////////////
@@ -611,8 +633,8 @@ PassiveToggleCookingOff:
 if (IsCookingActivated) {
   IsCookingActivated := !IsCookingActivated
 reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
-}
 return
+}
 
 PassiveToggleCookingOn:
   IsCookingActivated := !IsCookingActivated
@@ -635,8 +657,8 @@ if (IsCookingActivated) {
 		LongDelay()
 ;		Send {Enter up}
 	}
-}
 return
+}
 
 ;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
 
@@ -671,8 +693,8 @@ if (IsBeatPokerActivated) {
 			break
 		}
 	}
-}
 return	
+}
 
 ;//////////////////////////////////      Script Functions      ////////////////////////////////////////
 }
@@ -681,52 +703,53 @@ ReloadScript:
 {
 	TimeMins = 0
 	TimeSecs = 0
-	TimeMinz = 0
+	TimeMins1 = 0
+	TimeMins2 = 0
 	TimeSecz = 0
 	MissionFailSafeType=0
 	GuiControl,, MyText2, MissionFailSafe Mode: %MissionFailSafeType%
 	sleep, 1000
 	reload
 	ExitApp
-}
 return   
+}
 
 AbortScript:
 {
 	ExitApp
-}
 return 
+}
 
 if WinActive("Red Dead Redemption 2")
 {
 ;////// Delay-Functions
 SuperShortDelay(){
 	sleep, 20 
-}
 return
+}
 
 ShortDelay(){
 	sleep, 200 
-}
 return
+}
 
 LongDelay(){
 	sleep, 800
-}
 return
+}
 
 SuperLongDelay(){
 	sleep, 3200
-}
 return
+}
 
 ;////// a couple of code macros/functions for Send{Enter} w/proper delays and min/repeat typing functions
 SendEnter(){
 	LongDelay()
 	Send {Enter}
 	ShortDelay()
-}
 return
+}
 
 SendEnterEnter(){
 	LongDelay()
@@ -734,28 +757,28 @@ SendEnterEnter(){
 	LongDelay()
 	Send {Enter}
 	ShortDelay()
-}
 return
+}
 
 ;////// Tab Menu is self explanitory. uses F4 to directly access the items dial-menu for speed
 OpenTabMenu(){
 Send {F4 down}
 ShortDelay()
-} 
 return
+} 
 
 CloseTabMenu(){
 	Send {F4 up}
-}
 return
+}
 
 ;////// player menu - L menu on PC
 OpenPlayerMenu(){
 	turnCapslockOff()
 	Send {l}
 	LongDelay()
-} 
 return
+} 
 
 ClosePlayerMenu(){
 	Loop, 4
@@ -764,30 +787,30 @@ ClosePlayerMenu(){
 		Send {ESC}
 		Send {ESC up}
 	}
-}
 return
+}
 
 ;//// the escape menu in game
 EscapeMenu(){
 ;ShortDelay()
 Send {ESC}
 ShortDelay()
-}
 return
+}
 
 ;//// currently not used
 invertCapsLockState(){ 
 SetCapsLockState % !GetKeyState("CapsLock", "T") ;////////// requires [v1.1.30+]
-}
 return
+}
 
 ;///// This will lock it off for a moment, called each time it's used
 turnCapslockOff() {
   if (GetKeyState("CapsLock", "T") = 1) {
     SetCapsLockState, off
   }
-}
 return
+}
 
 ;/////////////////      Update Passive Background AFK    ///////////////////////////
 UpdateAntiAFK:
@@ -840,10 +863,11 @@ ToggleMissionFailSafe:
 	Gui, guitwo: Hide
 	sleep, 1000
 	Gui, guithree: Hide
+return
 }
+
 return 
 }
-return  ;//  end winactive
 
 ;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 UpdateOSD:
@@ -940,8 +964,8 @@ UpdateOSD:
 					GuiControl, guithree:, MyText3, 
 					;sleep, 300
 					GuiControl, guitwo:, MyText2, 
+					}
 
-}
 					;GuiControl, guithree:, MyText3, %loopcount%
 
 					;if TimeMinz - LastTimeMinz is between 1 and 5
@@ -981,10 +1005,10 @@ UpdateOSD:
 				sleep, 500
 				;//////	8 Minute bug fix
 				if (!(TimeMins1="0") and !(TimeMins2="0")){
-
 				if (TimeMins2=""){
 					TimeMins2=8
-				}}
+				}
+				}
 
 				if TimeMins1 < 1 and TimeMins2 = 0
 				{
@@ -1040,10 +1064,10 @@ UpdateOSD:
 		} 
 	} ;//// end ifwin
 	else
+	{
 		Gui, guione: Hide
 		Gui, guitwo: Hide
 		Gui, guithree: Hide
-	return
-} ;//// end UpdateOSD
+	}
 
-
+} ;//// end UpdateOSD - this is on a timer so it doesn't return

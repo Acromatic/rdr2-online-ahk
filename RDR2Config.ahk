@@ -1,5 +1,3 @@
-; v1.0.1
-; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 
 #NoEnv
@@ -21,47 +19,9 @@ IfExist, %CFG%
 { 
 	;/////////////////   Settings     ///////////////
 	IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
-	IniRead, Read_UpdateEditorOnStart, %CFG%, Settings, UpdateEditorOnStart
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
 
-	;/////////////////    Update Editor from Config on Start    ///////////////
-	if Read_UpdateEditorOnStart = 1
-	{
-		URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,downloadconfig.txt
-	 	 if (errorlevel) {
-	   	 msgbox, 0, Error - RDR2-Online-AHK Macros, Received error response from GitHub and failed to download RDR2Config.ahk.`nPlease retry later or check 									manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
-	    	FileDelete, downloadconfig.txt
-	   	return
-	  	}
-	
-	  	FileReadLine, downloadconfig, downloadconfig.txt, 1
-	  	FileReadLine, currentVersion, %A_ScriptName%, 1
-	  	if (downloadconfig = currentVersion) {
-	   		 FileDelete, downloadconfig.txt
-	    		if (!silentSuccess)
-	      			msgbox, You are running the latest version!`n%update%`nIf something doesn't work please let me know!`nhttps://github.com/Acromatic/rdr2-online-ahk/
-	  } else if (InStr(downloadconfig, "; v") = 1) {
-	  	MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of RDR2Config.ahk has been released.`n%currentVersion% <-- your version   %update% <-- available update`nWould 						you like to update?`nWarning: This will replace script files, custom scripts should search "fork" in the script to update from their own fork/repo!
-	    IfMsgBox Yes
-	    {
-	      	FileCopy, downloadconfig.txt, %A_ScriptName%, 1
-	      	FileDelete, downloadconfig.txt
-	      	FileDelete, README.md
-	      	msgbox, 0, Update successful! - RDR2Config.ahk, Update successful, the script will now reload!`nHint: Check for new stuff `;)
-	      	reload
-	    }
-	    IfMsgBox No
-	    {
-	      	msgbox, This script will NOT be updated!`nHint: Set AutoUpdateOnStart to false to disable automatic checking!
-	      	FileDelete, downloadconfig.txt
-	    }
-	  } else {
-	    	msgbox, 0, Error - RDR2-Online-AHK Macros, Received invalid response from GitHub and failed to download RDR2Config.ahk.`nPlease retry later or check 	manually.`nHint: Set 				CheckForUpdates to false to disable automatic checking!
-	    	FileDelete, downloadconfig.txt
-	  }
-	}	
-	
 	;/////////////////// Singleplayer ONLY binds ///////////////
 	IniRead,Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
 	
@@ -69,9 +29,6 @@ IfExist, %CFG%
 	IniRead,Read_PassiveToggleCookingOnKey, %CFG%,Hotkeys,PassiveToggleCookingOn
 	IniRead,Read_PassiveToggleCookingOffKey, %CFG%,Hotkeys,PassiveToggleCookingOff
 	
-	IniRead,Read_ToggleEnhancedAFKKey, %CFG%,Hotkeys,ToggleEnhancedAFK
-	IniRead,Read_TogglePatrolAFKKey, %CFG%,Hotkeys,TogglePatrolAFK
-	IniRead,Read_ToggleAFKKey, %CFG%,Hotkeys,ToggleAFK
 	IniRead,Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
 	IniRead,Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
 	IniRead,Read_ToggleFinaleKey, %CFG%,Hotkeys,ToggleFinale
@@ -99,6 +56,11 @@ IfExist, %CFG%
 	IniRead,Read_VolumeUpKey, %CFG%, Hotkeys,VolumeUp
 	IniRead,Read_ReloadScriptKey, %CFG%, Hotkeys,ReloadScript
 	IniRead,Read_AbortScriptKey, %CFG%, Hotkeys,AbortScript
+
+	IniRead, Read_TimerAddMinutesKey, %CFG%, Hotkeys,TimerAddMinutes
+	IniRead, Read_TimerSubMinutesKey, %CFG%, Hotkeys,TimerSubMinutes
+	IniRead, Read_TimerResetMinutesKey, %CFG%, Hotkeys,TimerResetMinutes
+	IniRead, Read_TimerResetSecondsKey, %CFG%, Hotkeys,TimerResetSeconds
 	
 		;////// GuiControls
 	GuiControl,,BeatPoker,%Read_BeatPokerKey%
@@ -106,9 +68,6 @@ IfExist, %CFG%
 	GuiControl,,PassiveToggleCookingOn,%Read_PassiveToggleCookingOnKey%
 	GuiControl,,PassiveToggleCookingOff,%Read_PassiveToggleCookingOffKey%
 	
-	GuiControl,,ToggleEnhancedAFK,%Read_ToggleEnhancedAFKKey%
-	GuiControl,,TogglePatrolAFK,%Read_TogglePatrolAFKKey%
-	GuiControl,,ToggleAFK,%Read_ToggleAFKKey%
 	GuiControl,,ToggleDefensive,%Read_ToggleDefensiveKey%
 	GuiControl,,ToggleClicker,%Read_ToggleClickerKey%
 	GuiControl,,ToggleFinale,%Read_ToggleFinaleKey%
@@ -136,88 +95,95 @@ IfExist, %CFG%
 	GuiControl,,VolumeUp,%Read_VolumeUpKey%
 	GuiControl,,ReloadScript,%Read_ReloadScriptKey%
 	GuiControl,,AbortScript,%Read_AbortScriptKey%
+
+	GuiControl,,TimerAddMinutes,%Read_TimerAddMinutesKey%
+	GuiControl,,TimerSubMinutes,%Read_TimerSubMinutesKey%
+	GuiControl,,TimerResetMinutes,%Read_TimerResetMinutesKey% 
+	GuiControl,,TimerResetSeconds,%Read_TimerResetSecondsKey%
 }
 	
-Gui, Add, Text, x10 y20 w150 h20,PassiveToggleCookingOnKey:
-Gui, Add, Text, x10 y50 w150 h20,PassiveToggleCookingOff Key:
+Gui, Add, Text, x10 y20 w150 h20,BeatPoker Key:
+
+Gui, Add, Text, x10 y50 w150 h20,PassiveToggleCookingOn Key:
+Gui, Add, Text, x10 y80 w150 h20,PassiveToggleCookingOnKey:
+
+Gui, Add, Text, x10 y110 w150 h20,ToggleDefensive Key:
+Gui, Add, Text, x10 y140 w150 h20,ToggleClicker Key:
+Gui, Add, Text, x10 y170 w150 h20,ToggleFinale Key:
+
+Gui, Add, Text, x10 y200 w150 h20,Health Key:
+Gui, Add, Text, x10 y230 w150 h20,Stamina Key:
+Gui, Add, Text, x10 y260 w150 h20,Deadeye Key:
+Gui, Add, Text, x10 y290 w150 h20,HealCores Key:
+
+Gui, Add, Text, x10 y320 w150 h20,WildernessCamp Key:
+Gui, Add, Text, x10 y350 w150 h20,ItemSlot Key:
 	
-Gui, Add, Text, x10 y80 w150 h20,ToggleEnhancedAFK Key:
-Gui, Add, Text, x10 y110 w150 h20,TogglePatrolAFK Key:
-Gui, Add, Text, x10 y140 w150 h20,ToggleAFK Key:
+Gui, Add, Text, x10 y380 w150 h20,HuntingWagon Key:
+Gui, Add, Text, x10 y410 w150 h20,BountyWagon Key:
+Gui, Add, Text, x320 y20 w150 h20,DismissWagons Key:
+Gui, Add, Text, x320 y50 w150 h20,FeedHorse Key:
 
-Gui, Add, Text, x10 y170 w150 h20,ToggleDefensive Key:
-Gui, Add, Text, x10 y200 w150 h20,ToggleClicker Key:
-Gui, Add, Text, x10 y230 w150 h20,ToggleFinale Key:
+Gui, Add, Text, x320 y80 w150 h20,ShowPosses Key:
+Gui, Add, Text, x320 y110 w150 h20,FormPosse Key:
+Gui, Add, Text, x320 y140 w150 h20,QuickRace Key:
+Gui, Add, Text, x320 y170 w150 h20,MenuSlotTwo Key:
+Gui, Add, Text, x320 y200 w150 h20,MenuSlotFour Key:
 
-Gui, Add, Text, x10 y260 w150 h20,Health Key:
-Gui, Add, Text, x10 y290 w150 h20,Stamina Key:
-Gui, Add, Text, x10 y320 w150 h20,Deadeye Key:
-Gui, Add, Text, x10 y350 w150 h20,HealCores Key:
-	
-Gui, Add, Text, x10 y380 w150 h20,WildernessCamp Key:
-Gui, Add, Text, x10 y410 w150 h20,ItemSlot Key:
+Gui, Add, Text, x320 y230 w150 h20,VolumeDown Key:
+Gui, Add, Text, x320 y260 w150 h20,VolumeUp Key:
+Gui, Add, Text, x320 y290 w150 h20,ReloadScript Key:
+Gui, Add, Text, x320 y320 w150 h20,AbortScript Key:
 
-Gui, Add, Text, x320 y20 w150 h20,HuntingWagon Key:
-Gui, Add, Text, x320 y50 w150 h20,BountyWagon Key:
-Gui, Add, Text, x320 y80 w150 h20,DismissWagons Key:
-Gui, Add, Text, x320 y110 w150 h20,FeedHorse Key:
-
-Gui, Add, Text, x320 y140 w150 h20,ShowPosses Key:
-Gui, Add, Text, x320 y170 w150 h20,FormPosse Key:
-Gui, Add, Text, x320 y200 w150 h20,QuickRace Key:
-Gui, Add, Text, x320 y230 w150 h20,MenuSlotTwo Key:
-Gui, Add, Text, x320 y260 w150 h20,MenuSlotFour Key:
-
-Gui, Add, Text, x320 y290 w150 h20,VolumeDown Key:
-Gui, Add, Text, x320 y320 w150 h20,VolumeUp Key:
-Gui, Add, Text, x320 y350 w150 h20,ReloadScript Key:
-Gui, Add, Text, x320 y380 w150 h20,AbortScript Key:
-Gui, Add, Text, x320 y410 w150 h20,BeatPoker Key:
+Gui, Add, Text, x320 y350 w150 h20,TimerAddMinutes Key:
+Gui, Add, Text, x320 y380 w150 h20,TimerSubMinutes Key:
+Gui, Add, Text, x320 y410 w150 h20,TimerResetMinutes Key:
+Gui, Add, Text, x320 y440 w150 h20,TimerResetSeconds Key:
 
 ;///////// HotKey Edit Boxes
-Gui, Add, Hotkey,x480 y410 w150 h20 vBeatPokerKey,F11
 
-Gui, Add, Hotkey, x160 y20 w150 h20 vPassiveToggleCookingOnKey,^Enter
-Gui, Add, Hotkey, x160 y50 w150 h20 vPassiveToggleCookingOffKey,F10
+Gui, Add, Hotkey, x160 y20 w150 h20 vBeatPokerKey,F11
 
-Gui, Add, Hotkey, x160 y80 w150 h20 vToggleEnhancedAFKKey,j
-Gui, Add, Hotkey, x160 y110 w150 h20 vTogglePatrolAFKKey,o
-Gui, Add, Hotkey, x160 y140 w150 h20 vToggleAFKKey,k
-	
-Gui, Add, Hotkey, x160 y170 w150 h20 vToggleDefensiveKey,F5
-Gui, Add, Hotkey, x160 y200 w150 h20 vToggleClickerKey,z
-Gui, Add, Hotkey, x160 y230 w150 h20 vToggleFinaleKey,F9
+Gui, Add, Hotkey, x160 y50 w150 h20 vPassiveToggleCookingOnKey,^Enter
+Gui, Add, Hotkey, x160 y80 w150 h20 vPassiveToggleCookingOffKey,F10
 
-Gui, Add, Hotkey, x160 y260 w150 h20 vHealthKey,NumpadHome
-Gui, Add, Hotkey,x160 y290 w150 h20 vStaminaKey,NumpadUp
-Gui, Add, Hotkey,x160 y320 w150 h20 vDeadeyeKey,NumpadPgUp
-Gui, Add, Hotkey,x160 y350 w150 h20 vHealCoresKey,NumpadLeft
+Gui, Add, Hotkey, x160 y110 w150 h20 vToggleDefensiveKey,F5
+Gui, Add, Hotkey, x160 y140 w150 h20 vToggleClickerKey,z
+Gui, Add, Hotkey, x160 y170 w150 h20 vToggleFinaleKey,F9
 
-Gui, Add, Hotkey,x160 y380 w150 h20 vWildernessCampKey,NumpadClear 
-Gui, Add, Hotkey,x160 y410 w150 h20 vItemSlotKey,NumpadRight 
+Gui, Add, Hotkey, x160 y200 w150 h20 vHealthKey,NumpadHome
+Gui, Add, Hotkey, x160 y230 w150 h20 vStaminaKey,NumpadUp
+Gui, Add, Hotkey, x160 y260 w150 h20 vDeadeyeKey,NumpadPgUp
+Gui, Add, Hotkey,x160 y290 w150 h20 vHealCoresKey,NumpadLeft
 
-Gui, Add, Hotkey,x480 y20 w150 h20 vHuntingWagonKey,NumpadEnd 
-Gui, Add, Hotkey,x480 y50 w150 h20 vBountyWagonKey,NumpadDown 
-Gui, Add, Hotkey,x480 y80 w150 h20 vDismissWagonsKey,NumpadPgDn
-Gui, Add, Hotkey,x480 y110 w150 h20 vFeedHorseKey,NumpadIns
+Gui, Add, Hotkey,x160 y320 w150 h20 vWildernessCampKey,NumpadClear 
+Gui, Add, Hotkey,x160 y350 w150 h20 vItemSlotKey,NumpadRight 
 
-Gui, Add, Hotkey,x480 y140 w150 h20 vShowPossesKey,t
-Gui, Add, Hotkey,x480 y170 w150 h20 vFormPosseKey,y
-Gui, Add, Hotkey,x480 y200 w150 h20 vQuickRaceKey,F6
-Gui, Add, Hotkey, x480 y230 w150 h20 vMenuSlotTwoKey,NumpadDiv 
-Gui, Add, Hotkey,x480 y260 w150 h20 vMenuSlotFourKey,NumpadMult 
-Gui, Add, Hotkey,x480 y290 w150 h20 vVolumeDownKey,NumpadSub
-Gui, Add, Hotkey,x480 y320 w150 h20 vVolumeUpKey,NumpadAdd
-Gui, Add, Hotkey, x480 y350 w150 h20 vReloadScriptKey,F10
-Gui, Add, Hotkey,x480 y380 w150 h20 vAbortScriptKey,^Escape
+Gui, Add, Hotkey,x160 y380 w150 h20 vHuntingWagonKey,NumpadEnd 
+Gui, Add, Hotkey,x160 y410 w150 h20 vBountyWagonKey,NumpadDown 
+Gui, Add, Hotkey,x480 y20 w150 h20 vDismissWagonsKey,NumpadPgDn
+Gui, Add, Hotkey,x480 y50 w150 h20 vFeedHorseKey,NumpadIns
+
+Gui, Add, Hotkey,x480 y80 w150 h20 vShowPossesKey,t
+Gui, Add, Hotkey,x480 y110 w150 h20 vFormPosseKey,y
+Gui, Add, Hotkey,x480 y140 w150 h20 vQuickRaceKey,F6
+Gui, Add, Hotkey,x480 y170 w150 h20 vMenuSlotTwoKey,NumpadDiv 
+Gui, Add, Hotkey,x480 y200 w150 h20 vMenuSlotFourKey,NumpadMult 
+
+Gui, Add, Hotkey, x480 y230 w150 h20 vVolumeDownKey,NumpadSub
+Gui, Add, Hotkey,x480 y260 w150 h20 vVolumeUpKey,NumpadAdd
+Gui, Add, Hotkey,x480 y290 w150 h20 vReloadScriptKey,F10
+Gui, Add, Hotkey,x480 y320 w150 h20 vAbortScriptKey,^Escape
+
+Gui, Add, Hotkey, x480 y350 w150 h20 TimerAddMinutesKey
+Gui, Add, Hotkey,x480 y380 w150 h20 TimerSubMinutesKey
+Gui, Add, Hotkey,x480 y410 w150 h20 TimerResetMinutesKey
+Gui, Add, Hotkey,x480 y440 w150 h20 TimerResetSecondsKey
+
 
 if Read_LoadEditorOnStart = 1
 Gui, Add, CheckBox, x60 y450 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
 else Gui, Add, CheckBox, x60 y450 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
-
-if Read_UpdateEditorOnStart = 1 
-Gui, Add, CheckBox, x70 y470 w150 h20 Checked vUpdateEditorOnStart, Auto Update Editor on start?
-else Gui, Add, CheckBox, x70 y470 w150 h20 vUpdateEditorOnStart, Auto Update Editor on start?
 
 if Read_AutoUpdateOnStart = 1
 Gui, Add, CheckBox, x360 y450 w150 h20 Checked vAutoUpdateOnStart, Auto Update on start?
@@ -250,7 +216,6 @@ Save:
 
 	;/////////////////   Settings     ///////////////
 	IniWrite, %LoadEditorOnStart%, %CFG%, Settings, LoadEditorOnStart
-	IniWrite, %UpdateEditorOnStart%, %CFG%, Settings, UpdateEditorOnStart
 	IniWrite, %AutoUpdateOnStart%, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, %SilentUpdateOnStart%, %CFG%, Settings, SilentUpdateOnStart
 	
@@ -260,10 +225,7 @@ Save:
 	;//////////////////  Online Macros  ////////////////////
 	IniWrite, %PassiveToggleCookingOnKey%, %CFG%, Hotkeys, PassiveToggleCookingOn
 	IniWrite, %PassiveToggleCookingOffKey%, %CFG%, Hotkeys, PassiveToggleCookingOff
-	IniWrite, %ToggleEnhancedAFKKey%, %CFG%, Hotkeys, ToggleEnhancedAFK
-	IniWrite, %TogglePatrolAFKKey%, %CFG%, Hotkeys, TogglePatrolAFK
-	
-	IniWrite, %ToggleAFKKey%, %CFG%, Hotkeys, ToggleAFK
+
 	IniWrite, %ToggleDefensiveKey%, %CFG%, Hotkeys, ToggleDefensive
 	IniWrite, %ToggleClickerKey%, %CFG%, Hotkeys, ToggleClicker
 	IniWrite, %ToggleFinaleKey%, %CFG%, Hotkeys, ToggleFinale
@@ -272,6 +234,7 @@ Save:
 	IniWrite, %StaminaKey%, %CFG%, Hotkeys, Stamina
 	IniWrite, %DeadeyeKey%, %CFG%, Hotkeys, Deadeye
 	IniWrite, %HealCoresKey%, %CFG%, Hotkeys, HealCores
+
 	IniWrite, %WildernessCampKey%, %CFG%, Hotkeys, WildernessCamp
 	IniWrite, %ItemSlotKey%, %CFG%, Hotkeys, ItemSlot
 	
@@ -285,12 +248,17 @@ Save:
 	IniWrite, %QuickRaceKey%, %CFG%, Hotkeys, QuickRace
 	IniWrite, %MenuSlotTwoKey%, %CFG%, Hotkeys, MenuSlotTwo
 	IniWrite, %MenuSlotFourKey%, %CFG%, Hotkeys, MenuSlotFour
+
 	IniWrite, %VolumeDownKey%, %CFG%, Hotkeys, VolumeDown
-	
 	IniWrite, %VolumeUpKey%, %CFG%, Hotkeys, VolumeUp
 	IniWrite, %ReloadScriptKey%, %CFG%, Hotkeys, ReloadScript
 	IniWrite, %AbortScriptKey%, %CFG%, Hotkeys, AbortScript
-	
+
+	IniWrite, %TimerAddMinutesKey%, %CFG%, Hotkeys,TimerAddMinutes
+	IniWrite, %TimerSubMinutesKey%, %CFG%, Hotkeys,TimerSubMinutes
+	IniWrite, %TimerResetMinutesKey% , %CFG%, Hotkeys,TimerResetMinutes
+	IniWrite, %TimerResetSecondsKey%, %CFG%, Hotkeys,TimerResetSeconds
+
 	ExitApp
 return
 }
