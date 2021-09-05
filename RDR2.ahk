@@ -1,5 +1,3 @@
-; v1.0.1
-; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 
 #NoEnv
@@ -21,33 +19,67 @@ Global KeyPressDuration := 90		;----> Duration each key press is held down.
 setkeydelay, %KeySendDelay%, %KeyPressDuration%, true
 
 CFG = config.ini
-; Check for updates?
-CheckForUpdates    	     := true  ; Initial status IS OPTIONAL - if you change the code set this false until you change your update URL
-IsEnhancedAFKActivated   := false ; Initial status should always be false ( Also mostly passive, don't rebind)
-IsAFKActivated       	:= false ; Initial status should always be false
-IsPatrolAFKActivated 	:= false ; Initial status should always be false
-IsClickerActivated   	:= false ; Initial status should always be false
-IsCookingActivated    	:= false ; Initial status should always be false
+
+IsClickerActivated   		:= false ; Initial status should always be false
+IsCookingActivated    		:= false ; Initial status should always be false
 IsMissionFailSafeActivated    	:= false ; Initial status should always be false
-MissionFailSafeType     := 0 	 ; Initial status should always be zero
-IsTimerSet     := 0 	 ; Initial status should always be zero
-TimeMins 		:= 0
-TimeSecs 		:= 0
-LoopCount      := 3      ;Number of times to multisample TimeSecz, values < 3 will break multisampling
-Pack 		:= 0		;Status should always be 0
+MissionFailSafeType     	:= 0 	 ; Initial status should always be zero
+IsTimerSet     			:= 0 	 ; Initial status should always be zero
+loopcount			:= 0	 ; Initial status should always be zero
 
 ;////// Initialize the GUI for On Screen Display
-CustomColor := "AAAAAA"  ; Can be any RGB color (it will be made transparent below).
-Gui +LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
-Gui, Color, %CustomColor%
-Gui, Font, s19  ; Set a large font size (32-point).
-Gui, Add, Text, vMyText cLime, XXXXX YYYYY  ; XX & YY serve to auto-size the window.
+CustomColor := "7F7F7F"  ; Can be any RGB color (it will be made transparent below).
 
-; Make all pixels of this color transparent and make the text itself translucent (150):
-WinSet, TransColor, %CustomColor% 150
-SetTimer, UpdateOSD, 10  ; There are also delays in the function
+;////////////////////////////////////////// GUI ONE //////////////////////////////////////
+;/// gui window for a line of text 
+Gui, guione: +LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+Gui, guione: Color, %CustomColor%
+Gui, guione: Font, s19  ; Set a large font size (32-point).
+Gui, guione: Add, Text, Left vMyText cLime, 00:00  ; 00:00 serves to auto-size the window.
+;////// Make all pixels of this color transparent and make the text itself translucent (150):
+WinSet, TransColor, %CustomColor% 200
+;WinSet, AlwaysOnTop, %CustomColor% 150
+
+SetTimer, UpdateOSD, 300  
 Gosub, UpdateOSD
-;Gui, Show, x800 y50 NoActivate  ; NoActivate avoids deactivating the currently active window.
+
+;////// Initialize the GUI for On Screen Display
+Gui, guione: Show, x905 y70 w100 h60 NoActivate  ; NoActivate avoids deactivating the currently active window.
+
+;////////////////////////////////////////// GUI TWO //////////////////////////////////////
+;/// another gui window for another line of text 
+Gui, guitwo: +LastFound +AlwaysOnTop -Caption +ToolWindow ;+ToolWindow avoids a taskbar button and alt-tab menuitem.
+Gui, guitwo: Color, %CustomColor%
+Gui, guitwo: margin, 5,10
+Gui, guitwo: font, s19 bold cwhite, Courier
+Gui, guitwo: Add, Text, Center vMyText2 cYellow, \_RedDead-2-Online-Macros-Enabled_/ ; serves to auto-size the window.
+;////// Make all pixels of this color transparent and make the text itself translucent (150):
+WinSet, TransColor, %CustomColor% 150
+;WinSet, AlwaysOnTop, %CustomColor% 150
+Gui, guitwo: Show, x670 y110 w700 h40 NoActivate  ; NoActivate avoids deactivating the currently active window.
+
+;////////////////////////////////////////// GUI THREE //////////////////////////////////////
+;/// yet another gui window for yet another line of text 
+;Gui, guithree: Color, 339900
+Gui, guithree: +LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+Gui, guithree: Color, %CustomColor%
+Gui, guithree: margin, 5,10
+Gui, guithree: font, s19 bold cwhite, Courier
+Gui, guithree: Add, Text, Center vMyText3 cWhite, \___-- By: Acromatic --___/ ; "        " serve to auto-size the window.
+;////// Make all pixels of this color transparent and make the text itself translucent (150):
+WinSet, TransColor, %CustomColor% 220
+;WinSet, AlwaysOnTop, %CustomColor% 150
+Gui, guithree: Show, x740 y150 w600 h40 NoActivate  ; NoActivate avoids deactivating the currently active window.
+sleep, 600
+Gui, guione: Hide   ; gui 1
+sleep, 1000
+Gui, guithree: Hide ; gui 3
+sleep, 1000
+Gui, guitwo: Hide   ; gui 2
+
+;////// Automatic Anti-Away-From-Keyboard - Fires a timed Send {AppsKey} to disable in-game AFK Disconnects 
+;////// Least destructive key, requires RedDead Active Window
+SetTimer, UpdateAntiAFK, 180000
 
 ;////// another gui script snippet
 ;Gui Color, 0xFF0000
@@ -56,16 +88,12 @@ Gosub, UpdateOSD
 ;Gui Show, w200 h200
 ;return
 
-
 ;///////////// Write config.ini (Script Configuration w/Hotkeys) /////////////
-
 IfNotExist,%CFG%
 {
-	
 ;/////////////////   Settings     ///////////////
 	
 	IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
-	IniWrite, 1, %CFG%, Settings, UpdateEditorOnStart
 	IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
 	
@@ -78,9 +106,9 @@ IfNotExist,%CFG%
 	IniWrite, ^Enter, %CFG%, Hotkeys, PassiveToggleCookingOn
 	IniWrite, x, %CFG%, Hotkeys, PassiveToggleCookingOff
 	
-	IniWrite, j, %CFG%, Hotkeys, ToggleEnhancedAFK
-	IniWrite, o, %CFG%, Hotkeys, TogglePatrolAFK
-	IniWrite, k, %CFG%, Hotkeys, ToggleAFK
+	;IniWrite, j, %CFG%, Hotkeys, ToggleEnhancedAFK
+	;IniWrite, o, %CFG%, Hotkeys, TogglePatrolAFK
+	;IniWrite, k, %CFG%, Hotkeys, ToggleAFK
 	
 	IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
 	IniWrite, z, %CFG%, Hotkeys, ToggleClicker
@@ -122,7 +150,6 @@ IfExist, %CFG%
 { 
 ;/////////////////   Settings     ///////////////
 	IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
-	IniRead, Read_UpdateEditorOnStart, %CFG%, Settings, UpdateEditorOnStart
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
 	
@@ -133,9 +160,9 @@ IfExist, %CFG%
 	IniRead, Read_PassiveToggleCookingOnKey, %CFG%,Hotkeys,PassiveToggleCookingOn
 	IniRead, Read_PassiveToggleCookingOffKey, %CFG%,Hotkeys,PassiveToggleCookingOff
 	
-	IniRead, Read_ToggleEnhancedAFKKey, %CFG%,Hotkeys,ToggleEnhancedAFK
-	IniRead, Read_TogglePatrolAFKKey, %CFG%,Hotkeys,TogglePatrolAFK
-	IniRead, Read_ToggleAFKKey, %CFG%,Hotkeys,ToggleAFK
+	;IniRead, Read_ToggleEnhancedAFKKey, %CFG%,Hotkeys,ToggleEnhancedAFK
+	;IniRead, Read_TogglePatrolAFKKey, %CFG%,Hotkeys,TogglePatrolAFK
+	;IniRead, Read_ToggleAFKKey, %CFG%,Hotkeys,ToggleAFK
 	IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
 	IniRead, Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
 	IniRead, Read_ToggleMissionFailSafeKey, %CFG%,Hotkeys,ToggleMissionFailSafe
@@ -172,14 +199,40 @@ IfExist, %CFG%
 
 if(Read_AutoUpdateOnStart=1)
 {
-	; Check for script updates on startup
-	if (CheckForUpdates=true) {
-	  performUpdateCheck(true)
+	Gui, guione: Show, x905 y70 w100 h60 NoActivate 
+	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
+  	if (errorlevel) {
+    		GuiControl, guione:, MyText, Error response from GitHub, update check was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+    	
+	FileDelete, updatecheck.txt
+    	return
+  	}
+  	FileReadLine, updatecheck, updatecheck.txt, 1
+	if (Update.ahk)
+  	FileReadLine, currentVersion, Update.ahk, 1
+  	if (updatecheck = currentVersion){
+   		FileDelete, updatecheck.txt
+    		GuiControl, guione:, MyText, Update failed, scripts will not be updated. version %updatecheck% was detected.
+		return
 	}
+	else if (InStr(updatecheck, "; v") = 1) {
+    		if (!SilentSuccess)
+    		GuiControl, guione:, MyText, Update available, scripts will now be updated to version %updatecheck% 			- Warning: do NOT interupt the update process!
+      		
+		FileCopy, update.txt, Update.ahk, 1
+      		FileDelete, update.txt
+	}
+	Sleep, 1000
+	;C:\Program Files\AutoHotkey
+	;Run %A_AhkPath%  Read_SilentUpdateOnStart
+	Run *RunAs "C:\Program Files\AutoHotkey" "Update.ahk" Read_SilentUpdateOnStart
+	ExitApp
+	return
 }
 
 if(Read_LoadEditorOnStart=1)
 {
+    	GuiControl, guione:, MyText, Starting Configuration Editor...
 	RunWait, RDR2Config.ahk
 }
 ;/////////////////// Singleplayer ONLY binds ///////////////
@@ -191,9 +244,6 @@ Hotkey, %Read_BeatPokerKey%, BeatPoker
 Hotkey, %Read_PassiveToggleCookingOnKey%, PassiveToggleCookingOn
 Hotkey, %Read_PassiveToggleCookingOffKey%, PassiveToggleCookingOff
 
-Hotkey, %Read_ToggleEnhancedAFKKey%, ToggleEnhancedAFK
-Hotkey, %Read_TogglePatrolAFKKey%, TogglePatrolAFK
-Hotkey, %Read_ToggleAFKKey%, ToggleAFK
 Hotkey, %Read_ToggleDefensiveKey%, ToggleDefensive
 Hotkey, %Read_ToggleClickerKey%, ToggleClicker
 Hotkey, %Read_ToggleMissionFailSafeKey%, ToggleMissionFailSafe
@@ -227,96 +277,8 @@ Hotkey, %Read_TimerSubMinutesKey%, TimerSubMinutes
 Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
 Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
 
-; ==============
-; === UPDATE ===
-; ==============
-performUpdateCheck(silentSuccess = false) {
-  URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,update.txt
-  if (errorlevel) {
-    msgbox, 0, Error - RDR2 Online AHK-Macros, Received error response from GitHub and update check was canceled.`nPlease retry later or check manually.`n`nHint: Set CheckForUpdates to false to disable automatic checking!
-    FileDelete, update.txt
-    return
-  }
-
-  FileReadLine, update, update.txt, 1
-  FileReadLine, currentVersion, %A_ScriptName%, 1
-  if (update = currentVersion) {
-    FileDelete, update.txt
-    if (!silentSuccess)
-      msgbox, You are running the latest version!`n`n%update%`n`nIf something doesn't work please let me know!`n`nhttps://github.com/Acromatic/rdr2-online-ahk/
-  } else if (InStr(update, "; v") = 1) {
-    MsgBox, 4, Update available! - RDR2 Online AHK-Macros, A new version of RDR2 Online AHK-Macros has been released!`n`n%currentVersion% <-- your version`n%update% <-- available update`n`nWould you like to update?`n`nWarning: If you don't use config.ahk this might reset all your settings!
-    IfMsgBox Yes
-    {
-      FileCopy, update.txt, %A_ScriptName%, 1
-      FileDelete, update.txt
-      FileDelete, README.md
-
-	;/// Update the readme file
-      UpdateReadMe()
-
-      msgbox, 0, Update successful! - RDR2 Online AHK-Macros, Update successful, the script will now reload!`n`nHint: Check for new stuff `;)
-      reload
-    }
-    IfMsgBox No
-    {
-      msgbox, This script will NOT be updated!`n`nHint: Set CheckForUpdates to false to disable automatic checking!
-      FileDelete, update.txt
-    }
-  } else {
-    msgbox, 0, Error - RDR2 Online AHK-Macros, Received invalid response from GitHub and update check was canceled.`nPlease retry later or check manually.`n`nHint: Set CheckForUpdates to false to disable automatic checking!
-    FileDelete, update.txt
-  }
-}
-return
-
-CheckForUpdates:
-  performUpdateCheck()
-  return
-  
-UpdateReadMe()
-{
-;///////////////// Update Readme file  //////////////////////
-URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/README.md,readme.txt
-	  if (errorlevel) {
-	    msgbox, 0, Error - RDR2-Online-AHK Macros, Received error response from GitHub and failed to download README.md.`nPlease retry later or check 				manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
-	    FileDelete, readme.txt
-	    return
-	  }
-	
-	  FileReadLine, readme, readme.txt, 1
-	  FileReadLine, currentVersion, %A_ScriptName%, 1
-	  if (readme = currentVersion) {
-	    FileDelete, readme.txt
-	    if (!silentSuccess)
-	      msgbox, You have the latest version of README.md!`n%update%`nIf something doesn't work please let me know!`nhttps://github.com/Acromatic/rdr2-online-	ahk/
-		  } 
-		  else if (InStr(readme, "; v") = 1) {
-		    MsgBox, 4, Update available! - RDR2-Online-AHK Macros, A new version of README.md has been released!`n%currentVersion% <-- your version`n%update% <-- available update`nWould you like to update?`nWarning: If you don't use config.ini this might delete your README.md!
-		    IfMsgBox Yes
-		    {
-		      FileCopy, readme.txt, %A_ScriptName%, 1
-		      FileDelete, readme.txt
-		      FileDelete, README.md
-		      msgbox, 0, Update successful! - README.md, Update successful!
-		      reload
-		    }
-		    IfMsgBox No
-		    {
-		      msgbox, This script will NOT be updated!`nHint: Set CheckForUpdates to false to disable automatic checking!
-		      FileDelete, readme.txt
-		    }
-		  } 
-		  else {
-		  msgbox, 0, Error - RDR2-Online-AHK Macros, Received invalid response from GitHub and failed to download README.md.`nPlease retry later or	check manually.`nHint: Set CheckForUpdates to false to disable automatic checking!
-	    FileDelete, readme.txt
-	  }
-	}
-return
-;/////////////// End Update README.md //////////////////////////
-
 ;///////////////////////////   Auto Keys   /////////////////////////////////////
-#IfWinActive, Red Dead Redemption 2      
+if WinActive("Red Dead Redemption 2")
 {
 turnCapslockOff()
 
@@ -335,7 +297,7 @@ turnCapslockOff()
 	KeyWait, s, T0.1
 	
 	if (ErrorLevel){
-	;Send {s down}
+	Send {s down}
 	}
 
 	
@@ -356,99 +318,12 @@ turnCapslockOff()
 	}
 return
 }
-;/////////////////////////////////////////////////////////////////////////////
-;//////////////////////////   Enhanced Catalog and AFK     ///////////////////
-
-; Toggle AFK - tap a key to avoid getting kicked, you can also use the catalog
-; This one is passive, it makes holding j unnessary incase you need to go AFK quickly and easily the normal way
-; only better! It automatically shuts off and uses the J key bind so you'll never even notice how awsome it is!
-
-ToggleEnhancedAFK:
-  IsEnhancedAFKActivated := !IsEnhancedAFKActivated
-
-  if (IsEnhancedAFKActivated) {
-    Loop {
-   	;ToolTip, Enhanced AFK Mode Enabled,0,0
-	Send {j down}
-	LongDelay()
-	LongDelay()
-    	
-   	;ToolTip, Enhanced AFK Mode Disabled,0,0
-	Send {j}
-        break
-      }
-    }
-  return
-
-;//////////////////////////    Patrol Toggle     /////////////////////////////
-
-; Toggle Patrol AFK (move left/right in a loop to not get kicked)
-; This one is for Horseback and Walking Patrols, mostly it just looks cool
-
-TogglePatrolAFK:
-  IsPatrolAFKActivated := !IsPatrolAFKActivated
-
-  if (IsPatrolAFKActivated) {
-    Loop {
-   	;ToolTip, Patrol Mode Enabled,0,0
-
-      	LongDelay()
-	Send {d up}
-	ShortDelay()
-	Send {a down}
-
-      if (!IsPatrolAFKActivated) {
-   	;ToolTip, Patrol Mode Disabled,0,0
-	ShortDelay()
-	Send {a up}
-        break
-      }
-
-      	LongDelay()
-	Send {a up}
-	ShortDelay()
-	Send {d down}
-
-      if (!IsPatrolAFKActivated) {
-   	;ToolTip, Patrol Mode Disabled,0,0
-	ShortDelay()
-	Send {d up}
-        break
-      }
-    }
-  }
-  return
-
-;//////////////////////////   AFK Toggle     /////////////////////////////
-
-; Toggle AFK - tap a key to avoid getting kicked, you can also use the catalog 
-; This one is for carts (Bounty) and Stealth-AFK, it changes to reverse view to keep an eye on things
-
-ToggleAFK:
-  IsAFKActivated := !IsAFKActivated
-
-  if (IsAFKActivated) {
-    Loop {
-   	;ToolTip, AFK Mode Enabled,0,0
-
-      	SuperLongDelay()
-	Send {c up}
-      	SuperLongDelay()
-	Send {c down}
-
-      if (!IsAFKActivated) {
-   	;ToolTip, AFK Mode Disabled,0,0
-	Send {c up}
-        break
-      }
-    }
-  }
-  return
 
 ;//////////////////////////   Clicker Toggle     /////////////////////////////
 
 ; Toggle Rapid-Fire Clicker
-
+if WinActive("Red Dead Redemption 2")
+{
 ToggleClicker:
   IsClickerActivated := !IsClickerActivated
 
@@ -758,7 +633,7 @@ if (IsCookingActivated) {
 		Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
 		Send {Down}
 		LongDelay()
-		Send {Enter up}
+;		Send {Enter up}
 	}
 }
 return
@@ -800,17 +675,16 @@ if (IsBeatPokerActivated) {
 return	
 
 ;//////////////////////////////////      Script Functions      ////////////////////////////////////////
+}
 
 ReloadScript:
 {
-	IsMissionFailSafeActivated=false
-	IsTimerSet=0
 	TimeMins = 0
 	TimeSecs = 0
 	TimeMinz = 0
 	TimeSecz = 0
 	MissionFailSafeType=0
-	GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType%
+	GuiControl,, MyText2, MissionFailSafe Mode: %MissionFailSafeType%
 	sleep, 1000
 	reload
 	ExitApp
@@ -823,39 +697,43 @@ AbortScript:
 }
 return 
 
+if WinActive("Red Dead Redemption 2")
+{
 ;////// Delay-Functions
 SuperShortDelay(){
-sleep, 20 
+	sleep, 20 
 }
 return
 
 ShortDelay(){
-sleep, 200 
+	sleep, 200 
 }
 return
 
 LongDelay(){
-sleep, 800
+	sleep, 800
 }
 return
 
 SuperLongDelay(){
-sleep, 3200
+	sleep, 3200
 }
 return
 
 ;////// a couple of code macros/functions for Send{Enter} w/proper delays and min/repeat typing functions
 SendEnter(){
-LongDelay()
-Send {Enter}
+	LongDelay()
+	Send {Enter}
+	ShortDelay()
 }
 return
 
 SendEnterEnter(){
-LongDelay()
-Send {Enter}
-LongDelay()
-Send {Enter}
+	LongDelay()
+	Send {Enter}
+	LongDelay()
+	Send {Enter}
+	ShortDelay()
 }
 return
 
@@ -891,10 +769,9 @@ return
 
 ;//// the escape menu in game
 EscapeMenu(){
-;turnCapslockOff()
 ;ShortDelay()
 Send {ESC}
-SuperShortDelay()
+ShortDelay()
 }
 return
 
@@ -912,69 +789,76 @@ turnCapslockOff() {
 }
 return
 
-;//////////////////      Mission Failsafe Mode    ///////////////////////////
+;/////////////////      Update Passive Background AFK    ///////////////////////////
+UpdateAntiAFK:
+{
+	Send {AppsKey}
+}
+return
+
+;/////////////////      Mission Failsafe Mode    ///////////////////////////
 ;/////// Cycle the Mission Failsafe Modes ///////
 ToggleMissionFailSafe:
 {
-	if(MissionFailSafeType>=6){       ;////// off, drop-only, give-to-contact, and walk-in MissionFailSafe Types 4-6 respectively
+	MissionFailSafeType++
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+	Gui, guithree: Show, x740 y150 w600 h40 NoActivate
+	if(MissionFailSafeType>=7){       ;////// off, drop-only, give-to-contact, and walk-in MissionFailSafe Types 4-6 respectively
 		IsMissionFailSafeActivated := !IsMissionFailSafeActivated
 		MissionFailSafeType=0
+		GuiControl, guitwo:, MyText2, Mission Failsafe Mode: Disabled
 	}
 	else
 	{
-		if(!IsMissionFailSafeActivated){
-			IsMissionFailSafeActivated=true
-			Gui, Show, x910 y70 NoActivate
-			MissionFailSafeType=0
-			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType%
-		}
-		else
-		{
-		Gui, Hide
-		Gui, Show, x800 y100 NoActivate
+		IsMissionFailSafeActivated=true
 		if(MissionFailSafeType=1){
-			GuiControl,, MyText, MissionFailSafe Mode: Dead Drop
-			SuperLongDelay()
+			GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-1
+			GuiControl, guithree:, MyText3, Dead-Drop Mode 
 		}
 		if(MissionFailSafeType=2){
-			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
-			SuperLongDelay()
+			GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-2
+			GuiControl, guithree:, MyText3, Contact-Drop Mode
 		}
 		if(MissionFailSafeType=3){
-			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
-			SuperLongDelay()
+			GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-3
+			GuiControl, guithree:, MyText3, Walk-In/Drive-In Mode
 		}
 		if(MissionFailSafeType=4){
-			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Dead Drop
-			SuperLongDelay()
+			GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-4
+			GuiControl, guithree:, MyText3, Dead-Drop Mode
 		}
 		if(MissionFailSafeType=5){
-			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Contact Drop
-			SuperLongDelay()
+			GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-5
+			GuiControl, guithree:, MyText3, Contact-Drop Mode
 		}
 		if(MissionFailSafeType=6){
-			GuiControl,, MyText, MissionFailSafe Mode: %MissionFailSafeType% Walk-In/Drive-In
-			SuperLongDelay()
+			GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-6
+			GuiControl, guithree:, MyText3, Walk-In/Drive-In Mode
 		}
-		}
-	MissionFailSafeType++
 	}
+	sleep, 1600
+	Gui, guitwo: Hide
+	sleep, 1000
+	Gui, guithree: Hide
 }
 return 
-					
+}
+return  ;//  end winactive
+
 ;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 UpdateOSD:
 {
-	#IfWinActive, Red Dead Redemption 2 
+	if WinActive("Red Dead Redemption 2")
 	{
 		if (IsMissionFailSafeActivated)
 		{
+			Gui, guione: Show, x905 y70 w100 h60 NoActivate
 			if(MissionFailSafeType<=3)
 			{
 				if(IsTimerSet=0)
 				{
-					TimeMins = 12
-					TimeSecs = 54
+					TimeMins = 13
+					TimeSecs = 49
 					IsTimerSet=1
 				}
 				LongDelay()
@@ -988,14 +872,14 @@ UpdateOSD:
 					
 					if(TimeMins<0)
 					{			
-;/// dead drop variant 
+						;/// dead drop legendary variant 
 						if(MissionFailSafeType=1){
 							Send {r down}
 							LongDelay()
 							Send {r up}
 							reload
 						}
-;/// contact drop variant 
+						;/// contact drop legendary variant 
 						if(MissionFailSafeType=2){
 							Send {RButton down}
 							ShortDelay()
@@ -1005,7 +889,7 @@ UpdateOSD:
 							Send {RButton up}
 							reload
 						}
-;/// drive in (bounty) variant 
+						;/// drive in (bounty) legendary variant 
 						if(MissionFailSafeType=3){
 							Send {w down}
 							Send {LShift down}
@@ -1016,51 +900,63 @@ UpdateOSD:
 						}
 					}		
 				}
-;////// Anti-AFK
-				;if TimeSecs = 30 
-				;{
-				;	Send {c down}
-				;	LongDelay()
-				;	Send {c up}
-				;}
-;/// Digit Formatting
-				;IfNotInString, TimeSecs, 0
-				;{
-					;if TimeSecs < 10 
-						TimeSecs := Format("{:02}", TimeSecs)
-				;}			
-				;IfNotInString, TimeMins, 0
-				;{
-					;if TimeMins < 10 
+				;/// Digit Formatting
+				TimeSecs := Format("{:02}", TimeSecs)
 				TimeMins := Format("{:02}", TimeMins)
-						;(SubStr(Pack, 1, StrLen(Pack) - StrLen(%TimeMins%)) . TimeMins)
-				;}			
-				GuiControl,, MyText, %TimeMins%:%TimeSecs%
+				GuiControl, guione:, MyText, %TimeMins%:%TimeSecs%
 				return
 			}
 			else
 			{
 ;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
-				Loop, 3
-				{
-;////// Update Minutes
+			Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+			Gui, guithree: Show, x740 y150 w600 h40 NoActivate
+				
+
+					;////// Update Minutes
 					Clip0 = %ClipBoardAll%
 					Clipboard = ; Erase clipboard
-					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "927 52 958 76" --clipboard --whitelist "0123456789",, hide
+					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "924 52 942 76" --clipboard --whitelist "0123456789",, hide
 					ClipBoard = %ClipBoard%       ; Convert to text
-					TimeMinz := RegExReplace(ClipBoard, "\D")
+					TimeMins1:= RegExReplace(ClipBoard, "\D")
 					Clipboard = %Clip0%              ; Restore clipboard
 					Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
 					
-					if TimeMinz - LastTimeMinz is between 1 and 5
-						break
-					else
-						LastTimeMinz = TimeMinz
-				}
+					Clip0 = %ClipBoardAll%
+					Clipboard = ; Erase clipboard
+					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "942 52 958 76" --clipboard --whitelist "0123456789",, hide
+					ClipBoard = %ClipBoard%       ; Convert to text
+					TimeMins2 := RegExReplace(ClipBoard, "\D")
+					Clipboard = %Clip0%              ; Restore clipboard
+					Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
+					
+					if(TimeMins2=0)
+					{
+					GuiControl, guithree:, MyText3, Countdown Activated!
+					sleep, 300
+					GuiControl, guitwo:, MyText2, %TimeMins2%
+					}
+					else{
+					GuiControl, guithree:, MyText3, 
+					;sleep, 300
+					GuiControl, guitwo:, MyText2, 
+
+}
+					;GuiControl, guithree:, MyText3, %loopcount%
+
+					;if TimeMinz - LastTimeMinz is between 1 and 5
+					;	break
+					;else
+					;{
+					;	LastTimeMinz = TimeMinz
+					;}
+
+
 ;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
+
 				Loop, 3
 				{
-;////// Now Update Seconds
+					;////// Now Update Seconds
 					Clip0 = %ClipBoardAll%
 					Clipboard = ; Erase clipboard
 					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "962 52 993 76" --clipboard --whitelist "0123456789",, hide
@@ -1074,19 +970,27 @@ UpdateOSD:
 					else
 						LastTimeSecz = TimeSecz
 				}
-;//////  Subtract seconds we use to capture data, and also
-;/// predict and manually replace timer when it reaches one or zero
-;/// increase reliability, reduce false timer results
-				if TimeSecz >= 2 
-					TimeSecz -= 2
+				;//////  Subtract seconds we use to capture data, and also
+				;/// predict and manually replace timer when it reaches one or zero
+				;/// increase reliability, reduce false timer results
+				if TimeSecz >= 0 
+				       TimeSecz -= 1
 				else
 					TimeSecz = 59
-				
-				if TimeMinz < 1 
+
+				sleep, 500
+				;//////	8 Minute bug fix
+				if (!(TimeMins1="0") and !(TimeMins2="0")){
+
+				if (TimeMins2=""){
+					TimeMins2=8
+				}}
+
+				if TimeMins1 < 1 and TimeMins2 = 0
 				{
-					if TimeSecz <= 10 
+					if TimeSecz <= 8 
 					{
-		;/// Drop-only
+						;/// Drop-only
 						if MissionFailSafeType = 4 
 						{
 							Send {r down}
@@ -1094,7 +998,7 @@ UpdateOSD:
 							Send {r up}
 							reload
 						}
-		;/// Drop-to-Contact
+						;/// Drop-to-Contact
 						if MissionFailSafeType = 5 
 						{
 							Send {RButton down}
@@ -1105,7 +1009,7 @@ UpdateOSD:
 							Send {RButton up}
 							reload
 						}
-		;/// Drive-in/Walk-in
+						;/// Drive-in/Walk-in
 						if MissionFailSafeType = 6 
 						{
 							Send {w down}
@@ -1118,42 +1022,28 @@ UpdateOSD:
 					}
 				}
 			}
-;////// Anti-AFK, again but different 
-;/// the catch-up timer skips some seconds we'll do a range instead
-			if TimeSecz between 30 and 33
-			{
-				Send {c down}
-				LongDelay()
-				Send {c up}
-			}
-;/// Digit Formatting
-			IfNotInString, TimeSecz, "0" 
-			{
-				if(TimeSecz<10)
-				{					
-					TimeSecz=0%TimeSecz%
-				}
-			}				
-			IfNotInString, TimeMinz, "0" 
-			{
-				if(TimeMinz<10)
-				{
-					TimeMinz=0%TimeMinz%
-				}
-			}			
-			GuiControl,, MyText, %TimeMinz%:%TimeSecz%
+			;/// Digit Formatting
+			TimeSecz := Format("{:02}", TimeSecz)
+			if(TimeMins1="")
+			TimeMinz2 := Format("{:02}", TimeMins2)
+			GuiControl, guione:, MyText, %TimeMins1%%TimeMins2%:%TimeSecz%
 			return
 		}
 		else 
 		{  			
-			MissionFailSafeType=0
 			IsTimerSet=0
-			TimeMins = 0
 			TimeSecs = 0
-			TimeMinz = 0
+			TimeMins = 0
+			TimeMins1 = 0
+			TimeMins2 = 0
 			TimeSecz = 0
-			Gui, Hide
 		} 
 	} ;//// end ifwin
+	else
+		Gui, guione: Hide
+		Gui, guitwo: Hide
+		Gui, guithree: Hide
 	return
 } ;//// end UpdateOSD
+
+
