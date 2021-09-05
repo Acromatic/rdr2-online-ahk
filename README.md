@@ -1,4 +1,4 @@
-# RDR2-Online-AHK Macros on GitHub
+﻿# RDR2-Online-AHK Macros on GitHub
 ([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
 
 *A suite of hotkeys for several useful features in RDR2:Online, see list further down.
@@ -11,7 +11,7 @@ AutoHotkey Version: v 1.1.33.02
 Introduction: Everthing in this script can be modified to your needs. BUT BE CAREFUL!
 The Player Menu, Escape Menu, and Tab Menu have different delay times due to various reasons, 
 so be sure to remember this if you are going to change the delay settings. 
-Everything is dialed in so the macroâ€™s are executed as fast and reliable as posible, 
+Everything is dialed in so the macroÃ¢â‚¬â„¢s are executed as fast and reliable as posible, 
 maybe even faster than you will be able to do manually.
 (Delays are measured in milliseconds) (1000 milliseconds in 1 second)
 
@@ -101,42 +101,42 @@ it also does next to nothing for controller users so there's that. Kind of a big
 ## Available macros
 
 * **BeatPoker** - This is a half working poker beating bot! (only tested with singleplayer)
-* **ToggleAutoRun** â€“ Auto run/drive mode, combine this with walk to run/drive at proper full speed
-* **ToggleAutoWalk** â€“ Auto walk/trot mode, ctrl+w to walk, then ctrl+shift to run, tap each to disable seperately (shift and w)
-* **ToggleAutoReverse** â€“ Auto backwards mode, ctrl+s to reverse, tap s to disable (was more useful when I wrote it)
-* **ToggleCooking** â€“ Auto Cooking mode
-* **ToggleEnhancedAFK** â€“ Enhanced AFK mode (this is mostly passive, speeds up j key)
-* **TogglePatrolAFK** â€“ Toggle Patrol mode (this is like gtav macros AFK, just moves left and right, circles on horseback)
-* **ToggleDefensive** â€“ Toggle Defensive mode
-* **ToggleAFK** â€“ Toggle AFK mode (my own version of AFK, uses look-behind to be AFK on carts and stealthly, no more catalog griefers!)
-* **ToggleClicker** â€“ Toggle Auto Clicker mode
-* **CycleMissionFailSafeMode** â€“ Cycle Mission Fail-Safe Mode
-* **Health** â€“ Use the preselected item from this slot (Health tonics slot)
-* **Stamina** â€“ Use the preselected item from this slot (Stamina tonics slot)
-* **Deadeye** â€“ Use the preselected item from this slot (Deadeye tonics slot)
-* **HealCores** â€“ Use the preselected item from this slot (food slot)
-* **WildernessCamp** â€“ Use the preselected item from this slot (camp slot)
-* **ItemSlot** â€“ Use the preselected item from this slot (binocular slot)
-* **HuntingWagon** â€“ Calls the Hunting Cart (nice for when it doesn't like to spawn)
-* **BountyWagon** â€“ Calls the Bounty Cart (nice for when it doesn't like to spawn)
-* **DismissWagons** â€“ Dismisses both Hunting, and Bounty carts
-* **FeedHorse** â€“ Feeds Horse if you're riding one, if not pulls out your left rifle slot
-* **ShowPossesWindow** â€“ Self Explainitory
-* **FormPosse** â€“ Form up the top-most posse, mine is named AAA Team but starting with numbers may also work
-* **QuickRace** â€“ Self Explainitory
-* **MenuSlotTwo** â€“ Opens the Online Menu, Chooses Row 1, Slot 2 (Load to Crimes currently, rockstar changes online menu)
-* **MenuSlotFour** â€“ Opens the Online Menu, Chooses Row 1, Slot 4 (Load to Camp currently, rockstar changes online menu)
-* **VolumeUp** â€“ Opens the settings, Turns the Volume Up
-* **VolumeDown** â€“ Opens the settings, Turns the Volume Down
-* **ReloadScript** â€“ Reloads the Script
-* **AbortScript** â€“ Exit / Shutdown the Script
-* **SoloSession** â€“ Force disconnect the game by freezing the process for 10 seconds (requires pssuspend.exe)
-* **KillGame** â€“ Kill the game process immediately (requires pskill.exe)
+* **ToggleAutoRun** - Auto run/drive mode, combine this with walk to run/drive at proper full speed
+* **ToggleAutoWalk** - Auto walk/trot mode, ctrl+w to walk, then ctrl+shift to run, tap each to disable seperately (shift and w)
+* **ToggleAutoReverse** - Auto backwards mode, ctrl+s to reverse, tap s to disable (was more useful when I wrote it)
+* **ToggleCooking** - Auto Cooking mode
+* **ToggleEnhancedAFK** - Enhanced AFK mode (this is mostly passive, speeds up j key)
+* **TogglePatrolAFK** - Toggle Patrol mode (this is like gtav macros AFK, just moves left and right, circles on horseback)
+* **ToggleDefensive** - Toggle Defensive mode
+* **ToggleAFK** - Toggle AFK mode (my own version of AFK, uses look-behind to be AFK on carts and stealthly, no more catalog griefers!)
+* **ToggleClicker** - Toggle Auto Clicker mode
+* **CycleMissionFailSafeMode** - Cycle Mission Fail-Safe Mode
+* **Health** - Use the preselected item from this slot (Health tonics slot)
+* **Stamina** - Use the preselected item from this slot (Stamina tonics slot)
+* **Deadeye** - Use the preselected item from this slot (Deadeye tonics slot)
+* **HealCores** - Use the preselected item from this slot (food slot)
+* **WildernessCamp** - Use the preselected item from this slot (camp slot)
+* **ItemSlot** - Use the preselected item from this slot (binocular slot)
+* **HuntingWagon** - Calls the Hunting Cart (nice for when it doesn't like to spawn)
+* **BountyWagon** - Calls the Bounty Cart (nice for when it doesn't like to spawn)
+* **DismissWagons** - Dismisses both Hunting, and Bounty carts
+* **FeedHorse** - Feeds Horse if you're riding one, if not pulls out your left rifle slot
+* **ShowPossesWindow** - Self Explainitory
+* **FormPosse** - Form up the top-most posse, mine is named AAA Team but starting with numbers may also work
+* **QuickRace** - Self Explainitory
+* **MenuSlotTwo** - Opens the Online Menu, Chooses Row 1, Slot 2 (Load to Crimes currently, rockstar changes online menu)
+* **MenuSlotFour** - Opens the Online Menu, Chooses Row 1, Slot 4 (Load to Camp currently, rockstar changes online menu)
+* **VolumeUp** - Opens the settings, Turns the Volume Up
+* **VolumeDown** - Opens the settings, Turns the Volume Down
+* **ReloadScript** - Reloads the Script
+* **AbortScript** - Exit / Shutdown the Script
+* **SoloSession** - Force disconnect the game by freezing the process for 10 seconds (requires pssuspend.exe)
+* **KillGame** - Kill the game process immediately (requires pskill.exe)
 
 
 ## Planned Features
 
-* **CycleOutfits** â€“ Cycle through your saved outfits
+* **CycleOutfits** - Cycle through your saved outfits
 
 * **More single player binds** - possibly a seperate script
 

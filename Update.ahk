@@ -30,12 +30,12 @@ WinSet, TransColor, %CustomColor% 200
 ;WinSet, AlwaysOnTop, %CustomColor% 150
 
 ;////// Initialize the GUI for On Screen Display
-Gui, guitwo: Show, x905 y70 w100 h60 NoActivate  ; NoActivate avoids deactivating the currently active window.
+Gui, guitwo: Show, x670 y110 w700 h40 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
 if %1%
-SilentSuccess := %1%
+	SilentSuccess := %1%
 else
-SilentSuccess := false
+	SilentSuccess := false
 
 UpdateScriptMain()
 UpdateScriptConfig()
