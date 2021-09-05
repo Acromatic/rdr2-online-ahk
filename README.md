@@ -1,6 +1,3 @@
-; v1.0.1
- 
-; ^ don't remove or alter this line (autoupdate)
 # RDR2-Online-AHK Macros on GitHub
 ([Go to Download Page](https://github.com/Acromatic/rdr2-online-ahk/))
 
@@ -25,6 +22,20 @@ If a new (or actually different) version is found it will prompt you to proceed 
 See the README section about using RDR2Config.ahk if you plan on changing settings as the update will replace the script files!
 
 You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
+
+* Updated to v1.1.1 - Sep 5th 2021
+* Added - Brand New Update and File System (Please update to this version manually!)
+* Added - Methods to the main script RDR2.ahk that allow the entire project to build from it alone
+* Added - HUD, OSD messaging system to relay what the script is doing 
+* Added - Passive Anti-AFK - no need to worry about AFK anymore!
+* Removed - All other forms of AFK
+* Removed - "UpdateEditorOnStart" setting, all files are now updated at the same time
+* Removed - Cleaned up a lot of old commented out code
+* Changed - A lot of main script code was moved into separate new files
+* Changed - Manual timer control hotkeys changed to non-game keys
+* Changed - Config.ahk to match the new hotkeys and settings
+* Fixed - Massive speed improvements throughout, second tuning pass more to come
+* Fixed - Auto Update now only checks for updates weekly (to reduce useless GitHub hits)
 
 * Updated to v1.0.1 - August 31st 2021
 * Added - MultiSampling to the Mission Failsafe timer 
