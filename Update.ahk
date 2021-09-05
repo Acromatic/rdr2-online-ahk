@@ -46,7 +46,7 @@ ExitApp
 return
 
 ;//////////////////////  Update Script Main File  ////////////////
-UpdateScriptMain(){
+UpdateScriptMain(SilentSuccess=false){
 URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,RDR2.txt
 	if (errorlevel) {
     	GuiControl, guione:, MyText, Error response from GitHub, update was aborted.`nPlease try again 		later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
