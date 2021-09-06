@@ -767,31 +767,31 @@ return
 		;////// Delay-Functions
 SuperShortDelay(){
 	sleep, 20 
-	return
 }
+	return
 
 ShortDelay(){
 	sleep, 200 
-	return
 }
+	return
 
 LongDelay(){
 	sleep, 800
-	return
 }
+	return
 
 SuperLongDelay(){
 	sleep, 3200
-	return
 }
+	return
 
 		;////// a couple of code macros/functions for Send{Enter} w/proper delays and min/repeat typing functions
 SendEnter(){
 	LongDelay()
 	Send {Enter}
 	ShortDelay()
-	return
 }
+	return
 
 SendEnterEnter(){
 	LongDelay()
@@ -799,28 +799,28 @@ SendEnterEnter(){
 	LongDelay()
 	Send {Enter}
 	ShortDelay()
-	return
 }
+	return
 
 		;////// Tab Menu is self explanitory. uses F4 to directly access the items dial-menu for speed
 OpenTabMenu(){
 	Send {F4 down}
 	ShortDelay()
-	return
 } 
+	return
 
 CloseTabMenu(){
 	Send {F4 up}
-	return
 }
+	return
 
 		;////// player menu - L menu on PC
 OpenPlayerMenu(){
 	turnCapslockOff()
 	Send {l}
 	LongDelay()
-	return
 } 
+	return
 
 ClosePlayerMenu(){
 	Loop, 4
@@ -829,16 +829,16 @@ ClosePlayerMenu(){
 		Send {ESC}
 		Send {ESC up}
 	}
-	return
 }
+	return
 
 		;//// the escape menu in game
 EscapeMenu(){
 		;ShortDelay()
 	Send {ESC}
 	ShortDelay()
-	return
 }
+	return
 
 		;//// currently not used
 invertCapsLockState(){ 
@@ -911,8 +911,8 @@ return
 	UpdateAntiAFK:
 	{
 		Send {AppsKey}
-	}
 	return
+	}
 	
 	;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 	UpdateOSD:
