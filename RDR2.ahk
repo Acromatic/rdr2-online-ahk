@@ -1,7 +1,7 @@
 ;#Warn   ;---------- For debugging
 
 #NoEnv
-SetTitleMatchMode, 3
+SetTitleMatchMode, 2
 #MaxThreadsPerHotkey 2
 #SingleInstance, Force               
 SetWorkingDir %A_ScriptDir% 
