@@ -220,7 +220,7 @@ if(Read_AutoUpdateOnStart=1)
 	
 	if (updatecheck = currentVersion){
 		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
-		Sleep, 2000
+		Sleep, 6000
 	}
 	else {
 		if (!SilentSuccess)
@@ -229,7 +229,7 @@ if(Read_AutoUpdateOnStart=1)
 		FileCopy, update.txt, Update.ahk, 1
      	FileDelete, update.txt
 		FileDelete, updatecheck.txt
-		Sleep, 2000
+		Sleep, 6000
 		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 		ExitApp
 		return
@@ -237,7 +237,7 @@ if(Read_AutoUpdateOnStart=1)
 	
 	if !FileExist(RDR2Config.ahk){
 	GuiControl, guitwo:, MyText2, RDR2Config.ahk not detected, running download script.
-	Sleep, 2000
+	Sleep, 6000
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
