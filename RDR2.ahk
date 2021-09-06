@@ -352,11 +352,21 @@ if WinActive("Red Dead Redemption 2")
 if !WinActive("Red Dead Redemption 2")
 ;#IfWinActive, ahk_exe RDR2.exe 
 {
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+	GuiControl, guitwo:, MyText2, Suspended
 	Suspend,On
+	Sleep, 2000
+	Gui, guitwo: Hide
+	return
 }
 else
 {
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+	GuiControl, guitwo:, MyText2, Unsuspended
 	Suspend,Off
+	Sleep, 2000
+	Gui, guitwo: Hide
+	return
 }
 	;//////////////////////////   Clicker Toggle     /////////////////////////////
 	; Toggle Rapid-Fire Clicker
