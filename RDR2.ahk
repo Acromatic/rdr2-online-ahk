@@ -464,6 +464,7 @@ HuntingWagon:
 	Send {Down 7}
 	SendEnter()
 	Send {Down}
+	ShortDelay()
 	SendEnterEnter()
 	SendEnter()
 	ClosePlayerMenu()
@@ -480,6 +481,7 @@ BountyWagon:
 	Send {Down}
 	SendEnterEnter()
 	Send {Down}
+	ShortDelay()
 	SendEnter()
 	ClosePlayerMenu()
 }
@@ -770,51 +772,51 @@ return
 SuperShortDelay(){
 	sleep, 20 
 }
-	return
+return
 
 ShortDelay(){
 	sleep, 200 
 }
-	return
+return
 
 LongDelay(){
 	sleep, 800
 }
-	return
+return
 
 SuperLongDelay(){
 	sleep, 3200
 }
-	return
+return
 
 		;////// a couple of code macros/functions for Send{Enter} w/proper delays and min/repeat typing functions
 SendEnter(){
 	LongDelay()
 	Send {Enter}
-	ShortDelay()
+	LongDelay()
 }
-	return
+return
 
 SendEnterEnter(){
 	LongDelay()
 	Send {Enter}
 	LongDelay()
 	Send {Enter}
-	ShortDelay()
+	LongDelay()
 }
-	return
+return
 
 		;////// Tab Menu is self explanitory. uses F4 to directly access the items dial-menu for speed
 OpenTabMenu(){
 	Send {F4 down}
 	ShortDelay()
 } 
-	return
+return
 
 CloseTabMenu(){
 	Send {F4 up}
 }
-	return
+return
 
 		;////// player menu - L menu on PC
 OpenPlayerMenu(){
@@ -822,7 +824,7 @@ OpenPlayerMenu(){
 	Send {l}
 	LongDelay()
 } 
-	return
+return
 
 ClosePlayerMenu(){
 	Loop, 4
@@ -832,7 +834,7 @@ ClosePlayerMenu(){
 		Send {ESC up}
 	}
 }
-	return
+return
 
 		;//// the escape menu in game
 EscapeMenu(){
@@ -840,7 +842,7 @@ EscapeMenu(){
 	Send {ESC}
 	ShortDelay()
 }
-	return
+return
 
 		;//// currently not used
 invertCapsLockState(){ 
@@ -1047,9 +1049,9 @@ return
 					else
 						TimeSecz = 59
 					
-					if TimeMins1 < 1 and TimeMins2 = 0
+					if (TimeMins1 < 1 and TimeMins2 = 0)
 					{
-						if TimeSecz <= 8 
+						if (TimeSecz <= 8) 
 						{
 							;/// Drop-only
 							if MissionFailSafeType = 4 
