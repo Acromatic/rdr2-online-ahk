@@ -511,7 +511,8 @@ if (WinActive("Red Dead Redemption 2")){
 			Send {Down}
 			ShortDelay()
 			Send {Space}
-			ClosePlayerMenu()}
+			ClosePlayerMenu()
+			}
 			return	
 		}
 		
