@@ -1097,13 +1097,13 @@ return
 				TimeMins1 = 0
 				TimeMins2 = 0
 				TimeSecz = 0
+				Gui, guione: Hide
+				Gui, guitwo: Hide
+				Gui, guithree: Hide
 			} 
 		} ;//// end ifwin
 		else
 		{
-			Gui, guione: Hide
-			Gui, guitwo: Hide
-			Gui, guithree: Hide
 		}
 		return
 	} ;//// end UpdateOSD
