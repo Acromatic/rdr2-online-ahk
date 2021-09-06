@@ -858,15 +858,7 @@ turnCapslockOff() {
 		;ClearClipboard() {
 		;	return
 		;}
-	
-	;/////////////////      Update Passive Background AFK    ///////////////////////////
-	UpdateAntiAFK:
-	{
-		Send {AppsKey}
-		return
-	}
-	
-	
+		
 	;/////////////////      Mission Failsafe Mode    ///////////////////////////
 	;/////// Cycle the Mission Failsafe Modes ///////
 	ToggleMissionFailSafe:
@@ -911,12 +903,18 @@ turnCapslockOff() {
 		Gui, guitwo: Hide
 		sleep, 500
 		Gui, guithree: Hide
+	}	
+	return
+;}  ; /// end ifwin
+;} ;//// end loop
+	
+	;/////////////////      Update Passive Background AFK    ///////////////////////////
+	UpdateAntiAFK:
+	{
+		Send {AppsKey}
 		return
 	}
-;}  ; /// end ifwin
 	
-;} ;//// end loop
-
 	;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 	UpdateOSD:
 	{
