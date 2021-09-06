@@ -28,7 +28,7 @@ MissionFailSafeType     	:= 0 	 ; Initial status should always be zero
 IsTimerSet     			:= 0 	 ; Initial status should always be zero
 TimeMins     			:= 0 	 ; Initial status should always be zero
 TimeSecs     			:= 0 	 ; Initial status should always be zero
-loopcount			:= 0	 ; Initial status should always be zero
+;loopcount			:= 0	 ; Initial status should always be zero
 
 ;////// Initialize the GUI for On Screen Display
 CustomColor := "7F7F7F"  ; Can be any RGB color (it will be made transparent below).
@@ -92,23 +92,19 @@ SetTimer, UpdateAntiAFK, 120000
 ;///////////// Write config.ini (Script Configuration wHotkeys) /////////////
 IfNotExist, %CFG%
 {
-	
 ;/////////////////   Settings     ///////////////
-	
 	IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
 	IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
-	
 	IniWrite, F11 , %CFG%, SinglePlayerHotkeys, BeatPoker
 	
 ;//////////////////  Other Macros  ////////////////////
-	
-	IniWrite, F8, %CFG%, Hotkeys, ToggleCookingOn
+	IniWrite, F8, %CFG%, Hotkeys, AutoCooking
 	
 	IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
-	IniWrite, z, %CFG%, Hotkeys, ToggleClicker
+	IniWrite, z, %CFG%, Hotkeys, AutoClicker
 	IniWrite, F9, %CFG%, Hotkeys, CycleMissionFailSafe
 	
 	IniWrite, NumpadHome , %CFG%, Hotkeys, Health
@@ -155,9 +151,9 @@ IfExist, %CFG%
 	IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
 	
 ;//////////////////  Online Macros  ////////////////////
-	IniRead, Read_ToggleCookingOnKey, %CFG%,Hotkeys,ToggleCookingOn
+	IniRead, Read_AutoCookingKey, %CFG%,Hotkeys,AutoCooking
 	IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
-	IniRead, Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
+	IniRead, Read_AutoClickerKey, %CFG%,Hotkeys,AutoClicker
 	
 	IniRead, Read_CycleMissionFailSafeKey, %CFG%,Hotkeys,CycleMissionFailSafe
 	
@@ -197,9 +193,9 @@ Hotkey, %Read_BeatPokerKey%, BeatPoker
 
 ;/////////////////// Other binds ///////////////
 
-Hotkey, %Read_ToggleCookingOnKey%, ToggleCookingOn
+Hotkey, %Read_ToggleCookingOnKey%, AutoCooking
 Hotkey, %Read_ToggleDefensiveKey%, ToggleDefensive
-Hotkey, %Read_ToggleClickerKey%, ToggleClicker
+Hotkey, %Read_ToggleClickerKey%, AutoClicker
 Hotkey, %Read_CycleMissionFailSafeKey%, CycleMissionFailSafe
 
 Hotkey, %Read_HealthKey%, Health
@@ -346,806 +342,805 @@ if (WinActive("Red Dead Redemption 2")){
 	return
 }
 
-if (WinActive("Red Dead Redemption 2"))
-{
-Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-GuiControl, guitwo:, MyText2, Unsuspended
-Suspend,Off
-Sleep, 2000
-Gui, guitwo: Hide
-else {
-Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-GuiControl, guitwo:, MyText2, Suspended
-Suspend,On
-Sleep, 2000
-Gui, guitwo: Hide
-}
-
+if (WinActive("Red Dead Redemption 2")){
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+	GuiControl, guitwo:, MyText2, Unsuspended
+	Suspend,Off
+	Sleep, 2000
+	Gui, guitwo: Hide
+	else {
+		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+		GuiControl, guitwo:, MyText2, Suspended
+		Suspend,On
+		Sleep, 2000
+		Gui, guitwo: Hide
+	}
+	
 ;//////////////////////////   Clicker Toggle     /////////////////////////////
 ; Toggle Rapid-Fire Clicker
-ToggleClicker:
-IsClickerActivated := !IsClickerActivated
-
-if (IsClickerActivated) {
-Loop {
-	if (WinActive("ahk_exe RDR2.exe")){
-		Click
-		Sleep 1
-		
-		if (!IsClickerActivated) {
-			break
-		}
-	}
-}
-return
-}
-
-;//////////////////////////    Defensive Toggle     /////////////////////////////
-ToggleDefensive:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenPlayerMenu()
-	Send {Up}
-	SendEnter()
-	Send {Up 4}
-	Send {Left}
-	
-	ClosePlayerMenu()
-}
-	return      
-}
-;///////////////////////////        Health Slot        ///////////////////////////////////
-Health:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenTabMenu()
-	MouseMove, 766, 354
-;SendEnter()
-	CloseTabMenu()
-}
-	return	
-}
-;///////////////////////////        Stamina Slot       ///////////////////////////////////
-Stamina:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenTabMenu()
-	MouseMove, 954, 271
-;SendEnter()
-	CloseTabMenu()
-}
-return	
-}
-;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
-Deadeye:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenTabMenu()
-	MouseMove, 1147, 350
-;SendEnter()
-	CloseTabMenu()
-}
-return
-}
-
-;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
-HealCores:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenTabMenu()
-	MouseMove, 691, 550
-	Send {q}
-;SendEnter()
-	CloseTabMenu()
-}
-return
-}
-
-;///////////////////////////        Wilderness Camp    //////////////////////////////////////
-WildernessCamp:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenTabMenu()
-	MouseMove, 963, 815
-	CloseTabMenu()
-}
-return	
-}
-
-;///////////////////////////        Item Slot    //////////////////////////////////////
-ItemSlot:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenTabMenu()
-	MouseMove, 1231, 548
-	Send {q 2}
-	CloseTabMenu()
-}
-return	
-}
-
-;///////////////////////////     Hunting Wagon    //////////////////////////////////////
-HuntingWagon:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenPlayerMenu()
-	LongDelay()
-	Send {Down 7}
-	SendEnter()
-	Send {Down}
-	ShortDelay()
-	SendEnterEnter()
-	SendEnter()
-	ClosePlayerMenu()
-}
-return	
-}
-
-;///////////////////////////     Bounty Wagon    /////////////////////////////////
-BountyWagon:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenPlayerMenu()
-	LongDelay()
-	Send {Down 7}
-	SendEnter()
-	Send {Down}
-	SendEnterEnter()
-	Send {Down}
-	ShortDelay()
-	SendEnter()
-	ClosePlayerMenu()
-}
-return	
-}
-
-;///////////////////////////     Dismiss Wagons    /////////////////////////////////
-DismissWagons:
-{
-if (WinActive("Red Dead Redemption 2")){
-	OpenPlayerMenu()
-	SuperShortDelay() 
-	Send {e}
-	SuperShortDelay()
-	Send {Down 7}
-	SuperShortDelay()
-	Send {Enter}
-	LongDelay()
-	Send {Down}
-	SendEnterEnter()
-	ShortDelay()
-	Send {Space}
-	ShortDelay()
-	Send {Down}
-	ShortDelay()
-	Send {Space}
-	ClosePlayerMenu()}
-	return	
-}
-
-;///////////////////////////     Feed Horse Slot    /////////////////////////////////
-FeedHorse:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		OpenTabMenu()
-		Send {r}
-		MouseMove, 691, 550
-		CloseTabMenu()
-	}
-	return	
-}
-
-;///////////////////////////     Open Posses List    ///////////////////////////
-ShowPosses:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		OpenPlayerMenu()
-		ShortDelay()
-		Send {Down 5}
-		SendEnter()
-	}
-	return	
-}
-
-;/////////////////////////          Form Posse       ////////////////////////////
-;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
-FormPosse:
-{     
-	if (WinActive("Red Dead Redemption 2")){
-		OpenPlayerMenu()
-		LongDelay()
-		Send {Down 5}
-		SendEnterEnter()
-		SendEnter()
-		ClosePlayerMenu()
-	}
-	return	
-}
-
-;//////////////////////           Quick Race         //////////////////////////////
-QuickRace:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		OpenPlayerMenu()
-		ShortDelay()
-		Send {Up 2}{Enter}
-		ShortDelay()
-		Send {Up}
-		ShortDelay()
-		Send {Up}
-		ShortDelay()
-		Send {Up}
-		ShortDelay()
-		Send {Up}{Enter}
-	}
-	return	
-}
-
-;///////////////////////          Menu Slot Two      ///////////////////////////
-MenuSlotTwo:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 170, 852
-		ShortDelay()
-		Send {Enter}
-		sleep,1000
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Enter}
-	}
-	return	
-}
-
-;///////////////////////          Menu Slot Four      ///////////////////////////
-MenuSlotFour:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 170, 852
-		ShortDelay()
-		Send {Enter}
-		sleep,1000
-		Send {Right 2}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Enter}
-	}
-	return	
-}
-
-;///////////////////////          Volume Down      ///////////////////////////
-VolumeDown:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 130, 960
-		LongDelay()
-		Send {Enter}
-;MouseClick, left, 132, 965
-		ShortDelay()
-		Send {Enter}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		ShortDelay()
-		ShortDelay()
-		Send {Left}
-		LongDelay()
-		Send {Left}
-		ShortDelay()
-		Send {ESC down}
-	}
-	return	
-}
-
-;///////////////////////          Volume Up       ///////////////////////////
-VolumeUp:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 131, 970
-		ShortDelay()
-		Send {Enter}
-;MouseClick, left, 132, 965
-		ShortDelay()
-		Send {Enter}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Right}
-		LongDelay()
-		Send {Right}
-		ShortDelay()
-		Send {ESC down}
-	}
-	return	
-}
-
-;///////////////////////         Timer Keys       ///////////////////////////
-TimerAddMinutes:
-{
-	if (WinActive("Red Dead Redemption 2"))
-		TimeMins++
-	return	
-}
-TimerSubMinutes:
-{
-	if (WinActive("Red Dead Redemption 2"))
-		TimeMins--
-	return	
-}
-TimerResetMinutes:
-{
-	if (WinActive("Red Dead Redemption 2"))
-		TimeMins=1
-	return	
-}
-TimerResetSeconds:
-{
-	if (WinActive("Red Dead Redemption 2"))
-		TimeSecs=30
-	return	
-}
-
-ToggleCooking:
-{
-	IsCookingActivated := !IsCookingActivated
-	if (IsCookingActivated) {
-		Loop{
-			if (WinActive("Red Dead Redemption 2")){
-				LongDelay()
-				Send {Enter up}
-				Send {Enter}
-				LongDelay()
-				Send {Space down}  ;/// For single player
-				LongDelay()
-				Send {Space up}    ;/// For single player
-				Send {r}           ;/// For single player
-				Send {Space}
-				Send {Enter down}
-				LongDelay()
-				Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
-				Send {Down}
-				LongDelay()
-			}
-		}
-	}
-	return
-}
-
-;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
-
-BeatPoker:
-{
-;// singleplayer
-	IsBeatPokerActivated := !IsBeatPokerActivated
-	
-	if (IsBeatPokerActivated) {
-		Loop{
-			if (WinActive("Red Dead Redemption 2"))
-			{
-				ShortDelay()
-				Send {Enter}
-				LongDelay()
-				Send {a down}
-				ShortDelay()
-				Send {Enter}
-				Send {g}
-				SuperLongDelay()
-				Send {Enter}
-				ShortDelay()
-				Send {a up}
-				Send {Up 30}
-				ShortDelay()
-				Send {RButton down}
-				LongDelay()
-				LongDelay()
-				Send {Enter}
-				ShortDelay()
-				Send {RButton up}
-				ShortDelay()
-				
-				if (!IsBeatPokerActivated) {
-		;ToolTip, BeatPoker Disabled,0,0
-					break
+	ToggleClicker:
+	{
+		IsClickerActivated := !IsClickerActivated
+		if (WinActive("Red Dead Redemption 2"))
+			if (IsClickerActivated) {
+				Loop {
+					if (WinActive("ahk_exe RDR2.exe")){
+						Click
+						Sleep 1
+						
+						if (!IsClickerActivated) {
+							break
+						}
+					}
 				}
 			}
-		}
+			return
 	}
-	return	
-}
-
-
-ReloadScript:
-{
-	TimeMins = 0
-	TimeSecs = 0
-	TimeMins1 = 0
-	TimeMins2 = 0
-	TimeSecz = 0
-	MissionFailSafeType=0
-	GuiControl,, MyText2, MissionFailSafe Mode: %MissionFailSafeType%
-	sleep, 1000
-	reload
-	ExitApp
-	return	
-}
-
-AbortScript:
-{
-	ExitApp
-	return	
-}
-;////// Delay-Functions
-SuperShortDelay(){
-	if (WinActive("Red Dead Redemption 2"))
-		sleep, 20 
-	return
-}
-
-
-ShortDelay(){
-	if (WinActive("Red Dead Redemption 2"))
-		sleep, 200 
-	return
-}
-
-LongDelay(){
-	if (WinActive("Red Dead Redemption 2"))
-		sleep, 800
-	return
-}
-
-SuperLongDelay(){
-	if (WinActive("Red Dead Redemption 2"))
-		sleep, 3200
-	return
-}
-;////// a couple of code macros/functions for Send{Enter} w/proper delays and min/repeat typing functions
-SendEnter(){
-	if (WinActive("Red Dead Redemption 2")){
-		LongDelay()
-		Send {Enter}
-		LongDelay()
-	}
-	return
-}
-
-SendEnterEnter(){
-	if (WinActive("Red Dead Redemption 2")){
-		LongDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Enter}
-		LongDelay()
-	}
-	return
-}
-
-;////// Tab Menu is self explanitory. uses F4 to directly access the items dial-menu for speed
-OpenTabMenu(){
-	if (WinActive("Red Dead Redemption 2")){
-		Send {F4 down}
-		ShortDelay()
-	}
-	return
-} 
-
-CloseTabMenu(){
-	if (WinActive("Red Dead Redemption 2"))
-		Send {F4 up}
-	return
-}
-
-;////// player menu - L menu on PC
-OpenPlayerMenu(){
-	if (WinActive("Red Dead Redemption 2")){
-		turnCapslockOff()
-		Send {l}
-		LongDelay()
-	}
-	return
-} 
-
-ClosePlayerMenu(){
-	Loop, 4
+;//////////////////////////    Defensive Toggle     /////////////////////////////
+	ToggleDefensive:
 	{
 		if (WinActive("Red Dead Redemption 2")){
+			OpenPlayerMenu()
+			Send {Up}
+			SendEnter()
+			Send {Up 4}
+			Send {Left}
+			
+			ClosePlayerMenu()
+		}
+		return      
+	}
+;///////////////////////////        Health Slot        ///////////////////////////////////
+	Health:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenTabMenu()
+			MouseMove, 766, 354
+			CloseTabMenu()
+		}
+		return	
+	}
+;///////////////////////////        Stamina Slot       ///////////////////////////////////
+	Stamina:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenTabMenu()
+			MouseMove, 954, 271
+			CloseTabMenu()
+		}
+		return	
+	}
+;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
+	Deadeye:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenTabMenu()
+			MouseMove, 1147, 350
+			CloseTabMenu()
+		}
+		return
+	}
+	
+;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
+	HealCores:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenTabMenu()
+			MouseMove, 691, 550
+			Send {q}
+			CloseTabMenu()
+		}
+		return
+	}
+	
+;///////////////////////////        Wilderness Camp    //////////////////////////////////////
+	WildernessCamp:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenTabMenu()
+			MouseMove, 963, 815
+			CloseTabMenu()
+		}
+		return	
+	}
+	
+;///////////////////////////        Item Slot    //////////////////////////////////////
+	ItemSlot:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenTabMenu()
+			MouseMove, 1231, 548
+			Send {q 2}
+			CloseTabMenu()
+		}
+		return	
+	}
+	
+;///////////////////////////     Hunting Wagon    //////////////////////////////////////
+	HuntingWagon:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenPlayerMenu()
 			LongDelay()
-			Send {ESC}
-			Send {ESC up}
+			Send {Down 7}
+			SendEnter()
+			Send {Down}
+			ShortDelay()
+			SendEnterEnter()
+			SendEnter()
+			ClosePlayerMenu()
 		}
+		return	
 	}
-	return
-}
-
+	
+;///////////////////////////     Bounty Wagon    /////////////////////////////////
+	BountyWagon:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenPlayerMenu()
+			LongDelay()
+			Send {Down 7}
+			SendEnter()
+			Send {Down}
+			SendEnterEnter()
+			Send {Down}
+			ShortDelay()
+			SendEnter()
+			ClosePlayerMenu()
+		}
+		return	
+	}
+	
+;///////////////////////////     Dismiss Wagons    /////////////////////////////////
+	DismissWagons:
+	{
+		if (WinActive("Red Dead Redemption 2")){
+			OpenPlayerMenu()
+			SuperShortDelay() 
+			Send {e}
+			SuperShortDelay()
+			Send {Down 7}
+			SuperShortDelay()
+			Send {Enter}
+			LongDelay()
+			Send {Down}
+			SendEnterEnter()
+			ShortDelay()
+			Send {Space}
+			ShortDelay()
+			Send {Down}
+			ShortDelay()
+			Send {Space}
+			ClosePlayerMenu()}
+			return	
+		}
+		
+;///////////////////////////     Feed Horse Slot    /////////////////////////////////
+		FeedHorse:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				OpenTabMenu()
+				Send {r}
+				MouseMove, 691, 550
+				CloseTabMenu()
+			}
+			return	
+		}
+		
+;///////////////////////////     Open Posses List    ///////////////////////////
+		ShowPosses:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				OpenPlayerMenu()
+				ShortDelay()
+				Send {Down 5}
+				SendEnter()
+			}
+			return	
+		}
+		
+;/////////////////////////          Form Posse       ////////////////////////////
+;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
+		FormPosse:
+		{     
+			if (WinActive("Red Dead Redemption 2")){
+				OpenPlayerMenu()
+				LongDelay()
+				Send {Down 5}
+				SendEnterEnter()
+				SendEnter()
+				ClosePlayerMenu()
+			}
+			return	
+		}
+		
+;//////////////////////           Quick Race         //////////////////////////////
+		QuickRace:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				OpenPlayerMenu()
+				ShortDelay()
+				Send {Up 2}{Enter}
+				ShortDelay()
+				Send {Up}
+				ShortDelay()
+				Send {Up}
+				ShortDelay()
+				Send {Up}
+				ShortDelay()
+				Send {Up}{Enter}
+			}
+			return	
+		}
+		
+;///////////////////////          Menu Slot Two      ///////////////////////////
+		MenuSlotTwo:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				EscapeMenu()
+				ShortDelay()
+				MouseMove, 170, 852
+				ShortDelay()
+				Send {Enter}
+				sleep,1000
+				Send {Right}
+				ShortDelay()
+				Send {Enter}
+				LongDelay()
+				Send {Enter}
+			}
+			return	
+		}
+		
+;///////////////////////          Menu Slot Four      ///////////////////////////
+		MenuSlotFour:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				EscapeMenu()
+				ShortDelay()
+				MouseMove, 170, 852
+				ShortDelay()
+				Send {Enter}
+				sleep,1000
+				Send {Right 2}
+				ShortDelay()
+				Send {Right}
+				ShortDelay()
+				Send {Enter}
+				LongDelay()
+				Send {Enter}
+			}
+			return	
+		}
+		
+;///////////////////////          Volume Down      ///////////////////////////
+		VolumeDown:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				EscapeMenu()
+				ShortDelay()
+				MouseMove, 130, 960
+				LongDelay()
+				Send {Enter}
+;MouseClick, left, 132, 965
+				ShortDelay()
+				Send {Enter}
+				ShortDelay()
+				Send {Right}
+				ShortDelay()
+				Send {Right}
+				ShortDelay()
+				Send {Enter}
+				ShortDelay()
+				ShortDelay()
+				Send {Left}
+				LongDelay()
+				Send {Left}
+				ShortDelay()
+				Send {ESC down}
+			}
+			return	
+		}
+		
+;///////////////////////          Volume Up       ///////////////////////////
+		VolumeUp:
+		{
+			if (WinActive("Red Dead Redemption 2")){
+				EscapeMenu()
+				ShortDelay()
+				MouseMove, 131, 970
+				ShortDelay()
+				Send {Enter}
+;MouseClick, left, 132, 965
+				ShortDelay()
+				Send {Enter}
+				ShortDelay()
+				Send {Right}
+				ShortDelay()
+				Send {Right}
+				ShortDelay()
+				Send {Enter}
+				LongDelay()
+				Send {Right}
+				LongDelay()
+				Send {Right}
+				ShortDelay()
+				Send {ESC down}
+			}
+			return	
+		}
+		
+;///////////////////////         Timer Keys       ///////////////////////////
+		TimerAddMinutes:
+		{
+			if (WinActive("Red Dead Redemption 2"))
+				TimeMins++
+			return	
+		}
+		TimerSubMinutes:
+		{
+			if (WinActive("Red Dead Redemption 2"))
+				TimeMins--
+			return	
+		}
+		TimerResetMinutes:
+		{
+			if (WinActive("Red Dead Redemption 2"))
+				TimeMins=1
+			return	
+		}
+		TimerResetSeconds:
+		{
+			if (WinActive("Red Dead Redemption 2"))
+				TimeSecs=30
+			return	
+		}
+		
+		ToggleCooking:
+		{
+			IsCookingActivated := !IsCookingActivated
+			if (WinActive("Red Dead Redemption 2"))
+				if (IsCookingActivated) {
+					Loop{
+						if (WinActive("Red Dead Redemption 2")){
+							LongDelay()
+							Send {Enter up}
+							Send {Enter}
+							LongDelay()
+							Send {Space down}  ;/// For single player
+							LongDelay()
+							Send {Space up}    ;/// For single player
+							Send {r}           ;/// For single player
+							Send {Space}
+							Send {Enter down}
+							LongDelay()
+							Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
+							Send {Down}
+							LongDelay()
+						}
+					}
+				}
+			return
+		}
+		
+;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
+		
+		BeatPoker:
+		{
+;// singleplayer
+			IsBeatPokerActivated := !IsBeatPokerActivated
+			
+			if (IsBeatPokerActivated) {
+				Loop{
+					if (WinActive("Red Dead Redemption 2"))
+					{
+						ShortDelay()
+						Send {Enter}
+						LongDelay()
+						Send {a down}
+						ShortDelay()
+						Send {Enter}
+						Send {g}
+						SuperLongDelay()
+						Send {Enter}
+						ShortDelay()
+						Send {a up}
+						Send {Up 30}
+						ShortDelay()
+						Send {RButton down}
+						LongDelay()
+						LongDelay()
+						Send {Enter}
+						ShortDelay()
+						Send {RButton up}
+						ShortDelay()
+						
+						if (!IsBeatPokerActivated) {
+		;ToolTip, BeatPoker Disabled,0,0
+							break
+						}
+					}
+				}
+			}
+			return	
+		}
+		
+		
+		ReloadScript:
+		{
+			;////// Need a log file in here 
+			TimeMins = 0
+			TimeSecs = 0
+			TimeMins1 = 0
+			TimeMins2 = 0
+			TimeSecz = 0
+			MissionFailSafeType=0
+			GuiControl,, MyText2, MissionFailSafe Mode: %MissionFailSafeType%
+			sleep, 1000
+			reload
+			ExitApp
+			return	
+		}
+		
+		AbortScript:
+		{
+			;////// Need a log file in here 
+			ExitApp
+			return	
+		}
+;////// Delay-Functions
+		SuperShortDelay(){
+			if (WinActive("Red Dead Redemption 2"))
+				sleep, 20 
+			return
+		}
+		
+		
+		ShortDelay(){
+			if (WinActive("Red Dead Redemption 2"))
+				sleep, 200 
+			return
+		}
+		
+		LongDelay(){
+			if (WinActive("Red Dead Redemption 2"))
+				sleep, 800
+			return
+		}
+		
+		SuperLongDelay(){
+			if (WinActive("Red Dead Redemption 2"))
+				sleep, 3200
+			return
+		}
+;////// a couple of code macros/functions for Send{Enter} w/proper delays and min/repeat typing functions
+		SendEnter(){
+			if (WinActive("Red Dead Redemption 2")){
+				LongDelay()
+				Send {Enter}
+				LongDelay()
+			}
+			return
+		}
+		
+		SendEnterEnter(){
+			if (WinActive("Red Dead Redemption 2")){
+				LongDelay()
+				Send {Enter}
+				LongDelay()
+				Send {Enter}
+				LongDelay()
+			}
+			return
+		}
+		
+;////// Tab Menu is self explanitory. uses F4 to directly access the items dial-menu for speed
+		OpenTabMenu(){
+			if (WinActive("Red Dead Redemption 2")){
+				Send {F4 down}
+				ShortDelay()
+			}
+			return
+		} 
+		
+		CloseTabMenu(){
+			if (WinActive("Red Dead Redemption 2"))
+				Send {F4 up}
+			return
+		}
+		
+;////// player menu - L menu on PC
+		OpenPlayerMenu(){
+			if (WinActive("Red Dead Redemption 2")){
+				turnCapslockOff()
+				Send {l}
+				LongDelay()
+			}
+			return
+		} 
+		
+		ClosePlayerMenu(){
+			Loop, 4
+			{
+				if (WinActive("Red Dead Redemption 2")){
+					LongDelay()
+					Send {ESC}
+					Send {ESC up}
+				}
+			}
+			return
+		}
+		
 ;//// the escape menu in game
-EscapeMenu(){
-	if (WinActive("Red Dead Redemption 2")){
-		Send {ESC}
-		ShortDelay()
-	}
-	return
-}
-
-;//// currently not used
-invertCapsLockState(){ 
-	if (WinActive("Red Dead Redemption 2"))
-		SetCapsLockState % !GetKeyState("CapsLock", "T") ;////////// requires [v1.1.30+]
-	return
-}
-
-;///// This will lock it off for a moment, called each time it's used
-turnCapslockOff() {
-	if (WinActive("Red Dead Redemption 2")){
-		if (GetKeyState("CapsLock", "T") = 1) {
-			SetCapsLockState, off
+		EscapeMenu(){
+			if (WinActive("Red Dead Redemption 2")){
+				Send {ESC}
+				ShortDelay()
+			}
+			return
 		}
-	}
-	return
-}
-
+		
+;//// currently not used
+		invertCapsLockState(){ 
+			if (WinActive("Red Dead Redemption 2"))
+				SetCapsLockState % !GetKeyState("CapsLock", "T") ;////////// requires [v1.1.30+]
+			return
+		}
+		
+;///// This will lock it off for a moment, called each time it's used
+		turnCapslockOff() {
+			if (WinActive("Red Dead Redemption 2")){
+				if (GetKeyState("CapsLock", "T") = 1) {
+					SetCapsLockState, off
+				}
+			}
+			return
+		}
+		
 ;/////////////////      Mission Failsafe Mode    ///////////////////////////
 ;/////// Cycle the Mission Failsafe Modes ///////
-CycleMissionFailSafe:
-{
-	if (WinActive("Red Dead Redemption 2")){
-		MissionFailSafeType++
-		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-		Gui, guithree: Show, x740 y150 w600 h40 NoActivate
-		if(MissionFailSafeType>=7){       ;////// off, drop-only, give-to-contact, and walk-in MissionFailSafe Types 4-6 respectively
-			IsMissionFailSafeActivated := !IsMissionFailSafeActivated
-			MissionFailSafeType=0
-			GuiControl, guitwo:, MyText2, Mission Failsafe Mode: Disabled
-		}
-		else
+		CycleMissionFailSafe:
 		{
-			IsMissionFailSafeActivated=true
-			if(MissionFailSafeType=1){
-				GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-1
-				GuiControl, guithree:, MyText3, Dead-Drop Mode 
-			}
-			if(MissionFailSafeType=2){
-				GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-2
-				GuiControl, guithree:, MyText3, Contact-Drop Mode
-			}
-			if(MissionFailSafeType=3){
-				GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-3
-				GuiControl, guithree:, MyText3, Walk-In/Drive-In Mode
-			}
-			if(MissionFailSafeType=4){
-				GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-4
-				GuiControl, guithree:, MyText3, Dead-Drop Mode
-			}
-			if(MissionFailSafeType=5){
-				GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-5
-				GuiControl, guithree:, MyText3, Contact-Drop Mode
-			}
-			if(MissionFailSafeType=6){
-				GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-6
-				GuiControl, guithree:, MyText3, Walk-In/Drive-In Mode
-			}
-		}
-		sleep, 800
-		Gui, guitwo: Hide
-		sleep, 500
-		Gui, guithree: Hide
-	}
-	return
-}	
-
-;/////////////////      Update Passive Background Anti-AFK    ///////////////////////////
-UpdateAntiAFK:
-{
-	if (WinActive("Red Dead Redemption 2"))
-		Send {AppsKey}
-	return
-}
-
-;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
-UpdateOSD:
-{
-	if WinActive("Red Dead Redemption 2")
-	{
-		if (IsMissionFailSafeActivated)
-		{
-			Gui, guione: Show, x905 y70 w100 h60 NoActivate
-			if(MissionFailSafeType<=3)
-			{
-				if(IsTimerSet=0)
-				{
-					TimeMins = 13
-					TimeSecs = 49
-					IsTimerSet=1
-				}
-				else {
-					LongDelay()
-					ShortDelay()
-					TimeSecs--
-					
-					if(TimeSecs<1)
-					{
-						TimeMins--
-						TimeSecs=59			
-						
-						if(TimeMins<0)
-						{			
-		;/// dead drop legendary variant 
-							if(MissionFailSafeType=1){
-								Send {r down}
-								LongDelay()
-								Send {r up}
-								reload
-							}
-		;/// contact drop legendary variant 
-							if(MissionFailSafeType=2){
-								Send {RButton down}
-								ShortDelay()
-								Send {r down}
-								LongDelay()
-								Send {r up}
-								Send {RButton up}
-								reload
-							}
-		;/// drive in (bounty) legendary variant 
-							if(MissionFailSafeType=3){
-								Send {w down}
-								Send {LShift down}
-								SuperLongDelay()
-								Send {w up}
-								Send {LShift up}
-								reload
-							}
-						}		
-					}
-;/// Digit Formatting
-					TimeSecs := Format("{:02}", TimeSecs)
-					TimeMins := Format("{:02}", TimeMins)
-					GuiControl, guione:, MyText, %TimeMins%:%TimeSecs%
-				}
-			}
-			else
-			{
+			if (WinActive("Red Dead Redemption 2")){
+				MissionFailSafeType++
 				Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
 				Gui, guithree: Show, x740 y150 w600 h40 NoActivate
-				
-;////// Update the first Minutes digit - for some reason minutes don't detect as well as seconds
-				Clip0 = %ClipBoardAll%
-				Clipboard = ; Erase clipboard
-				RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "924 52 942 76" --clipboard --whitelist "0123456789",, hide
-				ClipBoard = %ClipBoard%       ; Convert to text
-				TimeMins1:= RegExReplace(ClipBoard, "\D")
-				
-;////// Update the second Minutes digit - for some reason minutes don't detect as well as seconds
-				RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "942 52 958 76" --clipboard --whitelist "0123456789",, hide
-				ClipBoard = %ClipBoard%       ; Convert to text
-				TimeMins2 := RegExReplace(ClipBoard, "\D")
-				Clipboard = %Clip0%              ; Restore clipboard
-				Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
-				
-;//////	8 Minute bug fix
-				if (!(TimeMins1="0") and !(TimeMins2="0")){
-					if (TimeMins2=""){
-						TimeMins2=8
+				if(MissionFailSafeType>=7){       ;////// off, drop-only, give-to-contact, and walk-in MissionFailSafe Types 4-6 respectively
+					IsMissionFailSafeActivated := !IsMissionFailSafeActivated
+					MissionFailSafeType=0
+					GuiControl, guitwo:, MyText2, Mission Failsafe Mode: Disabled
+				}
+				else
+				{
+					IsMissionFailSafeActivated=true
+					if(MissionFailSafeType=1){
+						GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-1
+						GuiControl, guithree:, MyText3, Dead-Drop Mode 
+					}
+					if(MissionFailSafeType=2){
+						GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-2
+						GuiControl, guithree:, MyText3, Contact-Drop Mode
+					}
+					if(MissionFailSafeType=3){
+						GuiControl, guitwo:, MyText2, Legendary Mission Failsafe: type-3
+						GuiControl, guithree:, MyText3, Walk-In/Drive-In Mode
+					}
+					if(MissionFailSafeType=4){
+						GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-4
+						GuiControl, guithree:, MyText3, Dead-Drop Mode
+					}
+					if(MissionFailSafeType=5){
+						GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-5
+						GuiControl, guithree:, MyText3, Contact-Drop Mode
+					}
+					if(MissionFailSafeType=6){
+						GuiControl, guitwo:, MyText2, Timed Mission Failsafe Mode: type-6
+						GuiControl, guithree:, MyText3, Walk-In/Drive-In Mode
 					}
 				}
-;/////  Timer only needs to display under 1 minute
-				if(TimeMins2>=1)
+				sleep, 800
+				Gui, guitwo: Hide
+				sleep, 500
+				Gui, guithree: Hide
+			}
+			return
+		}	
+		
+;/////////////////      Update Passive Background Anti-AFK    ///////////////////////////
+		UpdateAntiAFK:
+		{
+			if (WinActive("Red Dead Redemption 2"))
+				Send {AppsKey}
+			return
+		}
+		
+;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
+		UpdateOSD:
+		{
+			if WinActive("Red Dead Redemption 2")
+			{
+				if (IsMissionFailSafeActivated)
 				{
-					GuiControl, guithree:, MyText3,
-					GuiControl, guitwo:, MyText2,
-				}
-				else{
-					GuiControl, guithree:, MyText3, Countdown Activated!
-					GuiControl, guitwo:, MyText2,  %TimeMins2%
-				}
+					Gui, guione: Show, x905 y70 w100 h60 NoActivate
+					if(MissionFailSafeType<=3)
+					{
+						if(IsTimerSet=0)
+						{
+							TimeMins = 13
+							TimeSecs = 49
+							IsTimerSet=1
+						}
+						else {
+							LongDelay()
+							ShortDelay()
+							TimeSecs--
+							
+							if(TimeSecs<1)
+							{
+								TimeMins--
+								TimeSecs=59			
+								
+								if(TimeMins<0)
+								{			
+		;/// dead drop legendary variant 
+									if(MissionFailSafeType=1){
+										Send {r down}
+										LongDelay()
+										Send {r up}
+										reload
+									}
+		;/// contact drop legendary variant 
+									if(MissionFailSafeType=2){
+										Send {RButton down}
+										ShortDelay()
+										Send {r down}
+										LongDelay()
+										Send {r up}
+										Send {RButton up}
+										reload
+									}
+		;/// drive in (bounty) legendary variant 
+									if(MissionFailSafeType=3){
+										Send {w down}
+										Send {LShift down}
+										SuperLongDelay()
+										Send {w up}
+										Send {LShift up}
+										reload
+									}
+								}		
+							}
+;/// Digit Formatting
+							TimeSecs := Format("{:02}", TimeSecs)
+							TimeMins := Format("{:02}", TimeMins)
+							GuiControl, guione:, MyText, %TimeMins%:%TimeSecs%
+						}
+					}
+					else
+					{
+						Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+						Gui, guithree: Show, x740 y150 w600 h40 NoActivate
+						
+;////// Update the first Minutes digit - for some reason minutes don't detect as well as seconds
+						Clip0 = %ClipBoardAll%
+						Clipboard = ; Erase clipboard
+						RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "924 52 942 76" --clipboard --whitelist "0123456789",, hide
+						ClipBoard = %ClipBoard%       ; Convert to text
+						TimeMins1:= RegExReplace(ClipBoard, "\D")
+						
+;////// Update the second Minutes digit - for some reason minutes don't detect as well as seconds
+						RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "942 52 958 76" --clipboard --whitelist "0123456789",, hide
+						ClipBoard = %ClipBoard%       ; Convert to text
+						TimeMins2 := RegExReplace(ClipBoard, "\D")
+						Clipboard = %Clip0%              ; Restore clipboard
+						Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
+						
+;//////	8 Minute bug fix
+						if (!(TimeMins1="0") and !(TimeMins2="0")){
+							if (TimeMins2=""){
+								TimeMins2=8
+							}
+						}
+;/////  Timer only needs to display under 1 minute
+						if(TimeMins2>=1)
+						{
+							GuiControl, guithree:, MyText3,
+							GuiControl, guitwo:, MyText2,
+						}
+						else{
+							GuiControl, guithree:, MyText3, Countdown Activated!
+							GuiControl, guitwo:, MyText2,  %TimeMins2%
+						}
 	;GuiControl, guithree:, MyText3, %loopcount%
-				
+						
 	;if TimeMinz - LastTimeMinz is between 1 and 5
 	;	break
 	;else
 	;{
 	;	LastTimeMinz = TimeMinz
 	;}
-				
+						
 ;////// MultiSampling to increase precision, decrease false reads, also allows us to remove the delays with runwait
-				Loop, 3
-				{
+						Loop, 3
+						{
 	;////// Now Update Seconds
-					Clipboard = ; Erase clipboard
-					RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "962 52 993 76" --clipboard --whitelist "0123456789",, hide
-					ClipBoard = %ClipBoard%       ; Just the text
-					TimeSecz := RegExReplace(ClipBoard, "\D")   ; Filter only digits
-					
-					if LastTimeSecz - TimeSecz is between 1 and 5
-						break
-					else
-						LastTimeSecz = TimeSecz
-				}
-				Clipboard = %Clip0%              ; Restore clipboard
-				Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
-				
+							Clipboard = ; Erase clipboard
+							RunWait, C:\Program Files\Capture2Text\Capture2Text_CLI.exe --screen-rect "962 52 993 76" --clipboard --whitelist "0123456789",, hide
+							ClipBoard = %ClipBoard%       ; Just the text
+							TimeSecz := RegExReplace(ClipBoard, "\D")   ; Filter only digits
+							
+							if LastTimeSecz - TimeSecz is between 1 and 5
+								break
+							else
+								LastTimeSecz = TimeSecz
+						}
+						Clipboard = %Clip0%              ; Restore clipboard
+						Clip0=    ; Clear our clipboard cache, doing this in two steps to reduce clipboard crossover hopefully
+						
 ;//////  Subtract seconds we use to capture data, and also
 ;/// predict and manually replace timer when it reaches one or zero
 ;/// increase reliability, reduce false timer results
-				if TimeSecz >= 0 
-					TimeSecz -= 1
-				else
-					TimeSecz = 59
-				
-				if (TimeMins1 < 1 and TimeMins2 = 0)
-				{
-					if (TimeSecz <= 8) 
-					{
+						if TimeSecz >= 0 
+							TimeSecz -= 1
+						else
+							TimeSecz = 59
+						
+						if (TimeMins1 < 1 and TimeMins2 = 0)
+						{
+							if (TimeSecz <= 8) 
+							{
 		;/// Drop-only
-						if MissionFailSafeType = 4 
-						{
-							Send {r down}
-							LongDelay()
-							Send {r up}
-							reload
-						}
+								if MissionFailSafeType = 4 
+								{
+									Send {r down}
+									LongDelay()
+									Send {r up}
+									reload
+								}
 		;/// Drop-to-Contact
-						if MissionFailSafeType = 5 
-						{
-							Send {RButton down}
-							ShortDelay()
-							Send {r down}
-							LongDelay()
-							Send {r up}
-							Send {RButton up}
-							reload
-						}
+								if MissionFailSafeType = 5 
+								{
+									Send {RButton down}
+									ShortDelay()
+									Send {r down}
+									LongDelay()
+									Send {r up}
+									Send {RButton up}
+									reload
+								}
 		;/// Drive-in/Walk-in
-						if MissionFailSafeType = 6 
-						{
-							Send {w down}
-							Send {LShift down}
-							SuperLongDelay()
-							Send {w up}
-							Send {LShift up}
-							reload
+								if MissionFailSafeType = 6 
+								{
+									Send {w down}
+									Send {LShift down}
+									SuperLongDelay()
+									Send {w up}
+									Send {LShift up}
+									reload
+								}
+							}
 						}
-					}
-				}
 ;return
-			}
+					}
 ;/// Digit Formatting
-			TimeSecz := Format("{:02}", TimeSecz)
-			if(TimeMins1="")
-				TimeMinz2 := Format("{:02}", TimeMins2)
-			GuiControl, guione:, MyText, %TimeMins1%%TimeMins2%:%TimeSecz%
-		}
-		else 
-		{  			
-			IsTimerSet=0
-			TimeSecs = 0
-			TimeMins = 0
-			TimeMins1 = 0
-			TimeMins2 = 0
-			TimeSecz = 0
-			Gui, guione: Hide
-			Gui, guitwo: Hide
-			Gui, guithree: Hide
-		} 
-	} ;//// end ifwin
-	return
-} ;//// end UpdateOSD
+					TimeSecz := Format("{:02}", TimeSecz)
+					if(TimeMins1="")
+						TimeMinz2 := Format("{:02}", TimeMins2)
+					GuiControl, guione:, MyText, %TimeMins1%%TimeMins2%:%TimeSecz%
+				}
+				else 
+				{  			
+					IsTimerSet=0
+					TimeSecs = 0
+					TimeMins = 0
+					TimeMins1 = 0
+					TimeMins2 = 0
+					TimeSecz = 0
+					Gui, guione: Hide
+					Gui, guitwo: Hide
+					Gui, guithree: Hide
+				} 
+			} ;//// end ifwin
+			return
+		} ;//// end UpdateOSD
 		

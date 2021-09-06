@@ -21,14 +21,13 @@ IfExist, %CFG%
 	IniRead, Read_LoadEditorOnStart, %CFG%, Settings, LoadEditorOnStart
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
-
+	IniRead,Read_ToggleDebugKey, %CFG%, Settings, ToggleDebug
+	
 	;/////////////////// Singleplayer ONLY binds ///////////////
 	IniRead,Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
 	
 	;//////////////////  Online Macros  ////////////////////
-	IniRead,Read_PassiveToggleCookingOnKey, %CFG%,Hotkeys,PassiveToggleCookingOn
-	IniRead,Read_PassiveToggleCookingOffKey, %CFG%,Hotkeys,PassiveToggleCookingOff
-	
+	IniRead,Read_AutoCookingKey, %CFG%,Hotkeys,AutoCooking
 	IniRead,Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
 	IniRead,Read_ToggleClickerKey, %CFG%,Hotkeys,ToggleClicker
 	IniRead,Read_ToggleFinaleKey, %CFG%,Hotkeys,ToggleFinale
@@ -56,21 +55,21 @@ IfExist, %CFG%
 	IniRead,Read_VolumeUpKey, %CFG%, Hotkeys,VolumeUp
 	IniRead,Read_ReloadScriptKey, %CFG%, Hotkeys,ReloadScript
 	IniRead,Read_AbortScriptKey, %CFG%, Hotkeys,AbortScript
-
+	
 	IniRead, Read_TimerAddMinutesKey, %CFG%, Hotkeys,TimerAddMinutes
 	IniRead, Read_TimerSubMinutesKey, %CFG%, Hotkeys,TimerSubMinutes
 	IniRead, Read_TimerResetMinutesKey, %CFG%, Hotkeys,TimerResetMinutes
 	IniRead, Read_TimerResetSecondsKey, %CFG%, Hotkeys,TimerResetSeconds
 	
 		;////// GuiControls
-	GuiControl,,BeatPoker,%Read_BeatPokerKey%
+	GuiControl,,ToggleDebug,%Read_ToggleDebugKey%
 
-	GuiControl,,PassiveToggleCookingOn,%Read_PassiveToggleCookingOnKey%
-	GuiControl,,PassiveToggleCookingOff,%Read_PassiveToggleCookingOffKey%
+	GuiControl,,BeatPoker,%Read_BeatPokerKey%
 	
+	GuiControl,,AutoCooking,%Read_AutoCookingKey%
+	GuiControl,,AutoClicker,%Read_AutoClickerKey%
 	GuiControl,,ToggleDefensive,%Read_ToggleDefensiveKey%
-	GuiControl,,ToggleClicker,%Read_ToggleClickerKey%
-	GuiControl,,ToggleFinale,%Read_ToggleFinaleKey%
+	GuiControl,,CycleMissionFailSafe,%Read_CycleMissionFailSafeKey%
 	
 	GuiControl,,Health,%Read_HealthKey%
 	GuiControl,,Stamina,%Read_StaminaKey%
@@ -90,26 +89,26 @@ IfExist, %CFG%
 	GuiControl,,QuickRace,%Read_QuickRaceKey%
 	GuiControl,,MenuSlotTwo,%Read_MenuSlotTwoKey%
 	GuiControl,,MenuSlotFour,%Read_MenuSlotFourKey%
-
+	
 	GuiControl,,VolumeDown,%Read_VolumeDownKey%
 	GuiControl,,VolumeUp,%Read_VolumeUpKey%
 	GuiControl,,ReloadScript,%Read_ReloadScriptKey%
 	GuiControl,,AbortScript,%Read_AbortScriptKey%
-
+	
 	GuiControl,,TimerAddMinutes,%Read_TimerAddMinutesKey%
 	GuiControl,,TimerSubMinutes,%Read_TimerSubMinutesKey%
 	GuiControl,,TimerResetMinutes,%Read_TimerResetMinutesKey% 
 	GuiControl,,TimerResetSeconds,%Read_TimerResetSecondsKey%
 }
-	
-Gui, Add, Text,x10 y20 w150 h20,BeatPoker Key:
 
-Gui, Add, Text,x10 y50 w150 h20,PassiveToggleCookingOn Key:
-Gui, Add, Text,x10 y80 w150 h20,PassiveToggleCookingOnKey:
+Gui, Add, Text,x10 y20 w150 h20,ToggleDebug Key:
 
-Gui, Add, Text,x10 y110 w150 h20,ToggleDefensive Key:
-Gui, Add, Text,x10 y140 w150 h20,ToggleClicker Key:
-Gui, Add, Text,x10 y170 w150 h20,ToggleFinale Key:
+Gui, Add, Text,x10 y50 w150 h20,BeatPoker Key:
+
+Gui, Add, Text,x10 y80 w150 h20,AutoCooking Key:
+Gui, Add, Text,x10 y110 w150 h20,AutoClicker Key:
+Gui, Add, Text,x10 y140 w150 h20,ToggleDefensive Key:
+Gui, Add, Text,x10 y170 w150 h20,CycleMissionFailSafe Key:
 
 Gui, Add, Text,x10 y200 w150 h20,Health Key:
 Gui, Add, Text,x10 y230 w150 h20,Stamina Key:
@@ -118,7 +117,7 @@ Gui, Add, Text,x10 y290 w150 h20,HealCores Key:
 
 Gui, Add, Text,x10 y320 w150 h20,WildernessCamp Key:
 Gui, Add, Text,x10 y350 w150 h20,ItemSlot Key:
-	
+
 Gui, Add, Text,x10 y380 w150 h20,HuntingWagon Key:
 Gui, Add, Text,x10 y410 w150 h20,BountyWagon Key:
 Gui, Add, Text,x320 y20 w150 h20,DismissWagons Key:
@@ -142,14 +141,14 @@ Gui, Add, Text,x320 y440 w150 h20,TimerResetSeconds Key:
 
 ;///////// HotKey Edit Boxes
 
-Gui, Add, Hotkey,x160 y20 w150 h20 vBeatPokerKey,F11
+Gui, Add, Hotkey,x160 y20 w150 h20 vToggleDebugKey,F7
 
-Gui, Add, Hotkey,x160 y50 w150 h20 vPassiveToggleCookingOnKey,^Enter
-Gui, Add, Hotkey,x160 y80 w150 h20 vPassiveToggleCookingOffKey,F10
+Gui, Add, Hotkey,x160 y50 w150 h20 vBeatPokerKey,F11
 
+Gui, Add, Hotkey,x160 y80 w150 h20 vAutoCookingKey,^Enter
+Gui, Add, Hotkey,x160 y140 w150 h20 vAutoClickerKey,z
 Gui, Add, Hotkey,x160 y110 w150 h20 vToggleDefensiveKey,F5
-Gui, Add, Hotkey,x160 y140 w150 h20 vToggleClickerKey,z
-Gui, Add, Hotkey,x160 y170 w150 h20 vToggleFinaleKey,F9
+Gui, Add, Hotkey,x160 y170 w150 h20 vCycleMissionFailSafeKey,F9
 
 Gui, Add, Hotkey,x160 y200 w150 h20 vHealthKey,NumpadHome
 Gui, Add, Hotkey,x160 y230 w150 h20 vStaminaKey,NumpadUp
@@ -182,17 +181,17 @@ Gui, Add, Hotkey,x480 y440 w150 h20 vTimerResetSecondsKey,o
 
 
 if Read_LoadEditorOnStart = 1
-Gui, Add, CheckBox, x60 y450 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
+	Gui, Add, CheckBox, x60 y450 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
 else Gui, Add, CheckBox, x60 y450 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
-
+	
 if Read_AutoUpdateOnStart = 1
-Gui, Add, CheckBox, x360 y450 w150 h20 Checked vAutoUpdateOnStart, Auto Update on start?
+	Gui, Add, CheckBox, x360 y450 w150 h20 Checked vAutoUpdateOnStart, Auto Update on start?
 else Gui, Add, CheckBox, x360 y450 w150 h20 vAutoUpdateOnStart, Auto Update on start?
-
+	
 if Read_SilentUpdateOnStart = 1 
-Gui, Add, CheckBox, x370 y470 w150 h20 Checked vSilentUpdateOnStart, Silent Updates?
+	Gui, Add, CheckBox, x370 y470 w150 h20 Checked vSilentUpdateOnStart, Silent Updates?
 else Gui, Add, CheckBox, x370 y470 w150 h20 vSilentUpdateOnStart, Silent Updates?
-
+	
 Gui, Add, Button, x50 y520 w200 h50 gButtonExit, Exit
 Gui, Add, Button, x350 y520 w200 h50 gSave, Save and Run
 
@@ -202,39 +201,38 @@ return
 ;/////////////////////  Functions   /////////////////
 
 ButtonExit:
-	ExitApp
+ExitApp
 return
 
 Save:
 {
 	Gui, Submit
-
+	
 	IfExist, %CFG%
 	{ 
 		FileDelete, config.ini
 	}
-
+	
 	;/////////////////   Settings     ///////////////
 	IniWrite, %LoadEditorOnStart%, %CFG%, Settings, LoadEditorOnStart
 	IniWrite, %AutoUpdateOnStart%, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, %SilentUpdateOnStart%, %CFG%, Settings, SilentUpdateOnStart
+	IniWrite, %ToggleDebugKey%, %CFG%, Hotkeys, ToggleDebug
 	
 	;/////////////////// Singleplayer Only Binds ///////////////
 	IniWrite, %BeatPokerKey%, %CFG%, SinglePlayerHotkeys, BeatPoker
-
+	
 	;//////////////////  Online Macros  ////////////////////
-	IniWrite, %PassiveToggleCookingOnKey%, %CFG%, Hotkeys, PassiveToggleCookingOn
-	IniWrite, %PassiveToggleCookingOffKey%, %CFG%, Hotkeys, PassiveToggleCookingOff
-
+	IniWrite, %AutoCookingKey%, %CFG%, Hotkeys, AutoCooking
+	IniWrite, %ToggleClickerKey%, %CFG%, Hotkeys, AutoClicker
 	IniWrite, %ToggleDefensiveKey%, %CFG%, Hotkeys, ToggleDefensive
-	IniWrite, %ToggleClickerKey%, %CFG%, Hotkeys, ToggleClicker
-	IniWrite, %ToggleFinaleKey%, %CFG%, Hotkeys, ToggleFinale
+	IniWrite, %CycleMissionFailSafeKey%, %CFG%, Hotkeys, CycleMissionFailSafe
 	
 	IniWrite, %HealthKey%, %CFG%, Hotkeys, Health
 	IniWrite, %StaminaKey%, %CFG%, Hotkeys, Stamina
 	IniWrite, %DeadeyeKey%, %CFG%, Hotkeys, Deadeye
 	IniWrite, %HealCoresKey%, %CFG%, Hotkeys, HealCores
-
+	
 	IniWrite, %WildernessCampKey%, %CFG%, Hotkeys, WildernessCamp
 	IniWrite, %ItemSlotKey%, %CFG%, Hotkeys, ItemSlot
 	
@@ -248,18 +246,17 @@ Save:
 	IniWrite, %QuickRaceKey%, %CFG%, Hotkeys, QuickRace
 	IniWrite, %MenuSlotTwoKey%, %CFG%, Hotkeys, MenuSlotTwo
 	IniWrite, %MenuSlotFourKey%, %CFG%, Hotkeys, MenuSlotFour
-
+	
 	IniWrite, %VolumeDownKey%, %CFG%, Hotkeys, VolumeDown
 	IniWrite, %VolumeUpKey%, %CFG%, Hotkeys, VolumeUp
 	IniWrite, %ReloadScriptKey%, %CFG%, Hotkeys, ReloadScript
 	IniWrite, %AbortScriptKey%, %CFG%, Hotkeys, AbortScript
-
+	
 	IniWrite, %TimerAddMinutesKey%, %CFG%, Hotkeys,TimerAddMinutes
 	IniWrite, %TimerSubMinutesKey%, %CFG%, Hotkeys,TimerSubMinutes
 	IniWrite, %TimerResetMinutesKey% , %CFG%, Hotkeys,TimerResetMinutes
 	IniWrite, %TimerResetSecondsKey%, %CFG%, Hotkeys,TimerResetSeconds
-
-	ExitApp
-return
-}
 	
+	ExitApp
+	return
+}

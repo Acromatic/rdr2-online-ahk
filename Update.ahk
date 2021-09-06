@@ -30,7 +30,7 @@ WinSet, TransColor, %CustomColor% 200
 ;WinSet, AlwaysOnTop, %CustomColor% 150
 
 ;////// Initialize the GUI for On Screen Display
-Gui, guitwo: Show, x670 y110 w700 h40 NoActivate  ; NoActivate avoids deactivating the currently active window.
+Gui, guitwo: Show, x500 y110 w1000 h80 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
 if %1%
 	SilentSuccess := %1%
@@ -47,49 +47,73 @@ return
 
 ;//////////////////////  Update Script Main File  ////////////////
 UpdateScriptMain(){
-URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,RDR2.txt
+	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,RDR2.txt
 	if (errorlevel) {
-    	GuiControl, guitwo:, MyText2, Error response from GitHub, update was aborted.`nPlease try again 		later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
-	FileDelete, RDR2.txt
-	return
+		GuiControl, guitwo:, MyText2, Error response from GitHub, update was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		FileDelete, RDR2.txt
+		Sleep, 4000
+		return
   	}
 	FileCopy, RDR2.txt, RDR2.ahk, 1
 	FileDelete, RDR2.txt
-
-    if (!SilentSuccess)
+	
+	if (!SilentSuccess)
       	GuiControl, guitwo:, MyText2, RDR2-Online-AHK Macros Update Success, the RDR2.ahk script was updated!
+	Sleep, 4000
 	return
 }
 
 ;//////////////////////  Update Script Config File  ////////////////
 UpdateScriptConfig(){
-URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,RDR2Config.txt
+	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,RDR2Config.txt
 	if (errorlevel) {
-    	GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
-	FileDelete, RDR2Config.txt
-	return
+		GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		FileDelete, RDR2Config.txt
+		Sleep, 4000
+		return
   	}
 	FileCopy, RDR2Config.txt, RDR2Config.ahk, 1
 	FileDelete, RDR2Config.txt
-
-    if (!SilentSuccess)
+	
+	if (!SilentSuccess)
       	GuiControl, guitwo:, MyText2, RDR2-Online-AHK Macros Update Success, the RDR2Config.ahk script was updated!
+	Sleep, 4000
+	return
+}
+
+;//////////////////////  Update Script Mission Failsafe ////////////////
+UpdateScriptMissionFailsafe(){
+	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2MissionFailsafe.ahk,RDR2MissionFailsafe.txt
+	if (errorlevel) {
+		GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		FileDelete, RDR2Config.txt
+		Sleep, 4000
+		return
+  	}
+	FileCopy, RDR2MissionFailsafe.txt, RDR2MissionFailsafe.ahk, 1
+	FileDelete, RDR2MissionFailsafe.txt
+	
+	if (!SilentSuccess)
+      	GuiControl, guitwo:, MyText2, RDR2-Online-AHK Macros Update Success, the RDR2MissionFailsafe.ahk script was updated!
+	Sleep, 4000
 	return
 }
 
 ;//////////////////////  Update Read Me File  ////////////////
 UpdateReadMe(){
-URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/README.md,README.txt
+	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/README.md,README.txt
 	if (errorlevel) {
-    	GuiControl, guitwo:, MyText2, Error response from GitHub on README.md, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
-	FileDelete, README.txt
-	return
+		GuiControl, guitwo:, MyText2, Error response from GitHub on README.md, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		FileDelete, README.txt
+		Sleep, 4000
+		return
   	}
 	FileCopy, README.txt, README.md, 1
 	FileDelete, README.txt
-
-    if (!SilentSuccess)
+	
+	if (!SilentSuccess)
       	GuiControl, guitwo:, MyText2, RDR2-Online-AHK Macros Update Success, the README.md script was updated!
+	Sleep, 4000
 	return
 }
 

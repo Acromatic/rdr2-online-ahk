@@ -6,7 +6,7 @@
 *I evidently do big missions most of the time so if you have ideas for useful macros, let me know or just send them in!
 
 Language: English Platform: Windows 10 Home (64 bit)
-AutoHotkey Version: v 1.1.33.02
+AutoHotkey Version: v 1.1.33.10
 
 Introduction: Everthing in this script can be modified to your needs. BUT BE CAREFUL!
 The Player Menu, Escape Menu, and Tab Menu have different delay times due to various reasons, 
@@ -23,7 +23,7 @@ See the README section about using RDR2Config.ahk if you plan on changing settin
 
 You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
 
-* Updated to v1.1.1 - Sep 5th 2021
+# Updated to v1.1.1 - Sep 5th 2021
 * Added - Brand New Update and File System (Please update to this version manually!)
 * Added - Methods to the main script RDR2.ahk that allow the entire project to build from it alone
 * Added - HUD, OSD messaging system to relay what the script is doing 
@@ -37,12 +37,14 @@ You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
 * Fixed - Massive speed improvements throughout, second tuning pass more to come
 * Fixed - Auto Update now only checks for updates weekly (to reduce useless GitHub hits)
 
-* Updated to v1.0.1 - August 31st 2021
+
+# Updated to v1.0.1 - August 31st 2021
 * Added - MultiSampling to the Mission Failsafe timer 
 * Added - Item Slot now cycles through all items
 * Fixed - Massive speed improvements throughout, initial tuning pass more to come
 
-* Updated to v1.0 - August 2021
+
+# Updated to v1.0 - August 2021
 * Added - Initialization File Configuration Editor
 * Added - Automatic Updates
 * Added - Mission Failsafe Mode
@@ -186,8 +188,8 @@ you can now go AFK because the timer is improved, but I wouldn't recommend it.
   * REDR0VER68
   * OriginalEmpire
   * 2called-chaos
-  * Updated to 2020-21 by: Midnight ( January 2021 )
-  * Rewritten for RDR2 by: Midnight ( August 2021 )
+  * Updated to 2020-21 by: Acromatic aka Midnight ( January 2021 )
+  * Rewritten for RDR2 by: Acromatic aka Midnight ( August 2021 v1.0 - September 2021 v1.1.1 )
 
 ## Legal
 
