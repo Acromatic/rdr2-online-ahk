@@ -242,7 +242,7 @@ if(Read_AutoUpdateOnStart=1)
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
-}
+	}
 if FileExist(updatecheck.txt)
 	FileDelete, updatecheck.txt
 GuiControl, guitwo:, MyText2, Updates are complete!!!!!!!
@@ -899,8 +899,7 @@ Loop
 			return
 		}
 		
-		return 
-	}
+	}  ; /// end ifwin
 	
 	;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 	UpdateOSD:
