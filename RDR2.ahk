@@ -77,8 +77,9 @@ sleep, 1000
 Gui, guitwo: Hide   ; gui 2
 
 ;////// Automatic Anti-Away-From-Keyboard - Fires a timed Send {AppsKey} to disable in-game AFK Disconnects 
-;////// Least destructive key, requires RedDead Active Window - 180000 equals every 3 minutes
-SetTimer, UpdateAntiAFK, 180000
+;////// Least destructive key, requires RedDead Active Window - 120000 equals every 2 minutes
+;////// The game changes the screen at 3:20mins but the prompt is at 2:20
+SetTimer, UpdateAntiAFK, 120000
 
 ;////// another gui script snippet
 ;Gui Color, 0xFF0000
@@ -242,12 +243,13 @@ if(Read_AutoUpdateOnStart=1)
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
-	}
-	
+}
+
 if FileExist("updatecheck.txt")
 	FileDelete, updatecheck.txt
 GuiControl, guitwo:, MyText2, "Completed checking for updates!"
 sleep, 4000
+Gui, guitwo: Hide   ; gui 2
 return
 }
 
@@ -899,7 +901,7 @@ if WinActive("Red Dead Redemption 2")
 			Gui, guithree: Hide
 			return
 		}
-	}  ; /// end ifwin
+}  ; /// end ifwin
 	
 ;} ;//// end loop
 
