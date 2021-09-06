@@ -215,8 +215,7 @@ if(Read_AutoUpdateOnStart=1)
 	FileReadLine, updatecheck, updatecheck.txt, 1
 	if !FileExist(Update.ahk){
 		FileCopy, updatecheck.txt, Update.ahk, 1
-     	FileDelete, updatecheck.txt
-	}
+ 	}
 	FileReadLine, currentVersion, Update.ahk, 1
 	
 	if (updatecheck = currentVersion){
@@ -231,6 +230,7 @@ if(Read_AutoUpdateOnStart=1)
 		
 		FileCopy, update.txt, Update.ahk, 1
      	FileDelete, update.txt
+		FileDelete, updatecheck.txt
 		Sleep, 2000
 		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 		ExitApp
