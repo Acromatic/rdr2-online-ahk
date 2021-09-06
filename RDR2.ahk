@@ -209,7 +209,7 @@ if(Read_AutoUpdateOnStart=1)
 		
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, Error response from GitHub, update check was aborted. Please try again later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		GuiControl, guitwo:, MyText2, "Error update was aborted. Please try again."
 		FileDelete, updatecheck.txt
 		return
 	}	
@@ -220,40 +220,40 @@ if(Read_AutoUpdateOnStart=1)
 	FileReadLine, currentVersion, Update.ahk, 1
 	
 	if (updatecheck = currentVersion){
-		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
-		Sleep, 6000
+		GuiControl, guitwo:, MyText2, "No new updates were found."
+		Sleep, 4000
 	}
 	else {
 		if (!SilentSuccess)
-			GuiControl, guitwo:, MyText2, Update available, scripts will now be updated to version %updatecheck% - Warning: do NOT interupt the update process!
+			GuiControl, guitwo:, MyText2, "Update available do NOT interupt!"
 		
 		FileCopy, update.txt, Update.ahk, 1
      	FileDelete, update.txt
 		FileDelete, updatecheck.txt
-		Sleep, 6000
+		Sleep, 4000
 		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 		ExitApp
 		return
 	}
 	
 	if !FileExist("RDR2Config.ahk") {
-	GuiControl, guitwo:, MyText2, RDR2Config.ahk not detected, UPDATING....
-	Sleep, 6000
+	GuiControl, guitwo:, MyText2, "RDR2Config.ahk not detected, UPDATING...."
+	Sleep, 4000
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
 	}
 	
-if FileExist(updatecheck.txt)
+if FileExist("updatecheck.txt")
 	FileDelete, updatecheck.txt
-GuiControl, guitwo:, MyText2, Completed checking for updates!
-sleep, 6000
+GuiControl, guitwo:, MyText2, "Completed checking for updates!"
+sleep, 4000
 
 }
 
 if(Read_LoadEditorOnStart=1)
 {
-    	GuiControl, guitwo:, MyText2, Starting Configuration Editor...
+    	GuiControl, guitwo:, MyText2, "Starting Configuration Editor..."
 	RunWait, RDR2Config.ahk
 }
 
@@ -327,7 +327,7 @@ Loop
 		if (ErrorLevel){
 			Send {s down}
 		}
-				
+		
 		$^w::
 		KeyWait, w, T0.1
 		
@@ -901,6 +901,8 @@ Loop
 		
 	}  ; /// end ifwin
 	
+} ;//// end loop
+
 	;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 	UpdateOSD:
 	{
@@ -1086,6 +1088,7 @@ Loop
 				TimeMins1 = 0
 				TimeMins2 = 0
 				TimeSecz = 0
+				return
 			} 
 		} ;//// end ifwin
 		else
@@ -1093,8 +1096,7 @@ Loop
 			Gui, guione: Hide
 			Gui, guitwo: Hide
 			Gui, guithree: Hide
+			return
 		}
-		
+		return
 	} ;//// end UpdateOSD
-	return
-}
