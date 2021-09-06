@@ -350,388 +350,394 @@ if WinActive("Red Dead Redemption 2")
 }
 
 ;if !WinActive("Red Dead Redemption 2")
-#IfWinActive, ahk_class sgaWindow 
+#IfWinActive, ahk_exe RDR2.exe 
 {
+	Suspend,Off
+}
+else
+{
+	Suspend,On
+}
 	;//////////////////////////   Clicker Toggle     /////////////////////////////
 	; Toggle Rapid-Fire Clicker
-	ToggleClicker:
-	IsClickerActivated := !IsClickerActivated
+ToggleClicker:
+IsClickerActivated := !IsClickerActivated
+
+if (IsClickerActivated) {
+	Loop {
+		Click
+		Sleep 1
+		
+		if (!IsClickerActivated) {
+			break
+		}
+	}
+	return
+}
+
+	;//////////////////////////    Defensive Toggle     /////////////////////////////
+
+ToggleDefensive:
+{
+	OpenPlayerMenu()
+	Send {Up}
+	SendEnter()
+	Send {Up 4}
+	Send {Left}
 	
-	if (IsClickerActivated) {
-		Loop {
-			Click
-			Sleep 1
+	ClosePlayerMenu()
+	return      
+}
+	;///////////////////////////        Health Slot        ///////////////////////////////////
+
+Health:
+{
+	OpenTabMenu()
+	MouseMove, 766, 354
+	;SendEnter()
+	CloseTabMenu()
+	return	
+}
+	;///////////////////////////        Stamina Slot       ///////////////////////////////////
+
+Stamina:
+{
+	OpenTabMenu()
+	MouseMove, 954, 271
+	;SendEnter()
+	CloseTabMenu()
+	return				
+}
+	;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
+
+Deadeye:
+{
+	OpenTabMenu()
+	MouseMove, 1147, 350
+	;SendEnter()
+	CloseTabMenu()
+	return	
+}
+	;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
+
+HealCores:
+{
+	OpenTabMenu()
+	MouseMove, 691, 550
+	Send {q}
+	;SendEnter()
+	CloseTabMenu()
+	return	
+}
+	;///////////////////////////        Wilderness Camp    //////////////////////////////////////
+
+WildernessCamp:
+{
+	OpenTabMenu()
+	MouseMove, 963, 815
+	CloseTabMenu()
+	return	
+}
+	;///////////////////////////        Item Slot    //////////////////////////////////////
+
+ItemSlot:
+{
+	OpenTabMenu()
+	MouseMove, 1231, 548
+	Send {q 2}
+	CloseTabMenu()
+	return
+}
+	;///////////////////////////     Hunting Wagon    //////////////////////////////////////
+
+HuntingWagon:
+{
+	OpenPlayerMenu()
+	LongDelay()
+	Send {Down 7}
+	SendEnter()
+	Send {Down}
+	SendEnterEnter()
+	SendEnter()
+	ClosePlayerMenu()
+	return		
+}
+	;///////////////////////////     Bounty Wagon    /////////////////////////////////
+
+BountyWagon:
+{
+	OpenPlayerMenu()
+	LongDelay()
+	Send {Down 7}
+	SendEnter()
+	Send {Down}
+	SendEnterEnter()
+	Send {Down}
+	SendEnter()
+	ClosePlayerMenu()
+	return	
+}
+	;///////////////////////////     Dismiss Wagons    /////////////////////////////////
+
+DismissWagons:
+{
+	OpenPlayerMenu()
+	SuperShortDelay() 
+	Send {e}
+	SuperShortDelay()
+	Send {Down 7}
+	SuperShortDelay()
+	Send {Enter}
+	LongDelay()
+	Send {Down}
+	SendEnterEnter()
+	ShortDelay()
+	Send {Space}
+	ShortDelay()
+	Send {Down}
+	ShortDelay()
+	Send {Space}
+	ClosePlayerMenu()
+	return	
+}
+	;///////////////////////////     Feed Horse Slot    /////////////////////////////////
+
+FeedHorse:
+{
+	OpenTabMenu()
+	Send {r}
+	MouseMove, 691, 550
+	CloseTabMenu()
+	return	
+}
+	;///////////////////////////     Open Posses List    ///////////////////////////
+
+ShowPosses:
+{
+	OpenPlayerMenu()
+	ShortDelay()
+	Send {Down 5}
+	SendEnter()
+	return	
+}
+	;/////////////////////////          Form Posse       ////////////////////////////
+	;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
+FormPosse:
+{     
+	OpenPlayerMenu()
+	LongDelay()
+	Send {Down 5}
+	SendEnterEnter()
+	SendEnter()
+	ClosePlayerMenu()
+	return	
+}
+	;//////////////////////           Quick Race         //////////////////////////////
+
+QuickRace:
+{
+	OpenPlayerMenu()
+	ShortDelay()
+	Send {Up 2}{Enter}
+	ShortDelay()
+	Send {Up}
+	ShortDelay()
+	Send {Up}
+	ShortDelay()
+	Send {Up}
+	ShortDelay()
+	Send {Up}{Enter}
+	return	
+}
+	;///////////////////////          Menu Slot Two      ///////////////////////////
+
+MenuSlotTwo:
+{
+	EscapeMenu()
+	ShortDelay()
+	MouseMove, 170, 852
+	ShortDelay()
+	Send {Enter}
+	sleep,2000
+	Send {Right}
+	ShortDelay()
+	Send {Enter}
+	LongDelay()
+	Send {Enter}
+	return	
+}
+	;///////////////////////          Menu Slot Four      ///////////////////////////
+
+
+MenuSlotFour:
+{
+	EscapeMenu()
+	ShortDelay()
+	MouseMove, 170, 852
+	ShortDelay()
+	Send {Enter}
+	sleep,2000
+	Send {Right 2}
+	ShortDelay()
+	Send {Right}
+	ShortDelay()
+	Send {Enter}
+	LongDelay()
+	Send {Enter}
+	return	
+}
+	;///////////////////////          Volume Down      ///////////////////////////
+
+VolumeDown:
+{
+	EscapeMenu()
+	ShortDelay()
+	MouseMove, 130, 960
+	LongDelay()
+	Send {Enter}
+	;MouseClick, left, 132, 965
+	ShortDelay()
+	Send {Enter}
+	ShortDelay()
+	Send {Right}
+	ShortDelay()
+	Send {Right}
+	ShortDelay()
+	Send {Enter}
+	ShortDelay()
+	ShortDelay()
+	Send {Left}
+	LongDelay()
+	Send {Left}
+	ShortDelay()
+	Send {ESC down}
+	return	
+}
+	;///////////////////////          Volume Up       ///////////////////////////
+
+VolumeUp:
+{
+	EscapeMenu()
+	ShortDelay()
+	MouseMove, 131, 970
+	ShortDelay()
+	Send {Enter}
+	;MouseClick, left, 132, 965
+	ShortDelay()
+	Send {Enter}
+	ShortDelay()
+	Send {Right}
+	ShortDelay()
+	Send {Right}
+	ShortDelay()
+	Send {Enter}
+	LongDelay()
+	Send {Right}
+	LongDelay()
+	Send {Right}
+	ShortDelay()
+	Send {ESC down}
+	return	
+}
+
+	;///////////////////////         Timer Keys       ///////////////////////////
+
+TimerAddMinutes:
+{
+	TimeMins++
+	return
+}
+TimerSubMinutes:
+{
+	TimeMins--
+	return
+}
+TimerResetMinutes:
+{
+	TimeMins=1
+	return	
+}
+TimerResetSeconds:
+{
+	TimeSecs=30
+	return
+}
+
+	;///////////////////////////       Experimental   /////////////////////////////
+	;//////////////////////////   Toggle Cooking     /////////////////////////////
+
+	; Toggle Cooking On - Ctrl+Enter to auto cook ( Last thing is brew coffee, x toggles off - reloads script)
+
+PassiveToggleCookingOff:
+if (IsCookingActivated) {
+	IsCookingActivated := !IsCookingActivated
+	reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
+	return
+}
+
+PassiveToggleCookingOn:
+IsCookingActivated := !IsCookingActivated
+
+if (IsCookingActivated) {
+	Loop{
+		LongDelay()
+		Send {Enter up}
+		Send {Enter}
+		LongDelay()
+		Send {Space down}  ;/// For single player
+		LongDelay()
+		Send {Space up}    ;/// For single player
+		Send {r}           ;/// For single player
+		Send {Space}
+		Send {Enter down}
+		LongDelay()
+		Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
+		Send {Down}
+		LongDelay()
+	;		Send {Enter up}
+	}
+	return
+}
+
+	;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
+
+BeatPoker:
+{
+		;// singleplayer
+	IsBeatPokerActivated := !IsBeatPokerActivated
+	
+	if (IsBeatPokerActivated) {
+		Loop{
+			ShortDelay()
+			Send {Enter}
+			LongDelay()
+			Send {a down}
+			ShortDelay()
+			Send {Enter}
+			Send {g}
+			SuperLongDelay()
+			Send {Enter}
+			ShortDelay()
+			Send {a up}
+			Send {Up 30}
+			ShortDelay()
+			Send {RButton down}
+			LongDelay()
+			LongDelay()
+			Send {Enter}
+			ShortDelay()
+			Send {RButton up}
+			ShortDelay()
 			
-			if (!IsClickerActivated) {
+			if (!IsBeatPokerActivated) {
+					;ToolTip, BeatPoker Disabled,0,0
 				break
 			}
 		}
-		return
 	}
-	
-	;//////////////////////////    Defensive Toggle     /////////////////////////////
-	
-	ToggleDefensive:
-	{
-		OpenPlayerMenu()
-		Send {Up}
-		SendEnter()
-		Send {Up 4}
-		Send {Left}
-		
-		ClosePlayerMenu()
-		return      
-	}
-	;///////////////////////////        Health Slot        ///////////////////////////////////
-	
-	Health:
-	{
-		OpenTabMenu()
-		MouseMove, 766, 354
-	;SendEnter()
-		CloseTabMenu()
-		return	
-	}
-	;///////////////////////////        Stamina Slot       ///////////////////////////////////
-	
-	Stamina:
-	{
-		OpenTabMenu()
-		MouseMove, 954, 271
-	;SendEnter()
-		CloseTabMenu()
-		return				
-	}
-	;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
-	
-	Deadeye:
-	{
-		OpenTabMenu()
-		MouseMove, 1147, 350
-	;SendEnter()
-		CloseTabMenu()
-		return	
-	}
-	;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
-	
-	HealCores:
-	{
-		OpenTabMenu()
-		MouseMove, 691, 550
-		Send {q}
-	;SendEnter()
-		CloseTabMenu()
-		return	
-	}
-	;///////////////////////////        Wilderness Camp    //////////////////////////////////////
-	
-	WildernessCamp:
-	{
-		OpenTabMenu()
-		MouseMove, 963, 815
-		CloseTabMenu()
-		return	
-	}
-	;///////////////////////////        Item Slot    //////////////////////////////////////
-	
-	ItemSlot:
-	{
-		OpenTabMenu()
-		MouseMove, 1231, 548
-		Send {q 2}
-		CloseTabMenu()
-		return
-	}
-	;///////////////////////////     Hunting Wagon    //////////////////////////////////////
-	
-	HuntingWagon:
-	{
-		OpenPlayerMenu()
-		LongDelay()
-		Send {Down 7}
-		SendEnter()
-		Send {Down}
-		SendEnterEnter()
-		SendEnter()
-		ClosePlayerMenu()
-		return		
-	}
-	;///////////////////////////     Bounty Wagon    /////////////////////////////////
-	
-	BountyWagon:
-	{
-		OpenPlayerMenu()
-		LongDelay()
-		Send {Down 7}
-		SendEnter()
-		Send {Down}
-		SendEnterEnter()
-		Send {Down}
-		SendEnter()
-		ClosePlayerMenu()
-		return	
-	}
-	;///////////////////////////     Dismiss Wagons    /////////////////////////////////
-	
-	DismissWagons:
-	{
-		OpenPlayerMenu()
-		SuperShortDelay() 
-		Send {e}
-		SuperShortDelay()
-		Send {Down 7}
-		SuperShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Down}
-		SendEnterEnter()
-		ShortDelay()
-		Send {Space}
-		ShortDelay()
-		Send {Down}
-		ShortDelay()
-		Send {Space}
-		ClosePlayerMenu()
-		return	
-	}
-	;///////////////////////////     Feed Horse Slot    /////////////////////////////////
-	
-	FeedHorse:
-	{
-		OpenTabMenu()
-		Send {r}
-		MouseMove, 691, 550
-		CloseTabMenu()
-		return	
-	}
-	;///////////////////////////     Open Posses List    ///////////////////////////
-	
-	ShowPosses:
-	{
-		OpenPlayerMenu()
-		ShortDelay()
-		Send {Down 5}
-		SendEnter()
-		return	
-	}
-	;/////////////////////////          Form Posse       ////////////////////////////
-	;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
-	FormPosse:
-	{     
-		OpenPlayerMenu()
-		LongDelay()
-		Send {Down 5}
-		SendEnterEnter()
-		SendEnter()
-		ClosePlayerMenu()
-		return	
-	}
-	;//////////////////////           Quick Race         //////////////////////////////
-	
-	QuickRace:
-	{
-		OpenPlayerMenu()
-		ShortDelay()
-		Send {Up 2}{Enter}
-		ShortDelay()
-		Send {Up}
-		ShortDelay()
-		Send {Up}
-		ShortDelay()
-		Send {Up}
-		ShortDelay()
-		Send {Up}{Enter}
-		return	
-	}
-	;///////////////////////          Menu Slot Two      ///////////////////////////
-	
-	MenuSlotTwo:
-	{
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 170, 852
-		ShortDelay()
-		Send {Enter}
-		sleep,2000
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Enter}
-		return	
-	}
-	;///////////////////////          Menu Slot Four      ///////////////////////////
-	
-	
-	MenuSlotFour:
-	{
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 170, 852
-		ShortDelay()
-		Send {Enter}
-		sleep,2000
-		Send {Right 2}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Enter}
-		return	
-	}
-	;///////////////////////          Volume Down      ///////////////////////////
-	
-	VolumeDown:
-	{
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 130, 960
-		LongDelay()
-		Send {Enter}
-	;MouseClick, left, 132, 965
-		ShortDelay()
-		Send {Enter}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		ShortDelay()
-		ShortDelay()
-		Send {Left}
-		LongDelay()
-		Send {Left}
-		ShortDelay()
-		Send {ESC down}
-		return	
-	}
-	;///////////////////////          Volume Up       ///////////////////////////
-	
-	VolumeUp:
-	{
-		EscapeMenu()
-		ShortDelay()
-		MouseMove, 131, 970
-		ShortDelay()
-		Send {Enter}
-	;MouseClick, left, 132, 965
-		ShortDelay()
-		Send {Enter}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Right}
-		ShortDelay()
-		Send {Enter}
-		LongDelay()
-		Send {Right}
-		LongDelay()
-		Send {Right}
-		ShortDelay()
-		Send {ESC down}
-		return	
-	}
-	
-	;///////////////////////         Timer Keys       ///////////////////////////
-	
-	TimerAddMinutes:
-	{
-		TimeMins++
-		return
-	}
-	TimerSubMinutes:
-	{
-		TimeMins--
-		return
-	}
-	TimerResetMinutes:
-	{
-		TimeMins=1
-		return	
-	}
-	TimerResetSeconds:
-	{
-		TimeSecs=30
-		return
-	}
-	
-	;///////////////////////////       Experimental   /////////////////////////////
-	;//////////////////////////   Toggle Cooking     /////////////////////////////
-	
-	; Toggle Cooking On - Ctrl+Enter to auto cook ( Last thing is brew coffee, x toggles off - reloads script)
-	
-	PassiveToggleCookingOff:
-	if (IsCookingActivated) {
-		IsCookingActivated := !IsCookingActivated
-		reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
-		return
-	}
-	
-	PassiveToggleCookingOn:
-	IsCookingActivated := !IsCookingActivated
-	
-	if (IsCookingActivated) {
-		Loop{
-			LongDelay()
-			Send {Enter up}
-			Send {Enter}
-			LongDelay()
-			Send {Space down}  ;/// For single player
-			LongDelay()
-			Send {Space up}    ;/// For single player
-			Send {r}           ;/// For single player
-			Send {Space}
-			Send {Enter down}
-			LongDelay()
-			Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
-			Send {Down}
-			LongDelay()
-	;		Send {Enter up}
-		}
-		return
-	}
-	
-	;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
-	
-	BeatPoker:
-	{
-		;// singleplayer
-		IsBeatPokerActivated := !IsBeatPokerActivated
-		
-		if (IsBeatPokerActivated) {
-			Loop{
-				ShortDelay()
-				Send {Enter}
-				LongDelay()
-				Send {a down}
-				ShortDelay()
-				Send {Enter}
-				Send {g}
-				SuperLongDelay()
-				Send {Enter}
-				ShortDelay()
-				Send {a up}
-				Send {Up 30}
-				ShortDelay()
-				Send {RButton down}
-				LongDelay()
-				LongDelay()
-				Send {Enter}
-				ShortDelay()
-				Send {RButton up}
-				ShortDelay()
-				
-				if (!IsBeatPokerActivated) {
-					;ToolTip, BeatPoker Disabled,0,0
-					break
-				}
-			}
-		}
-		return	
-	}
+	return	
 }
+
 
 ReloadScript:
 {
