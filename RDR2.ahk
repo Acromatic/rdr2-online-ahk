@@ -193,6 +193,7 @@ IfExist, %CFG%
 
 if(Read_AutoUpdateOnStart=1)
 {
+	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
 	;Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
 	;if FileExist(Update.ahk){
 	;	FileGetTime, FileTime, Update.ahk
@@ -251,7 +252,6 @@ sleep, 6000
 
 if(Read_LoadEditorOnStart=1)
 {
-	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
     	GuiControl, guitwo:, MyText2, Starting Configuration Editor...
 	RunWait, RDR2Config.ahk
 }
