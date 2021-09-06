@@ -210,7 +210,7 @@ if(Read_AutoUpdateOnStart=1)
 		
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, "Error update was aborted. Please try again."
+		GuiControl, guitwo:, MyText2, Error update was aborted. Please try again.
 		FileDelete, updatecheck.txt
 		return
 	}	
@@ -221,12 +221,12 @@ if(Read_AutoUpdateOnStart=1)
 	FileReadLine, currentVersion, Update.ahk, 1
 	
 	if (updatecheck = currentVersion){
-		GuiControl, guitwo:, MyText2, "No new updates were found."
+		GuiControl, guitwo:, MyText2, No new updates were found.
 		Sleep, 4000
 	}
 	else {
 		if (!SilentSuccess)
-			GuiControl, guitwo:, MyText2, "Update available do NOT interupt!"
+			GuiControl, guitwo:, MyText2, Update available do NOT interupt!
 		
 		FileCopy, update.txt, Update.ahk, 1
      	FileDelete, update.txt
@@ -238,7 +238,7 @@ if(Read_AutoUpdateOnStart=1)
 	}
 	
 	if !FileExist("RDR2Config.ahk") {
-	GuiControl, guitwo:, MyText2, "RDR2Config.ahk not detected, UPDATING...."
+	GuiControl, guitwo:, MyText2, RDR2Config.ahk not detected, UPDATING....
 	Sleep, 4000
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
@@ -247,7 +247,7 @@ if(Read_AutoUpdateOnStart=1)
 
 if FileExist("updatecheck.txt")
 	FileDelete, updatecheck.txt
-GuiControl, guitwo:, MyText2, "Completed checking for updates!"
+GuiControl, guitwo:, MyText2, Completed checking for updates!
 sleep, 4000
 Gui, guitwo: Hide   ; gui 2
 return
@@ -255,7 +255,7 @@ return
 
 if(Read_LoadEditorOnStart=1)
 {
-    	GuiControl, guitwo:, MyText2, "Starting Configuration Editor..."
+    	GuiControl, guitwo:, MyText2, Starting Configuration Editor...
 	RunWait, RDR2Config.ahk
 	return
 }
@@ -376,8 +376,8 @@ if (IsClickerActivated) {
 			break
 		}
 	}
-	return
 }
+return
 
 	;//////////////////////////    Defensive Toggle     /////////////////////////////
 
@@ -390,8 +390,8 @@ ToggleDefensive:
 	Send {Left}
 	
 	ClosePlayerMenu()
-	return      
 }
+return      
 	;///////////////////////////        Health Slot        ///////////////////////////////////
 
 Health:
@@ -400,8 +400,8 @@ Health:
 	MouseMove, 766, 354
 	;SendEnter()
 	CloseTabMenu()
-	return	
 }
+return	
 	;///////////////////////////        Stamina Slot       ///////////////////////////////////
 
 Stamina:
@@ -410,8 +410,8 @@ Stamina:
 	MouseMove, 954, 271
 	;SendEnter()
 	CloseTabMenu()
-	return				
 }
+return	
 	;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
 
 Deadeye:
@@ -420,9 +420,10 @@ Deadeye:
 	MouseMove, 1147, 350
 	;SendEnter()
 	CloseTabMenu()
-	return	
+	
 }
-	;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
+return
+;///////////////////////////        Heal Cores Slot    //////////////////////////////////////
 
 HealCores:
 {
@@ -431,8 +432,8 @@ HealCores:
 	Send {q}
 	;SendEnter()
 	CloseTabMenu()
-	return	
 }
+return	
 	;///////////////////////////        Wilderness Camp    //////////////////////////////////////
 
 WildernessCamp:
@@ -440,8 +441,8 @@ WildernessCamp:
 	OpenTabMenu()
 	MouseMove, 963, 815
 	CloseTabMenu()
-	return	
 }
+return	
 	;///////////////////////////        Item Slot    //////////////////////////////////////
 
 ItemSlot:
@@ -450,8 +451,8 @@ ItemSlot:
 	MouseMove, 1231, 548
 	Send {q 2}
 	CloseTabMenu()
-	return
 }
+return	
 	;///////////////////////////     Hunting Wagon    //////////////////////////////////////
 
 HuntingWagon:
@@ -464,8 +465,8 @@ HuntingWagon:
 	SendEnterEnter()
 	SendEnter()
 	ClosePlayerMenu()
-	return		
 }
+return	
 	;///////////////////////////     Bounty Wagon    /////////////////////////////////
 
 BountyWagon:
@@ -479,8 +480,8 @@ BountyWagon:
 	Send {Down}
 	SendEnter()
 	ClosePlayerMenu()
-	return	
 }
+return	
 	;///////////////////////////     Dismiss Wagons    /////////////////////////////////
 
 DismissWagons:
@@ -502,8 +503,8 @@ DismissWagons:
 	ShortDelay()
 	Send {Space}
 	ClosePlayerMenu()
-	return	
 }
+return	
 	;///////////////////////////     Feed Horse Slot    /////////////////////////////////
 
 FeedHorse:
@@ -512,8 +513,8 @@ FeedHorse:
 	Send {r}
 	MouseMove, 691, 550
 	CloseTabMenu()
-	return	
 }
+return	
 	;///////////////////////////     Open Posses List    ///////////////////////////
 
 ShowPosses:
@@ -522,8 +523,8 @@ ShowPosses:
 	ShortDelay()
 	Send {Down 5}
 	SendEnter()
-	return	
 }
+return	
 	;/////////////////////////          Form Posse       ////////////////////////////
 	;/ Name it with AAA's or something and keep it at the top of the list, joins last posse ( whatever is on top! )
 FormPosse:
@@ -534,8 +535,8 @@ FormPosse:
 	SendEnterEnter()
 	SendEnter()
 	ClosePlayerMenu()
-	return	
 }
+return	
 	;//////////////////////           Quick Race         //////////////////////////////
 
 QuickRace:
@@ -551,8 +552,8 @@ QuickRace:
 	Send {Up}
 	ShortDelay()
 	Send {Up}{Enter}
-	return	
 }
+return	
 	;///////////////////////          Menu Slot Two      ///////////////////////////
 
 MenuSlotTwo:
@@ -568,8 +569,8 @@ MenuSlotTwo:
 	Send {Enter}
 	LongDelay()
 	Send {Enter}
-	return	
 }
+return	
 	;///////////////////////          Menu Slot Four      ///////////////////////////
 
 
@@ -588,8 +589,8 @@ MenuSlotFour:
 	Send {Enter}
 	LongDelay()
 	Send {Enter}
-	return	
 }
+return	
 	;///////////////////////          Volume Down      ///////////////////////////
 
 VolumeDown:
@@ -615,8 +616,8 @@ VolumeDown:
 	Send {Left}
 	ShortDelay()
 	Send {ESC down}
-	return	
 }
+return	
 	;///////////////////////          Volume Up       ///////////////////////////
 
 VolumeUp:
@@ -641,32 +642,30 @@ VolumeUp:
 	Send {Right}
 	ShortDelay()
 	Send {ESC down}
-	return	
 }
-
+return	
 	;///////////////////////         Timer Keys       ///////////////////////////
 
 TimerAddMinutes:
 {
 	TimeMins++
-	return
 }
+return	
 TimerSubMinutes:
 {
 	TimeMins--
-	return
 }
+return	
 TimerResetMinutes:
 {
 	TimeMins=1
-	return	
 }
+return	
 TimerResetSeconds:
 {
 	TimeSecs=30
-	return
 }
-
+return	
 	;///////////////////////////       Experimental   /////////////////////////////
 	;//////////////////////////   Toggle Cooking     /////////////////////////////
 
@@ -676,8 +675,8 @@ PassiveToggleCookingOff:
 if (IsCookingActivated) {
 	IsCookingActivated := !IsCookingActivated
 	reload  ;////// bind with x failed, this is also good as a failsafe - We'll use the function instead and maybe write a log file :D
-	return
 }
+return	
 
 PassiveToggleCookingOn:
 IsCookingActivated := !IsCookingActivated
@@ -700,8 +699,8 @@ if (IsCookingActivated) {
 		LongDelay()
 	;		Send {Enter up}
 	}
-	return
 }
+return	
 
 	;//////////////////////    Beat Poker ( Singleplayer )     /////////////////////
 
@@ -739,8 +738,8 @@ BeatPoker:
 			}
 		}
 	}
-	return	
 }
+return	
 
 
 ReloadScript:
@@ -755,14 +754,14 @@ ReloadScript:
 	sleep, 1000
 	reload
 	ExitApp
-	return   
 }
+return	
 
 AbortScript:
 {
 	ExitApp
-	return 
 }
+return	
 
 
 		;////// Delay-Functions
@@ -844,16 +843,16 @@ EscapeMenu(){
 		;//// currently not used
 invertCapsLockState(){ 
 	SetCapsLockState % !GetKeyState("CapsLock", "T") ;////////// requires [v1.1.30+]
-	return
 }
+return
 
 		;///// This will lock it off for a moment, called each time it's used
 turnCapslockOff() {
 	if (GetKeyState("CapsLock", "T") = 1) {
 		SetCapsLockState, off
 	}
-	return
 }
+return
 
 		;ClearClipboard() {
 		;	return
@@ -912,8 +911,8 @@ turnCapslockOff() {
 	UpdateAntiAFK:
 	{
 		Send {AppsKey}
-		return
 	}
+	return
 	
 	;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 	UpdateOSD:
@@ -1105,7 +1104,7 @@ turnCapslockOff() {
 			Gui, guitwo: Hide
 			Gui, guithree: Hide
 		}
-		return
 	} ;//// end UpdateOSD
+	return
 ;}
 ;return
