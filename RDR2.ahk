@@ -1104,7 +1104,7 @@ return
 			Gui, guitwo: Hide
 			Gui, guithree: Hide
 		}
+		return
 	} ;//// end UpdateOSD
-	return
 ;}
 ;return
