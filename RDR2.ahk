@@ -9,7 +9,8 @@ SetWorkingDir %A_ScriptDir%
 ; Run as Admin to ensure the script will work
 IF NOT A_IsAdmin
 {
-	Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%"
+	;Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%"
+	Run *RunAs "%A_ScriptFullPath%"
 	ExitApp
 }
 
