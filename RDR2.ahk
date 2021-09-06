@@ -997,7 +997,6 @@ UpdateOSD:
 					TimeSecs = 49
 					IsTimerSet=1
 				}
-				else {
 					LongDelay()
 					ShortDelay()
 					TimeSecs--
@@ -1041,7 +1040,7 @@ UpdateOSD:
 					TimeSecs := Format("{:02}", TimeSecs)
 					TimeMins := Format("{:02}", TimeMins)
 					GuiControl, guione:, MyText, %TimeMins%:%TimeSecs%
-				}
+				
 			}
 			else
 			{
