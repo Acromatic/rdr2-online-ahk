@@ -224,10 +224,8 @@ if(Read_AutoUpdateOnStart=1)
 			FileDelete, updatecheck.txt
 		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
 		Sleep, 2000
-		return
 	}
-	
-	else if (InStr(updatecheck, "; v") = 1) {
+	else {
 		if (!SilentSuccess)
 			GuiControl, guitwo:, MyText2, Update available, scripts will now be updated to version %updatecheck% - Warning: do NOT interupt the update process!
 		
