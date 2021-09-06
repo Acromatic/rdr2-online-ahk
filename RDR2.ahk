@@ -21,14 +21,15 @@ setkeydelay, %KeySendDelay%, %KeyPressDuration%, true
 
 CFG = config.ini
 
-IsClickerActivated   		:= false ; Initial status should always be false
-IsCookingActivated    		:= false ; Initial status should always be false
-IsMissionFailSafeActivated    	:= false ; Initial status should always be false
-MissionFailSafeType     	:= 0 	 ; Initial status should always be zero
-IsTimerSet     			:= 0 	 ; Initial status should always be zero
-TimeMins     			:= 0 	 ; Initial status should always be zero
-TimeSecs     			:= 0 	 ; Initial status should always be zero
-;loopcount			:= 0	 ; Initial status should always be zero
+IsDebugActivated   			:= false	; Initial status should always be false
+IsClickerActivated   		:= false	; Initial status should always be false
+IsCookingActivated    		:= false	; Initial status should always be false
+IsMissionFailSafeActivated    := false	; Initial status should always be false
+MissionFailSafeType     		:= 0 	; Initial status should always be zero
+IsTimerSet     			:= 0		; Initial status should always be zero
+TimeMins     				:= 0		; Initial status should always be zero
+TimeSecs     				:= 0 	; Initial status should always be zero
+;loopcount				:= 0		; Initial status should always be zero
 
 ;////// Initialize the GUI for On Screen Display
 CustomColor := "7F7F7F"  ; Can be any RGB color (it will be made transparent below).
@@ -147,7 +148,7 @@ IfExist, %CFG%
 	IniRead, Read_LoadEditorOnStart, %CFG%, Settings,LoadEditorOnStart
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings,AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings,SilentUpdateOnStart
-	IniRead, Read_ToggleDebugKey, %CFG%,Hotkeys,ToggleDebug
+	IniRead, Read_ToggleDebugKey, %CFG%,Settings,ToggleDebug
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
 	IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
