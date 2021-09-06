@@ -248,13 +248,14 @@ if FileExist("updatecheck.txt")
 	FileDelete, updatecheck.txt
 GuiControl, guitwo:, MyText2, "Completed checking for updates!"
 sleep, 4000
-
+return
 }
 
 if(Read_LoadEditorOnStart=1)
 {
     	GuiControl, guitwo:, MyText2, "Starting Configuration Editor..."
 	RunWait, RDR2Config.ahk
+	return
 }
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
