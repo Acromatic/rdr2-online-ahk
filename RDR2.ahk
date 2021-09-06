@@ -193,51 +193,52 @@ IfExist, %CFG%
 
 if(Read_AutoUpdateOnStart=1)
 {
-	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
- 	if FileExist("Update.ahk"){
-	FileGetTime, FileTime, Update.ahk
-	FormatTime, FileTime, %FileTime%, YWeek
-	FormatTime, YearWeek, YWeek
-	if(%FileTime%>=%YearWeek%)
-	GuiControl, guitwo:, MyText2, %FileTime%:%YearWeek%
-	sleep, 300
-    	return
-	}
-	else{
-
-	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
-  	if (errorlevel) {
-    		GuiControl, guitwo:, MyText2, Error response from GitHub, update check was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
-    	
-	FileDelete, updatecheck.txt
-    	return
-  	}
-  	FileReadLine, updatecheck, updatecheck.txt, 1
-	if (!Update.ahk){
-		FileCopy, updatecheck.txt, Update.ahk, 1
-      		FileDelete, updatecheck.txt
-	}
-	else {
-  		FileReadLine, currentVersion, Update.ahk, 1
-	
-	  	if (updatecheck = currentVersion){
-   			FileDelete, updatecheck.txt
-    			GuiControl, guitwo:, MyText2, Update failed, scripts will not be updated. version %updatecheck% was detected.
+	;Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+	;if FileExist(Update.ahk){
+	;	FileGetTime, FileTime, Update.ahk
+	;	FormatTime, FileTime, %FileTime%, YWeek
+	;	
+	;	FormatTime, YearWeek, YWeek
+	;	if(%FileTime%>=%YearWeek%)
+	;		GuiControl, guitwo:, MyText2, %FileTime%:%YearWeek%
+	;	sleep, 3000
+	;	return
+	;}
+	;else{
+		
+		URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
+		if (errorlevel) {
+			GuiControl, guitwo:, MyText2, Error response from GitHub, update check was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+			
+			FileDelete, updatecheck.txt
 			return
 		}
-		else if (InStr(updatecheck, "; v") = 1) {
-	    		if (!SilentSuccess)
-    			GuiControl, guitwo:, MyText2, Update available, scripts will now be updated to version %updatecheck% 			- Warning: do NOT interupt the update process!
-      		
-			FileCopy, update.txt, Update.ahk, 1
-	      		FileDelete, update.txt
+		FileReadLine, updatecheck, updatecheck.txt, 1
+		if (!Update.ahk){
+			FileCopy, updatecheck.txt, Update.ahk, 1
+      		FileDelete, updatecheck.txt
 		}
-	}
-	Sleep, 2000
-	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
-	ExitApp
-	return
-	}
+		else {
+			FileReadLine, currentVersion, Update.ahk, 1
+			
+			if (updatecheck = currentVersion){
+				FileDelete, updatecheck.txt
+				GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
+				return
+			}
+			else if (InStr(updatecheck, "; v") = 1) {
+				if (!SilentSuccess)
+					GuiControl, guitwo:, MyText2, Update available, scripts will now be updated to version %updatecheck% - Warning: do NOT interupt the update process!
+				
+				FileCopy, update.txt, Update.ahk, 1
+	      		FileDelete, update.txt
+			}
+		}
+		Sleep, 2000
+		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
+		ExitApp
+		return
+	;}
 }
 
 if(Read_LoadEditorOnStart=1)
