@@ -1095,5 +1095,6 @@ Loop
 			Gui, guithree: Hide
 		}
 		
-	} ;//// end UpdateOSD - this is on a timer so it doesn't return
+	} ;//// end UpdateOSD
+	return
 }
