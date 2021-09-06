@@ -303,8 +303,8 @@ SetTimer, UpdateOSD, 200
 ;Gosub, UpdateOSD
 
 ;//// the main loop of the program 
-Loop
-{
+;Loop
+;{
 	;///////////////////////////   Auto Keys   /////////////////////////////////////
 	if WinActive("Red Dead Redemption 2")
 	{
@@ -841,9 +841,9 @@ Loop
 			return
 		}
 		
-		ClearClipboard() {
-			
-		}
+		;ClearClipboard() {
+		;	return
+		;}
 		
 	;/////////////////      Update Passive Background AFK    ///////////////////////////
 		UpdateAntiAFK:
@@ -901,7 +901,7 @@ Loop
 		
 	}  ; /// end ifwin
 	
-} ;//// end loop
+;} ;//// end loop
 
 	;/////// Capture, Syncronize the in-game-mission timer, than update OUR on-screen-display timer 
 	UpdateOSD:
@@ -1072,6 +1072,7 @@ Loop
 							}
 						}
 					}
+					;return
 				}
 				;/// Digit Formatting
 				TimeSecz := Format("{:02}", TimeSecz)
