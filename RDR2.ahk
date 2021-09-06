@@ -211,31 +211,39 @@ if(Read_AutoUpdateOnStart=1)
 		GuiControl, guitwo:, MyText2, Error response from GitHub, update check was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
 		FileDelete, updatecheck.txt
 		return
-	}
-	if (!Update.ahk){
+	}	
+	if !FileExist(Update.ahk){
 		FileCopy, updatecheck.txt, Update.ahk, 1
      	FileDelete, updatecheck.txt
 		return
 	}
-	FileReadLine, updatecheck, updatecheck.txt, 1
-	FileReadLine, currentVersion, Update.ahk, 1
-	if (updatecheck = currentVersion){
-	FileDelete, updatecheck.txt
-	GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
-	return
+	if !FileExist(RDR2Config.ahk){
+		FileReadLine, updatecheck, updatecheck.txt, 1
+		FileReadLine, currentVersion, Update.ahk, 1
+		GuiControl, guitwo:, MyText2, RDR2Config.ahk not detected, running download script.
+		Sleep, 2000
+		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
+		ExitApp
+		return
+	}	
+
+if (updatecheck = currentVersion){
+		FileDelete, updatecheck.txt
+		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
+		return
 	}
+	
 	else if (InStr(updatecheck, "; v") = 1) {
 		if (!SilentSuccess)
 			GuiControl, guitwo:, MyText2, Update available, scripts will now be updated to version %updatecheck% - Warning: do NOT interupt the update process!
 		
 		FileCopy, update.txt, Update.ahk, 1
      	FileDelete, update.txt
+		Sleep, 2000
+		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
+		ExitApp
+		return
 	}
-		
-	Sleep, 2000
-	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
-	ExitApp
-	return
 	;}
 }
 
