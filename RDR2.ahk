@@ -208,7 +208,7 @@ if(Read_AutoUpdateOnStart=1)
 		
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/Update.ahk,updatecheck.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, Error response from GitHub, update check was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		GuiControl, guitwo:, MyText2, Error response from GitHub, update check was aborted. Please try again later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
 		FileDelete, updatecheck.txt
 		return
 	}	
