@@ -226,7 +226,7 @@ if(Read_AutoUpdateOnStart=1)
 		return
 	}	
 
-`	if (updatecheck = currentVersion){
+	if (updatecheck = currentVersion){
 		FileDelete, updatecheck.txt
 		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
 		Sleep, 2000
