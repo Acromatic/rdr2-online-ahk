@@ -194,7 +194,7 @@ IfExist, %CFG%
 if(Read_AutoUpdateOnStart=1)
 {
 	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-	if (Update.ahk){
+ 	if FileExist("Update.ahk"){
 	FileGetTime, FileTime, Update.ahk
 	FormatTime, FileTime, %FileTime%, YWeek
 	FormatTime, YearWeek, YWeek
