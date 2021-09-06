@@ -219,8 +219,6 @@ if(Read_AutoUpdateOnStart=1)
 	FileReadLine, currentVersion, Update.ahk, 1
 	
 	if (updatecheck = currentVersion){
-		if FileExist(updatecheck.txt)
-			FileDelete, updatecheck.txt
 		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
 		Sleep, 2000
 	}
@@ -243,7 +241,12 @@ if(Read_AutoUpdateOnStart=1)
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
 	ExitApp
 	return
-	}	
+}
+if FileExist(updatecheck.txt)
+	FileDelete, updatecheck.txt
+GuiControl, guitwo:, MyText2, Updates are complete!!!!!!!
+sleep, 6000
+
 }
 
 if(Read_LoadEditorOnStart=1)
