@@ -214,7 +214,7 @@ if(Read_AutoUpdateOnStart=1)
 		return
 	}	
 	FileReadLine, updatecheck, updatecheck.txt, 1
-	if !FileExist(Update.ahk) {
+	if !FileExist("Update.ahk") {
 		FileCopy, updatecheck.txt, Update.ahk, 1
  	}
 	FileReadLine, currentVersion, Update.ahk, 1
@@ -236,7 +236,7 @@ if(Read_AutoUpdateOnStart=1)
 		return
 	}
 	
-	if !FileExist(RDR2Config.ahk) {
+	if !FileExist("RDR2Config.ahk") {
 	GuiControl, guitwo:, MyText2, RDR2Config.ahk not detected, UPDATING....
 	Sleep, 6000
 	Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "Update.ahk" Read_SilentUpdateOnStart
