@@ -147,6 +147,7 @@ IfExist, %CFG%
 	IniRead, Read_LoadEditorOnStart, %CFG%, Settings,LoadEditorOnStart
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings,AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings,SilentUpdateOnStart
+	IniRead, Read_ToggleDebugKey, %CFG%,Hotkeys,ToggleDebug
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
 	IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
