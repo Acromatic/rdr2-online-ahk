@@ -193,6 +193,51 @@ IfExist, %CFG%
 	IniRead, Read_TimerResetSecondsKey, %CFG%, Hotkeys, TimerResetSeconds
 }
 
+;/////////////////// Singleplayer ONLY binds ///////////////
+
+Hotkey, %Read_BeatPokerKey%, BeatPoker
+
+;/////////////////// Other binds ///////////////
+
+Hotkey, %Read_PassiveToggleCookingOnKey%, PassiveToggleCookingOn
+Hotkey, %Read_PassiveToggleCookingOffKey%, PassiveToggleCookingOff
+
+Hotkey, %Read_ToggleDefensiveKey%, ToggleDefensive
+Hotkey, %Read_ToggleClickerKey%, ToggleClicker
+Hotkey, %Read_ToggleMissionFailSafeKey%, ToggleMissionFailSafe
+
+Hotkey, %Read_HealthKey%, Health
+Hotkey, %Read_StaminaKey%, Stamina
+Hotkey, %Read_DeadeyeKey%, Deadeye
+Hotkey, %Read_HealCoresKey%, HealCores
+
+Hotkey, %Read_WildernessCampKey%, WildernessCamp
+Hotkey, %Read_ItemSlotKey%, ItemSlot
+
+Hotkey, %Read_HuntingWagonKey%, HuntingWagon
+Hotkey, %Read_BountyWagonKey%, BountyWagon
+Hotkey, %Read_DismissWagonsKey%, DismissWagons
+Hotkey, %Read_FeedHorseKey%, FeedHorse
+
+Hotkey, %Read_ShowPossesKey%, ShowPosses
+Hotkey, %Read_FormPosseKey%, FormPosse
+Hotkey, %Read_QuickRaceKey%, QuickRace
+Hotkey, %Read_MenuSlotTwoKey%, MenuSlotTwo
+Hotkey, %Read_MenuSlotFourKey%, MenuSlotFour
+
+Hotkey, %Read_VolumeDownKey%, VolumeDown
+Hotkey, %Read_VolumeUpKey%, VolumeUp
+Hotkey, %Read_ReloadScriptKey%, ReloadScript
+Hotkey, %Read_AbortScriptKey%, AbortScript
+
+Hotkey, %Read_TimerAddMinutesKey%, TimerAddMinutes
+Hotkey, %Read_TimerSubMinutesKey%, TimerSubMinutes
+Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
+Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
+
+SetTimer, UpdateOSD, 200  
+;Gosub, UpdateOSD
+
 if(Read_AutoUpdateOnStart=1)
 {
 	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
@@ -261,50 +306,6 @@ if(Read_LoadEditorOnStart=1)
 	return
 }
 
-;/////////////////// Singleplayer ONLY binds ///////////////
-
-Hotkey, %Read_BeatPokerKey%, BeatPoker
-
-;/////////////////// Other binds ///////////////
-
-Hotkey, %Read_PassiveToggleCookingOnKey%, PassiveToggleCookingOn
-Hotkey, %Read_PassiveToggleCookingOffKey%, PassiveToggleCookingOff
-
-Hotkey, %Read_ToggleDefensiveKey%, ToggleDefensive
-Hotkey, %Read_ToggleClickerKey%, ToggleClicker
-Hotkey, %Read_ToggleMissionFailSafeKey%, ToggleMissionFailSafe
-
-Hotkey, %Read_HealthKey%, Health
-Hotkey, %Read_StaminaKey%, Stamina
-Hotkey, %Read_DeadeyeKey%, Deadeye
-Hotkey, %Read_HealCoresKey%, HealCores
-
-Hotkey, %Read_WildernessCampKey%, WildernessCamp
-Hotkey, %Read_ItemSlotKey%, ItemSlot
-
-Hotkey, %Read_HuntingWagonKey%, HuntingWagon
-Hotkey, %Read_BountyWagonKey%, BountyWagon
-Hotkey, %Read_DismissWagonsKey%, DismissWagons
-Hotkey, %Read_FeedHorseKey%, FeedHorse
-
-Hotkey, %Read_ShowPossesKey%, ShowPosses
-Hotkey, %Read_FormPosseKey%, FormPosse
-Hotkey, %Read_QuickRaceKey%, QuickRace
-Hotkey, %Read_MenuSlotTwoKey%, MenuSlotTwo
-Hotkey, %Read_MenuSlotFourKey%, MenuSlotFour
-
-Hotkey, %Read_VolumeDownKey%, VolumeDown
-Hotkey, %Read_VolumeUpKey%, VolumeUp
-Hotkey, %Read_ReloadScriptKey%, ReloadScript
-Hotkey, %Read_AbortScriptKey%, AbortScript
-
-Hotkey, %Read_TimerAddMinutesKey%, TimerAddMinutes
-Hotkey, %Read_TimerSubMinutesKey%, TimerSubMinutes
-Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
-Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
-
-SetTimer, UpdateOSD, 200  
-;Gosub, UpdateOSD
 
 ;//// the main loop of the program 
 ;Loop
