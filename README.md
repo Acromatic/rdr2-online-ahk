@@ -23,7 +23,7 @@ See the README section about using RDR2Config.ahk if you plan on changing settin
 
 You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
 
-# Updated to v1.1.1 - Sep 5th 2021
+# Updated to v1.1.1 - Sep 6th 2021
 * Added - Brand New Update and File System (Please update to this version manually!)
 * Added - Methods to the main script RDR2.ahk that allow the entire project to build from it alone
 * Added - HUD, OSD messaging system to relay what the script is doing 
