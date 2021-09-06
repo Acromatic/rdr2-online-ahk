@@ -215,7 +215,6 @@ if(Read_AutoUpdateOnStart=1)
 	if !FileExist(Update.ahk){
 		FileCopy, updatecheck.txt, Update.ahk, 1
      	FileDelete, updatecheck.txt
-		return
 	}
 	if !FileExist(RDR2Config.ahk){
 		FileReadLine, updatecheck, updatecheck.txt, 1
@@ -227,7 +226,7 @@ if(Read_AutoUpdateOnStart=1)
 		return
 	}	
 
-if (updatecheck = currentVersion){
+`	if (updatecheck = currentVersion){
 		FileDelete, updatecheck.txt
 		GuiControl, guitwo:, MyText2, Update canceled, scripts will not be updated. same version %updatecheck% was detected.
 		return
