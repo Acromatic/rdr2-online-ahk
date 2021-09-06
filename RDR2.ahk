@@ -96,15 +96,16 @@ IfNotExist, %CFG%
 	IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
 	IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
+	IniWrite, F7, %CFG%, Settings, ToggleDebug
+	
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
 	IniWrite, F11 , %CFG%, SinglePlayerHotkeys, BeatPoker
 	
 ;//////////////////  Other Macros  ////////////////////
 	IniWrite, F8, %CFG%, Hotkeys, AutoCooking
-	
-	IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
 	IniWrite, z, %CFG%, Hotkeys, AutoClicker
+	IniWrite, F5, %CFG%, Hotkeys, ToggleDefensive
 	IniWrite, F9, %CFG%, Hotkeys, CycleMissionFailSafe
 	
 	IniWrite, NumpadHome , %CFG%, Hotkeys, Health
@@ -152,9 +153,8 @@ IfExist, %CFG%
 	
 ;//////////////////  Online Macros  ////////////////////
 	IniRead, Read_AutoCookingKey, %CFG%,Hotkeys,AutoCooking
-	IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
 	IniRead, Read_AutoClickerKey, %CFG%,Hotkeys,AutoClicker
-	
+	IniRead, Read_ToggleDefensiveKey, %CFG%,Hotkeys,ToggleDefensive
 	IniRead, Read_CycleMissionFailSafeKey, %CFG%,Hotkeys,CycleMissionFailSafe
 	
 	IniRead, Read_HealthKey, %CFG%, Hotkeys,Health
@@ -187,15 +187,17 @@ IfExist, %CFG%
 	IniRead, Read_TimerResetSecondsKey, %CFG%, Hotkeys, TimerResetSeconds
 }
 
+Hotkey, %Read_ToggleDebugKey%, ToggleDebug
+
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
 Hotkey, %Read_BeatPokerKey%, BeatPoker
 
 ;/////////////////// Other binds ///////////////
 
-Hotkey, %Read_ToggleCookingOnKey%, AutoCooking
+Hotkey, %Read_AutoCookingKey%, AutoCooking
+Hotkey, %Read_AutoClickerKey%, AutoClicker
 Hotkey, %Read_ToggleDefensiveKey%, ToggleDefensive
-Hotkey, %Read_ToggleClickerKey%, AutoClicker
 Hotkey, %Read_CycleMissionFailSafeKey%, CycleMissionFailSafe
 
 Hotkey, %Read_HealthKey%, Health
@@ -348,6 +350,7 @@ if (WinActive("Red Dead Redemption 2")){
 	Suspend,Off
 	Sleep, 2000
 	Gui, guitwo: Hide
+	}
 	else {
 		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
 		GuiControl, guitwo:, MyText2, Suspended
