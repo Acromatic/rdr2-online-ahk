@@ -609,7 +609,7 @@ MenuSlotTwo:
 		MouseMove, 170, 852
 		ShortDelay()
 		Send {Enter}
-		sleep,1000
+		sleep,1400
 		Send {Right}
 		ShortDelay()
 		Send {Enter}
@@ -628,7 +628,7 @@ MenuSlotFour:
 		MouseMove, 170, 852
 		ShortDelay()
 		Send {Enter}
-		sleep,1000
+		sleep,1400
 		Send {Right 2}
 		ShortDelay()
 		Send {Right}
