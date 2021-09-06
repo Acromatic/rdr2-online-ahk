@@ -349,14 +349,14 @@ if WinActive("Red Dead Redemption 2")
 	return
 }
 
-;if !WinActive("Red Dead Redemption 2")
-#IfWinActive, ahk_exe RDR2.exe 
+if !WinActive("Red Dead Redemption 2")
+;#IfWinActive, ahk_exe RDR2.exe 
 {
-	Suspend,Off
+	Suspend,On
 }
 else
 {
-	Suspend,On
+	Suspend,Off
 }
 	;//////////////////////////   Clicker Toggle     /////////////////////////////
 	; Toggle Rapid-Fire Clicker
