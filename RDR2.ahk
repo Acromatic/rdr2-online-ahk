@@ -296,7 +296,7 @@ Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
 Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
 
 SetTimer, UpdateOSD, 200  
-Gosub, UpdateOSD
+;Gosub, UpdateOSD
 
 ;//// the main loop of the program 
 Loop
