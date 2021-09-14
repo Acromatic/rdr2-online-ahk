@@ -78,6 +78,7 @@ Gui, guithree: Hide ; gui 3
 sleep, 1000
 Gui, guitwo: Hide   ; gui 2
 
+msgbox % "Script Running"
 ;////// Automatic Anti-Away-From-Keyboard - Fires a timed Send {AppsKey} to disable in-game AFK Disconnects 
 ;////// Least destructive key, requires RedDead Active Window - 120000 equals every 2 minutes
 ;////// The game changes the screen at 3:20mins but the prompt is at 2:20
@@ -98,7 +99,7 @@ IfNotExist, %CFG%
 	IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
 	IniWrite, F7, %CFG%, Settings, ToggleDebug
-	
+	IniWrite, F2 , %CFG%, Settings, RunScriptEditor
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
 	IniWrite, F11 , %CFG%, SinglePlayerHotkeys, BeatPoker
@@ -148,9 +149,11 @@ IfExist, %CFG%
 	IniRead, Read_LoadEditorOnStart, %CFG%, Settings,LoadEditorOnStart
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings,AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings,SilentUpdateOnStart
-	IniRead, Read_ToggleDebugKey, %CFG%,Settings,ToggleDebug
+	IniRead, Read_ToggleDebugKey, %CFG%, Settings,ToggleDebug
+	IniRead, Read_RunScriptEditorKey, %CFG%, Settings,RunScriptEditor
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
+	
 	IniRead, Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
 	
 ;//////////////////  Online Macros  ////////////////////
@@ -190,6 +193,7 @@ IfExist, %CFG%
 }
 
 Hotkey, %Read_ToggleDebugKey%, ToggleDebug
+Hotkey, %Read_ToggleDebugKey%, RunScriptEditor
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
@@ -609,7 +613,7 @@ MenuSlotTwo:
 		MouseMove, 170, 852
 		ShortDelay()
 		Send {Enter}
-		sleep,1400
+		sleep,2000
 		Send {Right}
 		ShortDelay()
 		Send {Enter}
@@ -628,7 +632,7 @@ MenuSlotFour:
 		MouseMove, 170, 852
 		ShortDelay()
 		Send {Enter}
-		sleep,1400
+		sleep,2000
 		Send {Right 2}
 		ShortDelay()
 		Send {Right}
@@ -739,9 +743,13 @@ AutoCooking:
 					Send {Space up}    ;/// For single player
 					Send {r}           ;/// For single player
 					Send {Space}
+					SendEnter()
 					Send {Enter down}
 					LongDelay()
-					Send {f 2}	   ;/// For cooking menus (must come after esc for crafting)
+					Send {f}	   ;/// For cooking menus (must come after esc for crafting)
+					ShortDelay()
+					Send {f}
+					ShortDelay()
 					Send {Down}
 					LongDelay()
 				}
@@ -792,10 +800,20 @@ BeatPoker:
 	return	
 }
 
+RunScriptEditor:
+{
+	if FileExist("AHK-Studio.ahk") {
+		GuiControl, guitwo:, MyText2, AHK-Studio.ahk Activated....
+		Sleep, 4000
+		Run *RunAs "C:\Program Files\AutoHotkey\AutoHotkey.exe" "AHK-Studio.ahk"
+		ExitApp
+	}
+	return
+}
 
 ReloadScript:
 {
-			;////// Need a log file in here 
+	;////// Need a log file in here 
 	TimeMins = 0
 	TimeSecs = 0
 	TimeMins1 = 0
@@ -811,7 +829,7 @@ ReloadScript:
 
 AbortScript:
 {
-			;////// Need a log file in here 
+	;////// Need a log file in here 
 	ExitApp
 	return	
 }
@@ -997,49 +1015,49 @@ UpdateOSD:
 					TimeSecs = 49
 					IsTimerSet=1
 				}
-					LongDelay()
-					ShortDelay()
-					TimeSecs--
+				LongDelay()
+				ShortDelay()
+				TimeSecs--
+				
+				if(TimeSecs<1)
+				{
+					TimeMins--
+					TimeSecs=59			
 					
-					if(TimeSecs<1)
-					{
-						TimeMins--
-						TimeSecs=59			
-						
-						if(TimeMins<0)
-						{			
+					if(TimeMins<0)
+					{			
 		;/// dead drop legendary variant 
-							if(MissionFailSafeType=1){
-								Send {r down}
-								LongDelay()
-								Send {r up}
-								reload
-							}
+						if(MissionFailSafeType=1){
+							Send {r down}
+							LongDelay()
+							Send {r up}
+							reload
+						}
 		;/// contact drop legendary variant 
-							if(MissionFailSafeType=2){
-								Send {RButton down}
-								ShortDelay()
-								Send {r down}
-								LongDelay()
-								Send {r up}
-								Send {RButton up}
-								reload
-							}
+						if(MissionFailSafeType=2){
+							Send {RButton down}
+							ShortDelay()
+							Send {r down}
+							LongDelay()
+							Send {r up}
+							Send {RButton up}
+							reload
+						}
 		;/// drive in (bounty) legendary variant 
-							if(MissionFailSafeType=3){
-								Send {w down}
-								Send {LShift down}
-								SuperLongDelay()
-								Send {w up}
-								Send {LShift up}
-								reload
-							}
-						}		
-					}
+						if(MissionFailSafeType=3){
+							Send {w down}
+							Send {LShift down}
+							SuperLongDelay()
+							Send {w up}
+							Send {LShift up}
+							reload
+						}
+					}		
+				}
 ;/// Digit Formatting
-					TimeSecs := Format("{:02}", TimeSecs)
-					TimeMins := Format("{:02}", TimeMins)
-					GuiControl, guione:, MyText, %TimeMins%:%TimeSecs%
+				TimeSecs := Format("{:02}", TimeSecs)
+				TimeMins := Format("{:02}", TimeMins)
+				GuiControl, guione:, MyText, %TimeMins%:%TimeSecs%
 				
 			}
 			else
