@@ -98,7 +98,7 @@ IfNotExist, %CFG%
 	IniWrite, 1, %CFG%, Settings, LoadEditorOnStart
 	IniWrite, 1, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, 0, %CFG%, Settings, SilentUpdateOnStart
-	IniWrite, F7, %CFG%, Settings, ToggleDebug
+	IniWrite, F3, %CFG%, Settings, ToggleDebug
 	IniWrite, F2 , %CFG%, Settings, RunScriptEditor
 	
 ;/////////////////// Singleplayer ONLY binds ///////////////
@@ -193,7 +193,7 @@ IfExist, %CFG%
 }
 
 Hotkey, %Read_ToggleDebugKey%, ToggleDebug
-Hotkey, %Read_ToggleDebugKey%, RunScriptEditor
+Hotkey, %Read_RunScriptEditorKey%, RunScriptEditor
 
 ;/////////////////// Singleplayer ONLY binds ///////////////
 
@@ -351,24 +351,6 @@ if (WinActive("Red Dead Redemption 2")){
 	return
 }
 
-SuspendHotkeys:
-{
-	if (WinActive("Red Dead Redemption 2")){
-	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-	GuiControl, guitwo:, MyText2, Unsuspended
-	Suspend,Off
-	Sleep, 2000
-	Gui, guitwo: Hide
-	}
-	else {
-		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-		GuiControl, guitwo:, MyText2, Suspended
-		Suspend,On
-		Sleep, 2000
-		Gui, guitwo: Hide
-	}
-}
-
 ;//////////////////////////   Toggle Debug Mode    /////////////////////////////
 ToggleDebug:
 {
@@ -388,6 +370,26 @@ ToggleDebug:
 		}
 	return
 }	
+
+SuspendHotkeys:
+{
+	if (WinActive("Red Dead Redemption 2"))
+	{
+		Gui, guitwo: Show, x670 y110 w700 h40
+		GuiControl, guitwo:, MyText2, Unsuspended
+		Suspend,Off
+		Sleep, 2000
+		Gui, guitwo: Hide
+	}
+	else 
+	{
+		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+		GuiControl, guitwo:, MyText2, Suspended
+		Suspend,On
+		Sleep, 2000
+		Gui, guitwo: Hide
+	}
+}
 
 
 ;//////////////////////////   Clicker Toggle     /////////////////////////////
@@ -410,6 +412,7 @@ AutoClicker:
 		}
 	return
 }
+
 ;//////////////////////////    Defensive Toggle     /////////////////////////////
 ToggleDefensive:
 {
@@ -424,6 +427,7 @@ ToggleDefensive:
 	}
 	return      
 }
+
 ;///////////////////////////        Health Slot        ///////////////////////////////////
 Health:
 {
@@ -434,6 +438,7 @@ Health:
 	}
 	return	
 }
+
 ;///////////////////////////        Stamina Slot       ///////////////////////////////////
 Stamina:
 {
@@ -444,6 +449,7 @@ Stamina:
 	}
 	return	
 }
+
 ;///////////////////////////        Dead Eye Slot      ////////////////////////////////////
 Deadeye:
 {
@@ -837,6 +843,7 @@ AbortScript:
 	ExitApp
 	return	
 }
+
 ;////// Delay-Functions
 SuperShortDelay(){
 	if (WinActive("Red Dead Redemption 2"))

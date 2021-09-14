@@ -144,12 +144,12 @@ Gui, Add, Text,x320 y440 w150 h20,TimerResetSeconds Key:
 
 ;///////// HotKey Edit Boxes
 
-Gui, Add, Hotkey,x160 y20 w150 h20 vToggleDebugKey,F7
+Gui, Add, Hotkey,x160 y20 w150 h20 vToggleDebugKey,F3
 Gui, Add, Hotkey,x160 y50 w150 h20 vRunScriptEditorKey,F2
 
 Gui, Add, Hotkey,x160 y80 w150 h20 vBeatPokerKey,F11
 
-Gui, Add, Hotkey,x160 y110 w150 h20 vAutoCookingKey,^Enter
+Gui, Add, Hotkey,x160 y110 w150 h20 vAutoCookingKey,F8
 Gui, Add, Hotkey,x160 y140 w150 h20 vAutoClickerKey,z
 Gui, Add, Hotkey,x160 y170 w150 h20 vToggleDefensiveKey,F5
 Gui, Add, Hotkey,x160 y200 w150 h20 vCycleMissionFailSafeKey,F9
@@ -185,19 +185,19 @@ Gui, Add, Hotkey,x480 y440 w150 h20 vTimerResetSecondsKey,o
 
 
 if Read_LoadEditorOnStart = 1
-	Gui, Add, CheckBox, x60 y450 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
-else Gui, Add, CheckBox, x60 y450 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
+	Gui, Add, CheckBox, x60 y540 w150 h20 Checked vLoadEditorOnStart, Run Config Editor on start?
+else Gui, Add, CheckBox, x60 y540 w150 h20 vLoadEditorOnStart, Run Config Editor on start?
 	
 if Read_AutoUpdateOnStart = 1
-	Gui, Add, CheckBox, x360 y450 w150 h20 Checked vAutoUpdateOnStart, Auto Update on start?
-else Gui, Add, CheckBox, x360 y450 w150 h20 vAutoUpdateOnStart, Auto Update on start?
+	Gui, Add, CheckBox, x360 y540 w150 h20 Checked vAutoUpdateOnStart, Auto Update on start?
+else Gui, Add, CheckBox, x360 y540 w150 h20 vAutoUpdateOnStart, Auto Update on start?
 	
 if Read_SilentUpdateOnStart = 1 
-	Gui, Add, CheckBox, x370 y470 w150 h20 Checked vSilentUpdateOnStart, Silent Updates?
-else Gui, Add, CheckBox, x370 y470 w150 h20 vSilentUpdateOnStart, Silent Updates?
+	Gui, Add, CheckBox, x370 y560 w150 h20 Checked vSilentUpdateOnStart, Silent Updates?
+else Gui, Add, CheckBox, x370 y560 w150 h20 vSilentUpdateOnStart, Silent Updates?
 	
-Gui, Add, Button, x50 y520 w200 h50 gButtonExit, Exit
-Gui, Add, Button, x350 y520 w200 h50 gSave, Save and Run
+Gui, Add, Button, x50 y580 w200 h50 gButtonExit, Exit
+Gui, Add, Button, x350 y580 w200 h50 gSave, Save and Run
 
 Gui, Show, w640 h700, RDR Online Quick Macros
 return 
@@ -221,7 +221,8 @@ Save:
 	IniWrite, %LoadEditorOnStart%, %CFG%, Settings, LoadEditorOnStart
 	IniWrite, %AutoUpdateOnStart%, %CFG%, Settings, AutoUpdateOnStart
 	IniWrite, %SilentUpdateOnStart%, %CFG%, Settings, SilentUpdateOnStart
-	IniWrite, %ToggleDebugKey%, %CFG%, Hotkeys, ToggleDebug
+	IniWrite, %ToggleDebugKey%, %CFG%, Settings, ToggleDebug
+	IniWrite, %RunScriptEditorKey%, %CFG%, Settings, RunScriptEditor
 	
 	;/////////////////// Singleplayer Only Binds ///////////////
 	IniWrite, %BeatPokerKey%, %CFG%, SinglePlayerHotkeys, BeatPoker

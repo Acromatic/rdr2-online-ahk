@@ -1,4 +1,4 @@
-﻿; v1.2.3
+﻿; v1.2.4
 ; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 
@@ -49,7 +49,7 @@ return
 UpdateScriptMain(){
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2.ahk,RDR2.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, Error response from GitHub, update was aborted.`nPlease try again later`nHint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		GuiControl, guitwo:, MyText2, Error response from GitHub, update was aborted. Please try again later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
 		FileDelete, RDR2.txt
 		Sleep, 4000
 		return
@@ -67,7 +67,7 @@ UpdateScriptMain(){
 UpdateScriptConfig(){
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2Config.ahk,RDR2Config.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
 		FileDelete, RDR2Config.txt
 		Sleep, 4000
 		return
@@ -85,7 +85,7 @@ UpdateScriptConfig(){
 UpdateScriptMissionFailsafe(){
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/RDR2MissionFailsafe.ahk,RDR2MissionFailsafe.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		GuiControl, guitwo:, MyText2, Error response from GitHub on RDR2Config.ahk, update was aborted. Please try again later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
 		FileDelete, RDR2Config.txt
 		Sleep, 4000
 		return
@@ -103,7 +103,7 @@ UpdateScriptMissionFailsafe(){
 UpdateReadMe(){
 	URLDownloadToFile,https://raw.githubusercontent.com/Acromatic/rdr2-online-ahk/main/README.md,README.txt
 	if (errorlevel) {
-		GuiControl, guitwo:, MyText2, Error response from GitHub on README.md, update was aborted. Please try again 		later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
+		GuiControl, guitwo:, MyText2, Error response from GitHub on README.md, update was aborted. Please try again later Hint: Uncheck "autoupdate on start?" in the Configuration Editor to disable automatic checking.
 		FileDelete, README.txt
 		Sleep, 4000
 		return
