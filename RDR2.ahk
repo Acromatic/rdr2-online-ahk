@@ -78,7 +78,7 @@ Gui, guithree: Hide ; gui 3
 sleep, 1000
 Gui, guitwo: Hide   ; gui 2
 
-msgbox % "Script Running"
+msgbox % "Script Running`n`nWarning: Last chance to disable autoupdate before accidentally overwriting your custom scripting"
 ;////// Automatic Anti-Away-From-Keyboard - Fires a timed Send {AppsKey} to disable in-game AFK Disconnects 
 ;////// Least destructive key, requires RedDead Active Window - 120000 equals every 2 minutes
 ;////// The game changes the screen at 3:20mins but the prompt is at 2:20
@@ -373,22 +373,29 @@ ToggleDebug:
 
 SuspendHotkeys:
 {
-	if (WinActive("Red Dead Redemption 2"))
+	if (A_IsSuspended)
 	{
-		Gui, guitwo: Show, x670 y110 w700 h40
-		GuiControl, guitwo:, MyText2, Unsuspended
-		Suspend,Off
-		Sleep, 2000
-		Gui, guitwo: Hide
+		if (WinActive("Red Dead Redemption 2"))
+		{
+			Gui, guitwo: Show, x670 y110 w700 h40
+			GuiControl, guitwo:, MyText2, Unsuspended
+			Suspend,Off
+			Sleep, 4000
+			Gui, guitwo: Hide
+		}
 	}
 	else 
 	{
-		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-		GuiControl, guitwo:, MyText2, Suspended
-		Suspend,On
-		Sleep, 2000
-		Gui, guitwo: Hide
+		if !(WinActive("Red Dead Redemption 2"))
+		{	
+			Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+			GuiControl, guitwo:, MyText2, Suspended
+			Suspend,On
+			Sleep, 4000
+			Gui, guitwo: Hide
+		}
 	}
+	return
 }
 
 

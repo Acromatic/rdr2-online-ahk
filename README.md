@@ -23,7 +23,7 @@ If a new (or actually different) version is found it will prompt you to proceed 
 
 You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
 
-# Updated to v1.2.3 - Sep 14th 2021
+# Updated to v1.2.4 - Sep 14th 2021
 * Added - RunScriptEditor 
 * Changed - Heal now cycles one left each time to avoid dead eye items
 * Fixed - AutoSuspension of hotkeys when red dead window not active ( Not including reload & exit or RunScriptEditor )
