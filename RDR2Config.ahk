@@ -22,6 +22,7 @@ IfExist, %CFG%
 	IniRead, Read_AutoUpdateOnStart, %CFG%, Settings, AutoUpdateOnStart
 	IniRead, Read_SilentUpdateOnStart, %CFG%, Settings, SilentUpdateOnStart
 	IniRead,Read_ToggleDebugKey, %CFG%, Settings, ToggleDebug
+	IniRead,Read_RunScriptEditorKey, %CFG%, Settings, RunScriptEditor
 	
 	;/////////////////// Singleplayer ONLY binds ///////////////
 	IniRead,Read_BeatPokerKey, %CFG%, SinglePlayerHotkeys,BeatPoker
@@ -63,7 +64,8 @@ IfExist, %CFG%
 	
 		;////// GuiControls
 	GuiControl,,ToggleDebug,%Read_ToggleDebugKey%
-
+	GuiControl,,RunScriptEditor,%Read_RunScriptEditorKey%
+	
 	GuiControl,,BeatPoker,%Read_BeatPokerKey%
 	
 	GuiControl,,AutoCooking,%Read_AutoCookingKey%
@@ -102,24 +104,25 @@ IfExist, %CFG%
 }
 
 Gui, Add, Text,x10 y20 w150 h20,ToggleDebug Key:
+Gui, Add, Text,x10 y50 w150 h20,RunScriptEditor Key:
 
-Gui, Add, Text,x10 y50 w150 h20,BeatPoker Key:
+Gui, Add, Text,x10 y80 w150 h20,BeatPoker Key:
 
-Gui, Add, Text,x10 y80 w150 h20,AutoCooking Key:
-Gui, Add, Text,x10 y110 w150 h20,AutoClicker Key:
-Gui, Add, Text,x10 y140 w150 h20,ToggleDefensive Key:
-Gui, Add, Text,x10 y170 w150 h20,CycleMissionFailSafe Key:
+Gui, Add, Text,x10 y110 w150 h20,AutoCooking Key:
+Gui, Add, Text,x10 y140 w150 h20,AutoClicker Key:
+Gui, Add, Text,x10 y170 w150 h20,ToggleDefensive Key:
+Gui, Add, Text,x10 y200 w150 h20,CycleMissionFailSafe Key:
 
-Gui, Add, Text,x10 y200 w150 h20,Health Key:
-Gui, Add, Text,x10 y230 w150 h20,Stamina Key:
-Gui, Add, Text,x10 y260 w150 h20,Deadeye Key:
-Gui, Add, Text,x10 y290 w150 h20,HealCores Key:
+Gui, Add, Text,x10 y230 w150 h20,Health Key:
+Gui, Add, Text,x10 y260 w150 h20,Stamina Key:
+Gui, Add, Text,x10 y290 w150 h20,Deadeye Key:
+Gui, Add, Text,x10 y320 w150 h20,HealCores Key:
 
-Gui, Add, Text,x10 y320 w150 h20,WildernessCamp Key:
-Gui, Add, Text,x10 y350 w150 h20,ItemSlot Key:
+Gui, Add, Text,x10 y350 w150 h20,WildernessCamp Key:
+Gui, Add, Text,x10 y380 w150 h20,ItemSlot Key:
 
-Gui, Add, Text,x10 y380 w150 h20,HuntingWagon Key:
-Gui, Add, Text,x10 y410 w150 h20,BountyWagon Key:
+Gui, Add, Text,x10 y410 w150 h20,HuntingWagon Key:
+Gui, Add, Text,x10 y440 w150 h20,BountyWagon Key:
 Gui, Add, Text,x320 y20 w150 h20,DismissWagons Key:
 Gui, Add, Text,x320 y50 w150 h20,FeedHorse Key:
 
@@ -142,24 +145,25 @@ Gui, Add, Text,x320 y440 w150 h20,TimerResetSeconds Key:
 ;///////// HotKey Edit Boxes
 
 Gui, Add, Hotkey,x160 y20 w150 h20 vToggleDebugKey,F7
+Gui, Add, Hotkey,x160 y50 w150 h20 vRunScriptEditorKey,F2
 
-Gui, Add, Hotkey,x160 y50 w150 h20 vBeatPokerKey,F11
+Gui, Add, Hotkey,x160 y80 w150 h20 vBeatPokerKey,F11
 
-Gui, Add, Hotkey,x160 y80 w150 h20 vAutoCookingKey,^Enter
+Gui, Add, Hotkey,x160 y110 w150 h20 vAutoCookingKey,^Enter
 Gui, Add, Hotkey,x160 y140 w150 h20 vAutoClickerKey,z
-Gui, Add, Hotkey,x160 y110 w150 h20 vToggleDefensiveKey,F5
-Gui, Add, Hotkey,x160 y170 w150 h20 vCycleMissionFailSafeKey,F9
+Gui, Add, Hotkey,x160 y170 w150 h20 vToggleDefensiveKey,F5
+Gui, Add, Hotkey,x160 y200 w150 h20 vCycleMissionFailSafeKey,F9
 
-Gui, Add, Hotkey,x160 y200 w150 h20 vHealthKey,NumpadHome
-Gui, Add, Hotkey,x160 y230 w150 h20 vStaminaKey,NumpadUp
-Gui, Add, Hotkey,x160 y260 w150 h20 vDeadeyeKey,NumpadPgUp
-Gui, Add, Hotkey,x160 y290 w150 h20 vHealCoresKey,NumpadLeft
+Gui, Add, Hotkey,x160 y230 w150 h20 vHealthKey,NumpadHome
+Gui, Add, Hotkey,x160 y260 w150 h20 vStaminaKey,NumpadUp
+Gui, Add, Hotkey,x160 y290 w150 h20 vDeadeyeKey,NumpadPgUp
+Gui, Add, Hotkey,x160 y320 w150 h20 vHealCoresKey,NumpadLeft
 
-Gui, Add, Hotkey,x160 y320 w150 h20 vWildernessCampKey,NumpadClear 
-Gui, Add, Hotkey,x160 y350 w150 h20 vItemSlotKey,NumpadRight 
+Gui, Add, Hotkey,x160 y350 w150 h20 vWildernessCampKey,NumpadClear 
+Gui, Add, Hotkey,x160 y380 w150 h20 vItemSlotKey,NumpadRight 
 
-Gui, Add, Hotkey,x160 y380 w150 h20 vHuntingWagonKey,NumpadEnd 
-Gui, Add, Hotkey,x160 y410 w150 h20 vBountyWagonKey,NumpadDown 
+Gui, Add, Hotkey,x160 y410 w150 h20 vHuntingWagonKey,NumpadEnd 
+Gui, Add, Hotkey,x160 y440 w150 h20 vBountyWagonKey,NumpadDown 
 Gui, Add, Hotkey,x480 y20 w150 h20 vDismissWagonsKey,NumpadPgDn
 Gui, Add, Hotkey,x480 y50 w150 h20 vFeedHorseKey,NumpadIns
 
@@ -195,7 +199,7 @@ else Gui, Add, CheckBox, x370 y470 w150 h20 vSilentUpdateOnStart, Silent Updates
 Gui, Add, Button, x50 y520 w200 h50 gButtonExit, Exit
 Gui, Add, Button, x350 y520 w200 h50 gSave, Save and Run
 
-Gui, Show, w640 h620, RDR Online Quick Macros
+Gui, Show, w640 h700, RDR Online Quick Macros
 return 
 
 ;/////////////////////  Functions   /////////////////

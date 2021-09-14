@@ -236,6 +236,7 @@ Hotkey, %Read_TimerResetMinutesKey%, TimerResetMinutes
 Hotkey, %Read_TimerResetSecondsKey%, TimerResetSeconds
 
 SetTimer, UpdateOSD, 200  
+SetTimer, SuspendHotkeys, 433  
 ;Gosub, UpdateOSD
 
 if(Read_AutoUpdateOnStart=1)
@@ -350,19 +351,22 @@ if (WinActive("Red Dead Redemption 2")){
 	return
 }
 
-if (WinActive("Red Dead Redemption 2")){
+SuspendHotkeys:
+{
+	if (WinActive("Red Dead Redemption 2")){
 	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
 	GuiControl, guitwo:, MyText2, Unsuspended
 	Suspend,Off
 	Sleep, 2000
 	Gui, guitwo: Hide
-}
-else {
-	Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
-	GuiControl, guitwo:, MyText2, Suspended
-	Suspend,On
-	Sleep, 2000
-	Gui, guitwo: Hide
+	}
+	else {
+		Gui, guitwo: Show, x670 y110 w700 h40 NoActivate
+		GuiControl, guitwo:, MyText2, Suspended
+		Suspend,On
+		Sleep, 2000
+		Gui, guitwo: Hide
+	}
 }
 
 ;//////////////////////////   Toggle Debug Mode    /////////////////////////////

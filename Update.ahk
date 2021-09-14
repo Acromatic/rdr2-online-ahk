@@ -1,4 +1,4 @@
-﻿; v1.1.2
+﻿; v1.2.3
 ; ^ don't remove or alter this line (autoupdate)
 ;#Warn   ;---------- For debugging
 

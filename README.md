@@ -19,9 +19,16 @@ maybe even faster than you will be able to do manually.
 
 By default it will check for a new version on GitHub every time you launch the script.
 If a new (or actually different) version is found it will prompt you to proceed or cancel.
-See the README section about using RDR2Config.ahk if you plan on changing settings as the update will replace the script files!
+	See the README section about using RDR2Config.ahk if you plan on changing settings as the update will replace the script files!
 
 You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
+
+# Updated to v1.2.3 - Sep 14th 2021
+* Added - RunScriptEditor 
+* Changed - Heal now cycles one left each time to avoid dead eye items
+* Fixed - AutoSuspension of hotkeys when red dead window not active ( Not including reload & exit or RunScriptEditor )
+* Fixed - Various other fixes
+* Broken - MissionFailSafe barely works ATM, I'm going to try a new approach that doesn't wait as long
 
 # Updated to v1.1.1 - Sep 6th 2021
 * Added - Brand New Update and File System (Please update to this version manually!)
@@ -37,35 +44,48 @@ You can disable the automatic check in the configuration (`AutoUpdateOnStart`).
 * Fixed - Massive speed improvements throughout, second tuning pass more to come
 * Fixed - Auto Update now only checks for updates weekly (to reduce useless GitHub hits)
 
-
 # Updated to v1.0.1 - August 31st 2021
 * Added - MultiSampling to the Mission Failsafe timer 
 * Added - Item Slot now cycles through all items
 * Fixed - Massive speed improvements throughout, initial tuning pass more to come
-
 
 # Updated to v1.0 - August 2021
 * Added - Initialization File Configuration Editor
 * Added - Automatic Updates
 * Added - Mission Failsafe Mode
 
+##Current Features
+
+Poker Beating Bot
+AutoRun \ AutoWalk
+Quick Heal
+Posse Macros
+Passive AntiAFK
+Passive Script Suspension
+Quick Items
+Systematic Cart and other Menu Calls
+Auto Clicker
+Editor/Launcher/HotKeys
+Configuration File
+Auto Updates
+And More!!!
 
 ## Installation
 
-  * Step 1 - Download the .ahk file (or clone the repo)
-  * You can manually change the code but there is not much need the NEW CONFIG EDITOR WILL DO STEP 2!, 
-  * runs at launch after the update check, if it does not open do the following
-  * (open RDR2Quick.ini in a text editor and change UpdateCheck=0 to UpdateCheck=1)
-  * 
-  * Step 2 - Open it in a text editor (e.g. notepad++ with AutoIT syntax highlighting) and change the hotkeys ([key list](https://www.autohotkey.com/docs/KeyList.htm))
-  * Step 3 - Install Dependencies - instructions below
-  * Step 4 - You can now run the script - Doubleclick your .ahk file (open with AHK) Note: On Windows 10 right click -> run as admin
+* Step 1 - Download the .ahk file (or clone the repo)
+* You can manually change the code but there is not much need the NEW CONFIG EDITOR WILL DO STEP 2!, 
+* runs at launch after the update check, if it does not open do the following
+* (open RDR2Quick.ini in a text editor and change UpdateCheck=0 to UpdateCheck=1)
+* 
+* Step 2 - Open it in a text editor (e.g. notepad++ with AutoIT syntax highlighting) and change the hotkeys ([key list](https://www.autohotkey.com/docs/KeyList.htm))
+* Step 3 - Install Dependencies - instructions below
+* Step 4 - You can now run the script - Doubleclick your .ahk file (open with AHK) Note: On Windows 10 right click -> run as admin
 
 ## Dependencies
 
-  * [AutoHotkey](https://www.autohotkey.com/)
-  * [Capture2Text](http://capture2text.sourceforge.net/) This is used to read text from the screen and capture the timer to reconstruct our own for finale mode
-  * [pssuspend.exe and pskill.exe](https://docs.microsoft.com/en-us/sysinternals/downloads/pssuspend) in your path (for force disconnect and process killing, see instructions below)
+* [AutoHotkey](https://www.autohotkey.com/)
+* [Capture2Text](http://capture2text.sourceforge.net/) This is used to read text from the screen and capture the timer to reconstruct our own for finale mode
+* [pssuspend.exe and pskill.exe](https://docs.microsoft.com/en-us/sysinternals/downloads/pssuspend) in your path (for force disconnect and process killing, see instructions below)
 
 ## Dependencies Installation (pssuspend.exe / pskill.exe)
 
@@ -98,9 +118,10 @@ it also does next to nothing for controller users so there's that. Kind of a big
 * You will have to toggle some modes manually since the game will change and some functions need to be aware of that.
 * Some inputs will work and some will not depending on what is taking place, reload script if problems occur
 * Sometimes you might find that the script doesn't appear to do anything. This might happen if you start
-  the game after the AHK script. Reloading it (right click on systray icon -> reload script) fixes that usually.
+the game after the AHK script. Reloading it (right click on systray icon -> reload script) fixes that usually.
 
-## Available macros
+
+## All Available macros
 
 * **BeatPoker** - This is a half working poker beating bot! (only tested with singleplayer)
 * **ToggleAutoRun** - Auto run/drive mode, combine this with walk to run/drive at proper full speed
@@ -155,7 +176,7 @@ This script features a new configuration editor script. You can also manually ed
 #### modifier keys for hotkeys
 
 If it's not clear enough from the key list. You can use [these symbols](https://autohotkey.com/docs/Hotkeys.htm#Symbols) in
-combination with keys. For example `F1` could heal and `+F1` (shift+F1) could healcores.
+	combination with keys. For example `F1` could heal and `+F1` (shift+F1) could healcores.
 
 Also you can not bind keys that are already used in the game, there is a certain part of my script that will, it's the part with (error) that is used to trigger
 the cooking, autorun, autowalk, and enhanced AFK. Generally speaking double binding a game hotkey will fail. Here's a list of keys known to not work.
@@ -170,26 +191,26 @@ Mission Failsafe Mode isn't intended for afk usage even though it has built-in a
 you can now go AFK because the timer is improved, but I wouldn't recommend it.
 
 ## Contributing
-	
-  This script is the culmination of macro scripts over the past 6 years, and 7 or more contributors.
-  Contributions are very welcome! Either report errors, bugs and propose features or directly submit code:
 
-  1. Fork it
-  2. Create your feature branch (`git checkout -b my-new-feature`)
-  3. Commit your changes (`git commit -am 'Added some feature'`)
-  4. Push to the branch (`git push origin my-new-feature`)
-  5. Create new Pull Request
+This script is the culmination of macro scripts over the past 6 years, and 7 or more contributors.
+Contributions are very welcome! Either report errors, bugs and propose features or directly submit code:
 
-  Starting in 2015 list of contributors over the years:
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
-  * KeyMash
-  * twentyafterfour
-  * StArL0rd84
-  * REDR0VER68
-  * OriginalEmpire
-  * 2called-chaos
-  * Updated to 2020-21 by: Acromatic aka Midnight ( January 2021 )
-  * Rewritten for RDR2 by: Acromatic aka Midnight ( August 2021 v1.0 - September 2021 v1.1.1 )
+Starting in 2015 list of contributors over the years:
+
+* KeyMash
+* twentyafterfour
+* StArL0rd84
+* REDR0VER68
+* OriginalEmpire
+* 2called-chaos
+* Updated to 2020-21 by: Acromatic aka Midnight ( January 2021 )
+* Rewritten for RDR2 by: Acromatic aka Midnight ( August 2021 v1.0 - September 2021 v1.2.3 )
 
 ## Legal
 
